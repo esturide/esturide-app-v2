@@ -33,6 +33,7 @@
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0",
     "vite-plugin-pwa": "^0.21.2",
-    "vite-plugin-qrcode": "^0.2.4"
+    "vite-plugin-qrcode": "^0.2.4",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

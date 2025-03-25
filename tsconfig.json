@@ -1,20 +1,30 @@
 {
   "files": [],
   "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
   ],
   "compilerOptions": {
+    "allowJs": true,
     "strict": true,
     "baseUrl": ".",
     "paths": {
+      "@": [
+        "./src"
+      ],
       "@/*": [
-        "./*",
+        "./src/*"
+      ],
+      "$lib": [
+        "./src/lib"
+      ],
+      "$lib/*": [
+        "./src/lib/*"
       ]
     }
-  },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  }
 }
