@@ -1,12 +1,29 @@
 import {defineConfig} from 'vite'
-import react from '@vitejs/plugin-react'
 import {VitePWA} from "vite-plugin-pwa";
+import react from '@vitejs/plugin-react'
+import legacy from '@vitejs/plugin-legacy';
+import terser from '@rollup/plugin-terser';
 
+import * as path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [
 		react(),
+
+		legacy({
+			targets: ['defaults', 'not IE 11'],
+			additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+		}),
+
+		terser({
+			compress: {
+				drop_console: true,
+				drop_debugger: true,
+			},
+			mangle: true,
+		}),
+
 		VitePWA({
 			registerType: 'autoUpdate',
 			manifest: {
@@ -39,4 +56,10 @@ export default defineConfig({
 			}
 		}),
 	],
+	resolve: {
+		alias: {
+			'@': path.resolve('./src'),
+			'$lib': path.resolve('./src/lib'),
+		},
+	},
 })
