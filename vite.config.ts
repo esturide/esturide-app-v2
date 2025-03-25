@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import { VitePWA } from "vite-plugin-pwa";
+import {defineConfig} from 'vite'
+import {VitePWA} from "vite-plugin-pwa";
 import react from '@vitejs/plugin-react'
 import legacy from '@vitejs/plugin-legacy';
 import terser from '@rollup/plugin-terser';
@@ -33,12 +33,13 @@ export default defineConfig({
 		}),
 
 		VitePWA({
-			registerType: 'prompt',
+			injectRegister: 'auto',
+			registerType: 'autoUpdate',
 			manifest: {
 				name: 'Esturide App Client',
 				short_name: 'Esturide Client',
 				description: 'It is an application to collectivize transportation in a way that is accessible and easy for users.',
-				orientation: 'any',
+				orientation: 'portrait',
 				display: 'standalone',
 				id: 'esturide-app',
 				start_url: '/',
@@ -57,6 +58,23 @@ export default defineConfig({
 						sizes: '512x512',
 						type: 'image/png'
 					}
+				],
+				shortcuts: [
+					{
+						"name": "Open",
+						"url": "/",
+						"description": ""
+					}
+				],
+				categories: [
+					'social',
+					'travel'
+				],
+				display_override: [
+					'standalone',
+					'fullscreen',
+					'browser',
+					'window-controls-overlay'
 				]
 			},
 			workbox: {
