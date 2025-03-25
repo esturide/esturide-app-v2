@@ -1,3 +1,24 @@
+@use "sass:color";
+
+$primary-color: #aa866a;
+$secondary-color: #40646c;
+$text-color: #fff;
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: color.scale($primary-color, $lightness: 20%);
+
+  h1 {
+    color: $secondary-color;
+  }
+
+  p {
+    color: $text-color;
+  }
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -11,9 +32,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
