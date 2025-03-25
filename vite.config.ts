@@ -33,7 +33,7 @@ export default defineConfig({
 		}),
 
 		VitePWA({
-			registerType: 'autoUpdate',
+			registerType: 'prompt',
 			manifest: {
 				name: 'Esturide App Client',
 				short_name: 'Esturide Client',
