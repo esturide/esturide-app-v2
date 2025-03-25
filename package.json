@@ -16,7 +16,9 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "^22.13.13",
     "@vitejs/plugin-legacy": "^6.0.2",
+    "husky": "^9.1.7",
     "leaflet": "^1.9.4",
+    "lint-staged": "^15.5.0",
     "react": "^19.0.0-rc.1",
     "react-dom": "^19.0.0-rc.1",
     "react-leaflet": "^5.0.0",
@@ -59,6 +61,17 @@
   "eslintConfig": {
     "extends": [
       "plugin:storybook/recommended"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
     ]
   }
 }
