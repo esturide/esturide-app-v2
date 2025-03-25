@@ -12,7 +12,13 @@ export default defineConfig({
 			manifest: {
 				name: 'Esturide App Client',
 				short_name: 'Esturide Client',
+				description: 'It is an application to collectivize transportation in a way that is accessible and easy for users.',
+				orientation: 'any',
+				display: 'standalone',
+				id: 'esturide-app',
 				start_url: '/',
+				scope: '/',
+				lang: 'es',
 				background_color: '#ffffff',
 				theme_color: '#000000',
 				icons: [
