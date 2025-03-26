@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { MapContainer } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
@@ -18,6 +18,10 @@ export default function MapView({
   return (
     <div className={'map-view'}>
       <MapContainer center={center} zoom={zoom} scrollWheelZoom={false}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
         {children}
       </MapContainer>
     </div>
