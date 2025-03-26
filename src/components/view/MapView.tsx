@@ -3,6 +3,7 @@ import { MapContainer } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
+import '@/styles/MapView.scss';
 
 type Props = {
   center: LatLngExpression;
@@ -15,10 +16,10 @@ export default function MapView({
   children,
 }: PropsWithChildren<Props>) {
   return (
-    <>
+    <div className={'map-view'}>
       <MapContainer center={center} zoom={zoom} scrollWheelZoom={false}>
         {children}
       </MapContainer>
-    </>
+    </div>
   );
 }
