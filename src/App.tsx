@@ -1,15 +1,14 @@
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { Marker, Popup, TileLayer } from 'react-leaflet';
+import MapView from './components/view/MapView.tsx';
 
-import 'leaflet/dist/leaflet.css';
 import '@/styles/App.scss';
 
 function App() {
   return (
     <>
-      <MapContainer
+      <MapView
         center={{ lat: 20.566807292503427, lng: -103.22299991414923 }}
-        zoom={11}
-        scrollWheelZoom={true}
+        zoom={15}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -20,7 +19,7 @@ function App() {
             A pretty CSS3 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
-      </MapContainer>
+      </MapView>
     </>
   );
 }
