@@ -1,9 +1,16 @@
+import { useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import MapView from './components/view/MapView.tsx';
+import { helloWorld } from '$libs/helloWorld.ts';
 
-import '@/styles/App.scss';
+import MapView from '@components/view/MapView.tsx';
+
+import '@styles/App.scss';
 
 function App() {
+  useEffect(() => {
+    helloWorld();
+  });
+
   return (
     <>
       <MapView
