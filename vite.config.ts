@@ -12,7 +12,6 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
       '@': path.resolve(__dirname, 'src'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@styles': path.resolve(__dirname, 'src/styles'),

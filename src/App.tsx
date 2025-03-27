@@ -1,7 +1,7 @@
 import { Marker, Popup } from 'react-leaflet';
 
 import MapView from '@components/view/MapView.tsx';
-import Button from '@components/buttons/Button.tsx';
+import { Button } from 'antd';
 
 import '@styles/App.scss';
 
@@ -22,7 +22,10 @@ function App() {
           </Popup>
         </Marker>
       </MapView>
-      <Button label={'Push me'} style={'danger'} onPress={onPress} />
+
+      <div>
+        <Button>A</Button>
+      </div>
     </>
   );
 }
