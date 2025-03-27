@@ -1,15 +1,14 @@
-import { useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import { helloWorld } from '$libs/helloWorld.ts';
 
 import MapView from '@components/view/MapView.tsx';
+import Button from '@components/buttons/Button.tsx';
 
 import '@styles/App.scss';
 
 function App() {
-  useEffect(() => {
-    helloWorld();
-  });
+  const onPress = async () => {
+    console.log('Button pressed');
+  };
 
   return (
     <>
@@ -23,6 +22,7 @@ function App() {
           </Popup>
         </Marker>
       </MapView>
+      <Button label={'Push me'} style={'danger'} onPress={onPress} />
     </>
   );
 }
