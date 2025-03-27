@@ -24,7 +24,7 @@ function App() {
       </MapView>
 
       <div>
-        <Button>A</Button>
+        <Button onClick={onPress}>A</Button>
       </div>
     </>
   );
