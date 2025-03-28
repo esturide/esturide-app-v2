@@ -3,7 +3,7 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
-import '@/styles/MapView.scss';
+import '@styles/view/MapView.scss';
 
 type Props = {
   center: LatLngExpression;
