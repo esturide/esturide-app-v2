@@ -1,16 +1,11 @@
-import { useEffect } from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import { helloWorld } from '$libs/helloWorld.ts';
 
 import MapView from '@components/view/MapView.tsx';
 
 import '@styles/App.scss';
+import { NavLink } from 'react-router';
 
 function App() {
-  useEffect(() => {
-    helloWorld();
-  });
-
   return (
     <>
       <MapView
@@ -23,6 +18,17 @@ function App() {
           </Popup>
         </Marker>
       </MapView>
+
+      <nav>
+        <NavLink to="/" end>
+          Home
+        </NavLink>
+        <NavLink to="/hello-world" end>
+          Hello world
+        </NavLink>
+        <NavLink to="/concerts">All Concerts</NavLink>
+        <NavLink to="/account">Account</NavLink>
+      </nav>
     </>
   );
 }
