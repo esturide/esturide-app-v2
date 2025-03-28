@@ -1,13 +1,14 @@
-import { StrictMode } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router';
 import { createRoot } from 'react-dom/client';
 import App from '@/App.tsx';
 
 import '@/index.scss';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <main className={'container'}>
-      <App />
-    </main>
-  </StrictMode>,
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/hello-world" element={<App />} />
+    </Routes>
+  </BrowserRouter>,
 );

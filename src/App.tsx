@@ -1,15 +1,11 @@
 import { Marker, Popup } from 'react-leaflet';
 
 import MapView from '@components/view/MapView.tsx';
-import { Button } from 'antd';
 
 import '@styles/App.scss';
+import { NavLink } from 'react-router';
 
 function App() {
-  const onPress = async () => {
-    console.log('Button pressed');
-  };
-
   return (
     <>
       <MapView
@@ -23,9 +19,16 @@ function App() {
         </Marker>
       </MapView>
 
-      <div>
-        <Button onClick={onPress}>A</Button>
-      </div>
+      <nav>
+        <NavLink to="/" end>
+          Home
+        </NavLink>
+        <NavLink to="/hello-world" end>
+          Hello world
+        </NavLink>
+        <NavLink to="/concerts">All Concerts</NavLink>
+        <NavLink to="/account">Account</NavLink>
+      </nav>
     </>
   );
 }
