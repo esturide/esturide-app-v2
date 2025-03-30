@@ -1,10 +1,11 @@
+import React from 'react';
 import '@styles/button/Button.scss';
 
 type Props = {
   label: string;
 };
 
-export default function Button({ label }: Props) {
+const Button: React.FC<Props> = ({ label }) => {
   return (
     <button
       className={
@@ -14,4 +15,6 @@ export default function Button({ label }: Props) {
       {label}
     </button>
   );
-}
+};
+
+export default Button;

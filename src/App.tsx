@@ -5,7 +5,6 @@ import MapView from '@components/view/MapView.tsx';
 import '@styles/App.scss';
 import { NavLink } from 'react-router';
 import Button from '@components/buttons/Button.tsx';
-import TextInput from '@components/buttons/TextInput.tsx';
 
 function App() {
   return (
@@ -33,7 +32,6 @@ function App() {
       </nav>
 
       <Button label={'Push me'} />
-      <TextInput placeholder={'A'} />
     </>
   );
 }
