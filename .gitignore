@@ -31,3 +31,8 @@ dist-ssr
 
 # PWA
 dev-dist/*
+
+# React router
+.react-router/*
+
+*storybook.log
