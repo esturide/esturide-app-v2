@@ -27,6 +27,7 @@
       "@components/*": ["src/components/*"],
       "@styles/*": ["src/styles/*"],
       "@assets/*": ["src/assets/*"],
+      "@app/*": ["src/app/*"],
       "$libs/*": ["src/libs/*"]
     }
   },
