@@ -42,7 +42,6 @@ const ButtonCard: React.FC<Props> = ({
       onKeyUp={e => e.key === 'Enter' && handleRelease()}
       className={`
         flex flex-col max-w-[327px] w-full text-left
-        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500
         transition-all duration-300
       `}
       aria-label={`${title} card`}
