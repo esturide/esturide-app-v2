@@ -19,6 +19,7 @@
     "@tailwindcss/postcss": "^4.0.17",
     "@tailwindcss/vite": "^4.0.17",
     "@types/node": "^22.13.13",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-legacy": "^6.0.2",
     "husky": "^9.1.7",
     "leaflet": "^1.9.4",
@@ -29,6 +30,7 @@
     "react-leaflet": "^5.0.0",
     "react-modal-sheet": "^4.0.1",
     "react-router": "^7.4.1",
+    "react-router-dom": "^7.4.1",
     "vite-plugin-compression": "^0.5.1"
   },
   "devDependencies": {

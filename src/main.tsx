@@ -1,15 +1,25 @@
-import { BrowserRouter, Route, Routes } from 'react-router';
-import { createRoot } from 'react-dom/client';
-import App from '@/App.tsx';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import '@/index.css';
+import App from '@/App.tsx';
 import LoginPage from '~/login.tsx';
 
-createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/login" element={<LoginPage />} />
-    </Routes>
-  </BrowserRouter>,
+import '@/index.css';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
 );
