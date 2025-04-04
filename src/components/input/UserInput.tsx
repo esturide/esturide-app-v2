@@ -59,11 +59,11 @@ const UserInput: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col w-full p-4 rounded-md">
+    <div className="flex flex-col w-full ">
       {label && (
         <label
           htmlFor="userInput"
-          className="mb-2 text-left text-sm font-medium text-teal-900"
+          className="my-2 mx-2 text-left text-sm font-medium text-teal-900"
         >
           {label}
         </label>
