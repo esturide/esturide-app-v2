@@ -61,6 +61,7 @@
     "sass": "^1.86.0",
     "sass-loader": "^16.0.5",
     "storybook": "8.6.9",
+    "storybook-tailwind-dark-mode": "^1.0.22",
     "tailwindcss": "^4.0.17",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
