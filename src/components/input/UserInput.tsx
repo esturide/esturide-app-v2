@@ -63,7 +63,7 @@ const UserInput: React.FC<Props> = ({
       {label && (
         <label
           htmlFor="userInput"
-          className="mb-2 text-left text-sm font-medium text-gray-700"
+          className="mb-2 text-left text-sm font-medium text-teal-900"
         >
           {label}
         </label>
