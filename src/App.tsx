@@ -1,11 +1,10 @@
 import { Marker, Popup } from 'react-leaflet';
 
-import MapView from '@components/view/MapView.tsx';
-
 import '@styles/App.scss';
 import { NavLink } from 'react-router';
 import Button from '@components/buttons/Button.tsx';
 import ConektaCheckout from '@components/checkout/ConektaCheckout.tsx';
+import MapView from './components/map/MapView';
 
 function App() {
   return (
@@ -28,8 +27,6 @@ function App() {
         <NavLink to="/login" end>
           Login
         </NavLink>
-        <NavLink to="/concerts">All Concerts</NavLink>
-        <NavLink to="/account">Account</NavLink>
       </nav>
 
       <Button label={'Push me'} />

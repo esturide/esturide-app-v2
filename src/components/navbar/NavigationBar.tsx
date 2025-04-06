@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IconContext } from 'react-icons';
-import NavItem from './NavItem';
-import { DefaultColor, NavItemType } from './types';
+import NavItem from '@components/navbar/NavItem.tsx';
+import { DefaultColor, NavItemType } from '@components/navbar/types.ts';
 
 interface NavigationBarProps {
   items: NavItemType[];
@@ -23,7 +23,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 bg-white shadow-lg"
+      className="fixed bottom-0 left-0 right-0 bg-white shadow-lg dark:bg-gray-800"
       role="navigation"
     >
       <IconContext.Provider

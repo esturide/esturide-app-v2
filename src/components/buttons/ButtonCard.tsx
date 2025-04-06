@@ -78,7 +78,7 @@ const ButtonCard: React.FC<Props> = ({
             {Array.isArray(content) ? (
               content.map((item, index) => (
                 <p key={index} className="mt-1">
-                  {item}
+                  {`- ${item}`}
                 </p>
               ))
             ) : (
