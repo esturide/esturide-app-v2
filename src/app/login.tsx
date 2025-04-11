@@ -16,8 +16,8 @@ const LoginPage: React.FC = () => {
   return (
     <PresentationLayout title={'Iniciar sesion'} header={<Logo />}>
       <div className="flex flex-col items-center mb-4 mx-2 gap-6">
-        <UserInput label={'Usuario'} />
-        <UserInput label={'Contraseña'} />
+        <UserInput label={'Usuario'} placeholder={'A'} />
+        <UserInput label={'Contraseña'} type="password" />
       </div>
 
       <div className="mx-3 my-6">

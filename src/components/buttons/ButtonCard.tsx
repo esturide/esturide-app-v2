@@ -70,6 +70,7 @@ const ButtonCard: React.FC<Props> = ({
             />
           )}
         </div>
+
         <div className="flex flex-col self-start">
           <h2 className="self-start text-xl font-bold text-gray-900">
             {title}

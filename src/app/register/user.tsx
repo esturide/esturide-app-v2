@@ -7,6 +7,8 @@ import Button from '@components/buttons/Button.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import { FaCar, FaUser } from 'react-icons/fa';
+import SelectColor from '@components/input/SelectColor.tsx';
+import DateInput from '@components/input/DateInput.tsx';
 
 const UserRegister: React.FC = () => {
   const [currentForm, setCurrentForm] = useState(0);
@@ -57,10 +59,28 @@ const UserRegister: React.FC = () => {
     );
   };
 
+  const FirstDriverRegister = () => {
+    return (
+      <>
+        <UserInput label={'Marca'} />
+        <UserInput label={'Modelo'} />
+
+        <div className="flex flex-row items-center mb-4 mx-2 gap-6">
+          <UserInput label={'Año'} type="number" />
+          <UserInput label={'Placas'} type="number" />
+        </div>
+
+        <SelectColor label={'Color'} />
+        <DateInput label={'Nacimiento'} />
+      </>
+    );
+  };
+
   const registerForm = [
     <FirstRegister />,
     <SecondRegister />,
     <ThirdRegister />,
+    <FirstDriverRegister />,
   ];
 
   const nextForm = async () => {
