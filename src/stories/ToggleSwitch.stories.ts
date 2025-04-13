@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
-import Button from '@components/buttons/Button.tsx';
+import ToggleSwitch from '@components/input/ToggleSwitch.tsx';
 
 const meta = {
-  title: 'Input/Button',
-  component: Button,
+  title: 'Input/ToggleSwitch',
+  component: ToggleSwitch,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof Button>;
+  args: {},
+} satisfies Meta<typeof ToggleSwitch>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Basic: Story = {
   args: {
-    label: 'Push me',
+    label: 'Switch toggle',
   },
 };
