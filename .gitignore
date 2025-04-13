@@ -38,4 +38,4 @@ dev-dist/*
 *storybook.log
 
 ## Environment
-.env
+*.env
