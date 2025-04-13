@@ -10,5 +10,7 @@ interface UserForm {
 }
 
 export const createUser = async (user: UserForm) => {
+  console.log(JSON.stringify(user));
+
   return false;
 };
