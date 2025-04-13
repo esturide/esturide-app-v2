@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { IconContext } from 'react-icons';
 import NavItem from '@components/navbar/NavItem.tsx';
-import { DefaultColor, NavItemType } from '@components/navbar/types.ts';
+import { DefaultColor, NavigationItemType } from '@components/navbar/types.ts';
 
 interface NavigationBarProps {
-  items: NavItemType[];
+  items: NavigationItemType[];
   color?: DefaultColor;
 }
 
-const NavigationBar: React.FC<NavigationBarProps> = ({
+const MobileNavigationBar: React.FC<NavigationBarProps> = ({
   items,
   color = 'green',
 }) => {
   const [activeItem, setActiveItem] = useState<string>(items[0]?.label || '');
 
-  const handleItemClick = async (item: NavItemType) => {
+  const handleItemClick = async (item: NavigationItemType) => {
     setActiveItem(item.label);
     if (item.action) {
       await item.action();
@@ -48,4 +48,4 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
   );
 };
 
-export default NavigationBar;
+export default MobileNavigationBar;

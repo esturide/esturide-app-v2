@@ -6,6 +6,7 @@ import { DeviceManagementProvider } from '@/context/DeviceManagment.tsx';
 import App from '@/App.tsx';
 import LoginPage from '~/login.tsx';
 import UserRegister from '~/register/user.tsx';
+import StreetRouteDemo from '~/demo/street-route.tsx';
 
 import '@/index.css';
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <UserRegister />,
+  },
+  {
+    path: '/street-route',
+    element: <StreetRouteDemo />,
   },
 ]);
 

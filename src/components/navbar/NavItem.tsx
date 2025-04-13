@@ -1,8 +1,8 @@
 import React from 'react';
-import { DefaultColor, NavItemType } from './types';
+import { DefaultColor, NavigationItemType } from './types';
 
 interface NavItemProps {
-  item: NavItemType;
+  item: NavigationItemType;
   isActive: boolean;
   onClick: () => void;
   color: DefaultColor;

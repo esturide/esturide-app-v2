@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import NavigationBar from '@components/navbar/NavigationBar.tsx';
+import MobileNavigationBar from '@components/navbar/MobileNavigationBar.tsx';
 import { FaHeart, FaHome, FaSearch, FaUser } from 'react-icons/fa';
 
 const meta = {
   title: 'NavigationBar',
-  component: NavigationBar,
+  component: MobileNavigationBar,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },
   args: {},
-} satisfies Meta<typeof NavigationBar>;
+} satisfies Meta<typeof MobileNavigationBar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
