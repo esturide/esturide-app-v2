@@ -1,6 +1,1 @@
-export type UserStatus =
-  | 'idle'
-  | 'authenticated'
-  | 'unauthenticated'
-  | 'authenticating'
-  | 'error';
+export type UserStatus = 'authenticated' | 'unauthenticated' | 'error';
