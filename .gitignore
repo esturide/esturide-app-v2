@@ -36,3 +36,6 @@ dev-dist/*
 .react-router/*
 
 *storybook.log
+
+## Environment
+.env
