@@ -23,6 +23,7 @@
     "@types/leaflet-rotatedmarker": "^0.2.5",
     "@types/leaflet-routing-machine": "^3.2.8",
     "@types/node": "^22.13.13",
+    "@types/react-color": "^3.0.13",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-legacy": "^6.0.2",
     "axios": "^1.8.4",

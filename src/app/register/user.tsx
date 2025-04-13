@@ -24,6 +24,7 @@ const UserRegister: React.FC = () => {
         <UserInput label={'Nombre'} />
         <UserInput label={'Primer apellido'} />
         <UserInput label={'Segundo apellido'} />
+        <DateInput label={'Nacimiento'} />
         <UserInput label={'Codigo'} type="number" />
       </>
     );
@@ -71,7 +72,6 @@ const UserRegister: React.FC = () => {
         </div>
 
         <SelectColor label={'Color'} />
-        <DateInput label={'Nacimiento'} />
       </>
     );
   };
