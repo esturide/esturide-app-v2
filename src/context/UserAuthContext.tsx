@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 import { UserStatus } from '$libs/types/UserStatus.ts';
+import { atom, useAtom } from 'jotai';
 
 interface AuthContextType {
   status: UserStatus;
@@ -9,13 +10,16 @@ interface AuthContextType {
   logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const authStatusAtom = atom<UserStatus>('unauthenticated');
+const tokenAtom = atom<string>('');
+
+const UserAuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const UserAuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [status, setStatus] = useState<AuthContextType['status']>('idle');
-  const [user, setUser] = useState<number>(0);
+  const [status, setStatus] = useAtom(authStatusAtom);
+  const [user, setUser] = useAtom(tokenAtom);
 
   useEffect(() => {
     /* Check if token is valid */
@@ -30,14 +34,14 @@ export const UserAuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ status, user, login, logout }}>
+    <UserAuthContext.Provider value={{ status, user, login, logout }}>
       {children}
-    </AuthContext.Provider>
+    </UserAuthContext.Provider>
   );
 };
 
 export const useUserAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
+  const context = useContext(UserAuthContext);
 
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');

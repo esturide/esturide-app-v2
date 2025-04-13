@@ -5,10 +5,12 @@ import legacy from '@vitejs/plugin-legacy';
 import tailwindcss from '@tailwindcss/vite';
 
 import * as path from 'path';
+import staticAssetsPlugin from 'vite-static-assets-plugin';
 
 // https://vite.dev/config/
 export default defineConfig({
   base: './',
+  publicDir: 'public',
 
   resolve: {
     alias: {
@@ -24,7 +26,20 @@ export default defineConfig({
 
   plugins: [
     tailwindcss(),
+
     react(),
+
+    staticAssetsPlugin({
+      // Optional configuration (defaults shown):
+      directory: 'public',
+      outputFile: 'src/static-assets.ts',
+      ignore: ['.DS_Store'],
+      debounce: 200,
+      enableDirectoryTypes: true,
+      maxDirectoryDepth: 5,
+      allowEmptyDirectories: false,
+      addLeadingSlash: true,
+    }),
 
     legacy({
       targets: ['defaults', 'not IE 11'],

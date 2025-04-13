@@ -29,6 +29,7 @@
     "axios": "^1.8.4",
     "color-string": "^2.0.1",
     "husky": "^9.1.7",
+    "jotai": "^2.12.2",
     "leaflet": "^1.9.4",
     "leaflet-rotatedmarker": "^0.2.0",
     "leaflet-routing-machine": "^3.2.12",
@@ -81,6 +82,7 @@
     "vite": "^6.2.0",
     "vite-plugin-pwa": "^0.21.2",
     "vite-plugin-qrcode": "^0.2.4",
+    "vite-static-assets-plugin": "^1.2.2",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.9"
   },
