@@ -4,10 +4,6 @@ import L from 'leaflet';
 import { LatLng } from '$libs/types/LatLng.ts';
 import MapView from '@components/map/view/MapView.tsx';
 
-import { Button } from '@headlessui/react';
-import { FaSearch } from 'react-icons/fa';
-import Control from 'react-leaflet-custom-control';
-
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 
