@@ -8,7 +8,8 @@ const config: StorybookConfig = {
     '@storybook/addon-onboarding',
     '@storybook/experimental-addon-test',
     '@storybook/addon-postcss',
-    '@chromatic-com/storybook'
+    '@storybook/addon-styling',
+    '@chromatic-com/storybook',
   ],
   framework: {
     name: '@storybook/react-vite',
