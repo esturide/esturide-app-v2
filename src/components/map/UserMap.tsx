@@ -1,8 +1,8 @@
-import { LatLng } from '$libs/types/LatLng.ts';
 import React, { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 import MapView from '@components/map/view/MapView.tsx';
+import { LatLng } from '$libs/types/LatLng.ts';
 
 type Props = {
   from: LatLng;
