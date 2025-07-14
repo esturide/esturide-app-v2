@@ -25,7 +25,7 @@
     "@types/node": "^22.13.13",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-legacy": "^6.0.2",
-    "axios": "^1.8.4",
+    "axios": "^1.10.0",
     "color-string": "^2.0.1",
     "husky": "^9.1.7",
     "leaflet": "^1.9.4",

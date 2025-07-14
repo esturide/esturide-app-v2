@@ -1,104 +1,140 @@
-import React, {
-  useState,
+import {
   ChangeEvent,
   FocusEvent,
-  PropsWithChildren,
+  useId,
+  useState,
+  forwardRef,
+  useImperativeHandle
 } from 'react';
+import { isAdult, emailRegex } from '@/utils/validators';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
+type ValidationType = 'adult' | 'email' | 'match' | 'required';
+
+export type UserInputRef = {
+  validate: () => boolean;
+};
 
 type Props = {
   label?: string;
-  value?: string;
+  value: string;
   type?: 'text' | 'number' | 'password' | 'date';
   placeholder?: string;
-  onChange?: (value: string) => Promise<void>;
+  onChange: (value: string) => void;
   onBlur?: (value: string) => Promise<void>;
   onFocus?: (value: string) => Promise<void>;
+  hasError?: (hasError: boolean) => void;
+  validations?: ValidationType[];
+  matchValue?: string; 
 };
 
-const UserInput: React.FC<Props> = ({
+const UserInput = forwardRef<UserInputRef, Props>(({
   label,
-  value = '',
+  value,
   type = 'text',
   placeholder = '',
   onChange,
   onBlur,
   onFocus,
-}) => {
-  const [inputValue, setInputValue] = useState(value);
+  hasError,
+  validations = ['required'],
+  matchValue = '',
+}, ref) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [messages, setMessages] = useState<string[]>([]);
+  const id = useId();
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const validateInput = (val: string): boolean => {
+    const newMessages: string[] = [];
+
+    const fullValidations = validations.includes('required')
+      ? validations
+      : ['required', ...validations];
+
+    if (fullValidations.includes('required') && val.trim() === '') {
+      newMessages.push('Este campo es obligatorio.');
+    }
+
+    if (fullValidations.includes('adult') && !isAdult(val)) {
+      newMessages.push('Debes tener al menos 18 años.');
+    }
+
+    if (fullValidations.includes('email') && !emailRegex.test(val)) {
+      newMessages.push('El correo electrónico no es válido.');
+    }
+
+    if (fullValidations.includes('match') && matchValue !== undefined && val !== matchValue) {
+      newMessages.push('Las contraseñas no coinciden.');
+    }
+
+    setMessages(newMessages);
+    hasError?.(newMessages.length > 0);
+    return newMessages.length === 0;
+  };
+
+  // Exponer método `validate` al padre
+  useImperativeHandle(ref, () => ({
+    validate: () => validateInput(value),
+  }));
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    onChange(newValue);
+    validateInput(newValue);
   };
 
   const handleBlur = async (event: FocusEvent<HTMLInputElement>) => {
-    if (onBlur) {
-      await onBlur(event.target.value);
-    }
+    validateInput(event.target.value);
+    if (onBlur) await onBlur(event.target.value);
   };
 
   const handleFocus = async (event: FocusEvent<HTMLInputElement>) => {
-    if (onFocus) {
-      await onFocus(event.target.value);
-    }
-  };
-
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const targetValue = event.target.value;
-
-    if (onChange) {
-      await onChange(targetValue);
-    }
-
-    setInputValue(targetValue);
-  };
-
-  const InputContainer: React.FC<PropsWithChildren> = ({ children }) => {
-    return (
-      <div className="flex flex-col w-full">
-        {label && (
-          <label
-            htmlFor="userInput"
-            className="my-2 mx-2 text-left text-sm font-medium text-teal-900"
-          >
-            {label}
-          </label>
-        )}
-        <div className="relative">{children}</div>
-      </div>
-    );
+    if (onFocus) await onFocus(event.target.value);
   };
 
   return (
-    <InputContainer>
-      <input
-        type={type === 'password' && showPassword ? 'text' : type}
-        id="userInput"
-        value={inputValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        placeholder={placeholder}
-        className="px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]"
-        aria-label={label || 'User input'}
-      />
-      {type === 'password' && (
-        <button
-          type="button"
-          onClick={togglePasswordVisibility}
-          className="absolute inset-y-0 right-0 pr-3 flex items-center"
-          aria-label={showPassword ? 'Hide password' : 'Show password'}
-        >
-          {showPassword ? (
-            <FaEye className="h-5 w-5 text-gray-400" />
-          ) : (
-            <FaEyeSlash className="h-5 w-5 text-gray-400" />
-          )}
-        </button>
+    <div className="flex flex-col w-full">
+      {label && (
+        <label htmlFor={id} className="my-2 mx-2 text-left text-sm font-medium text-teal-900">
+          {label}
+        </label>
       )}
-    </InputContainer>
+
+      <div className="relative">
+        <input
+          id={id}
+          type={type === 'password' && showPassword ? 'text' : type}
+          value={value}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          placeholder={placeholder}
+          className={`px-3 py-2 rounded-md w-full border ${
+            messages.length > 0 ? 'border-red-500' : 'border-gray-300'
+          }`}
+        />
+        {type === 'password' && (
+          <button
+            type="button"
+            onClick={togglePasswordVisibility}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center"
+          >
+            {showPassword ? <FaEye /> : <FaEyeSlash />}
+          </button>
+        )}
+      </div>
+
+      {messages.length > 0 && (
+        <div className="mt-1 ml-1">
+          {messages.map((msg, i) => (
+            <p key={i} className="text-red-500 text-sm">{msg}</p>
+          ))}
+        </div>
+      )}
+    </div>
   );
-};
+});
 
 export default UserInput;

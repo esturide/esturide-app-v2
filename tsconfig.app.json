@@ -28,6 +28,9 @@
       "@styles/*": ["src/styles/*"],
       "@assets/*": ["src/assets/*"],
       "@layouts/*": ["src/layouts/*"],
+      "@types/*" : ["src/types/*"] , 
+      "@validators" : ["src/utils/validators"] ,
+      "@api-calls" : ["src/api/api"],
       "~/*": ["src/app/*"],
       "$libs/*": ["src/libs/*"]
     }
