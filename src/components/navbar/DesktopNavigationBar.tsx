@@ -7,7 +7,7 @@ import {
   MenuItem,
   MenuItems,
 } from '@headlessui/react';
-import { NavigationType } from '@components/navbar/types.ts';
+import { ItemType } from '@components/navbar/types.ts';
 import { FaBell, FaUser } from 'react-icons/fa';
 import { LuMenu } from 'react-icons/lu';
 
@@ -16,7 +16,7 @@ function classNames(...classes: string[]) {
 }
 
 type Props = {
-  items: NavigationType[];
+  items: ItemType[];
 };
 
 const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
@@ -44,7 +44,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
               <div className="flex space-x-4">
                 {items.map(item => (
                   <a
-                    key={item.name}
+                    key={item.label}
                     href={item.href}
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
@@ -55,7 +55,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
                     )}
                     onClick={item.action}
                   >
-                    {item.name}
+                    {item.label}
                   </a>
                 ))}
               </div>
@@ -118,7 +118,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
         <div className="space-y-1 px-2 pt-2 pb-3">
           {items.map(item => (
             <DisclosureButton
-              key={item.name}
+              key={item.label}
               as="a"
               href={item.href}
               aria-current={item.current ? 'page' : undefined}
@@ -129,7 +129,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
                 'block rounded-md px-3 py-2 text-base font-medium',
               )}
             >
-              {item.name}
+              {item.label}
             </DisclosureButton>
           ))}
         </div>
