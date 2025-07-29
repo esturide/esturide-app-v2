@@ -7,6 +7,7 @@ import App from '@/App.tsx';
 import LoginPage from '~/login.tsx';
 import UserRegister from '~/register/user.tsx';
 import StreetRouteDemo from '~/demo/street-route.tsx';
+import UserMenu from '~/menu';
 
 import '@/index.css';
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: '/street-route',
     element: <StreetRouteDemo />,
+  },
+  {
+    path: '/menu',
+    element: <UserMenu />,
   },
 ]);
 

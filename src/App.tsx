@@ -6,10 +6,10 @@ function App() {
     <>
       <DesktopNavigationBar
         items={[
-          { name: 'Home', href: '/', current: true },
-          { name: 'Login', href: '/login', current: false },
+          { label: 'Home', href: '/', current: true },
+          { label: 'Login', href: '/login', current: false },
           {
-            name: 'Street route (Demo)',
+            label: 'Street route (Demo)',
             href: '/street-route',
             current: false,
           },
