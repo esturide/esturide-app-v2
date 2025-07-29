@@ -1,20 +1,23 @@
+import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
+
 import '@styles/App.scss';
-import DesktopNavigationBar from '@components/navbar/DesktopNavigationBar.tsx';
 
 function App() {
+  const items = [
+    { label: 'Home', href: '/', current: true },
+    { label: 'Login', href: '/login', current: false },
+    {
+      label: 'Street route (Demo)',
+      href: '/street-route',
+      current: false,
+    },
+  ];
+
   return (
     <>
-      <DesktopNavigationBar
-        items={[
-          { label: 'Home', href: '/', current: true },
-          { label: 'Login', href: '/login', current: false },
-          {
-            label: 'Street route (Demo)',
-            href: '/street-route',
-            current: false,
-          },
-        ]}
-      />
+      <ResponsiveLayout items={items}>
+        <p>Hello world</p>
+      </ResponsiveLayout>
     </>
   );
 }

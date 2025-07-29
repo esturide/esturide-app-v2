@@ -7,14 +7,14 @@ import App from '@/App.tsx';
 import LoginPage from '~/login.tsx';
 import UserRegister from '~/register/user.tsx';
 import StreetRouteDemo from '~/demo/street-route.tsx';
-import UserMenu from '~/menu';
+import UserHome from '~/home';
 
 import '@/index.css';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: <UserHome />,
   },
   {
     path: '/login',
@@ -29,8 +29,8 @@ const router = createBrowserRouter([
     element: <StreetRouteDemo />,
   },
   {
-    path: '/menu',
-    element: <UserMenu />,
+    path: '/home',
+    element: <UserHome />,
   },
 ]);
 
