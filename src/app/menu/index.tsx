@@ -1,6 +1,7 @@
 import HomeLayout from '@layouts/HomeLayout.tsx';
 import { ItemType } from '@components/navbar/types.ts';
-import { FaHome } from 'react-icons/fa';
+import { FaHome, FaPlus, FaUser } from 'react-icons/fa';
+import { FaMessage } from 'react-icons/fa6';
 
 function UserMenu() {
   const items: ItemType[] = [
@@ -14,16 +15,19 @@ function UserMenu() {
       label: 'Viajes',
       href: '/',
       current: false,
+      icon: FaPlus,
     },
     {
       label: 'Notificaciones',
       href: '/',
       current: false,
+      icon: FaMessage,
     },
     {
       label: 'Perfil',
       href: '/',
       current: false,
+      icon: FaUser,
     },
   ];
 
