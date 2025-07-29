@@ -1,4 +1,4 @@
-import HomeLayout from '@layouts/HomeLayout.tsx';
+import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
 import { ItemType } from '@components/navbar/types.ts';
 import { FaHome, FaPlus, FaUser } from 'react-icons/fa';
 import { FaMessage } from 'react-icons/fa6';
@@ -33,9 +33,9 @@ function UserMenu() {
 
   return (
     <>
-      <HomeLayout items={items}>
+      <ResponsiveLayout items={items}>
         <p>Hello world</p>
-      </HomeLayout>
+      </ResponsiveLayout>
     </>
   );
 }

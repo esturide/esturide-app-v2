@@ -8,7 +8,7 @@ type Props = {
   items: ItemType[];
 };
 
-function HomeLayout({ children, items }: React.PropsWithChildren<Props>) {
+function ResponsiveLayout({ children, items }: React.PropsWithChildren<Props>) {
   const DesktopViewLayout = () => {
     return (
       <>
@@ -38,4 +38,4 @@ function HomeLayout({ children, items }: React.PropsWithChildren<Props>) {
   }
 }
 
-export default HomeLayout;
+export default ResponsiveLayout;
