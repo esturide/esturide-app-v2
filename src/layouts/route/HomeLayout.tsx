@@ -3,6 +3,8 @@ import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
 import { ItemType } from '@components/navbar/types.ts';
 import { FaHome, FaPlus, FaUser } from 'react-icons/fa';
 import { FaMessage } from 'react-icons/fa6';
+import { CounterProvider } from '@/context/CounterContext.tsx';
+import { UserManagerProvider, useUserManager } from '@/context/UserManager.tsx';
 
 const HomeLayout = () => {
   const items: ItemType[] = [
@@ -33,11 +35,13 @@ const HomeLayout = () => {
   ];
 
   return (
-    <>
+    <UserManagerProvider>
       <ResponsiveLayout items={items}>
-        <Outlet />
+        <CounterProvider>
+          <Outlet />
+        </CounterProvider>
       </ResponsiveLayout>
-    </>
+    </UserManagerProvider>
   );
 };
 

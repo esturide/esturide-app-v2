@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider as JotaiProvider } from 'jotai';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { DeviceManagementProvider } from '@/context/DeviceManagment.tsx';
 
@@ -39,8 +40,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <DeviceManagementProvider>
-      <RouterProvider router={router} />
-    </DeviceManagementProvider>
+    <JotaiProvider>
+      <DeviceManagementProvider>
+        <RouterProvider router={router} />
+      </DeviceManagementProvider>
+    </JotaiProvider>
   </React.StrictMode>,
 );
