@@ -7,17 +7,8 @@ import { CounterProvider } from '@/context/CounterContext.tsx';
 import { useUserManager } from '@/context/UserManager.tsx';
 import { useEffect, useState } from 'react';
 
-const HomeLayout = () => {
+const IndexLayout = () => {
   const { isAuthenticated, token } = useUserManager();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(isAuthenticated, token);
-
-    if (!isAuthenticated) {
-      navigate('/login');
-    }
-  }, [isAuthenticated]);
 
   const items: ItemType[] = [
     {
@@ -25,24 +16,6 @@ const HomeLayout = () => {
       href: '/',
       current: false,
       icon: FaHome,
-    },
-    {
-      label: 'Viajes',
-      href: '/',
-      current: false,
-      icon: FaPlus,
-    },
-    {
-      label: 'Notificaciones',
-      href: '/',
-      current: false,
-      icon: FaMessage,
-    },
-    {
-      label: 'Perfil',
-      href: '/',
-      current: false,
-      icon: FaUser,
     },
   ];
 
@@ -55,4 +28,4 @@ const HomeLayout = () => {
   );
 };
 
-export default HomeLayout;
+export default IndexLayout;
