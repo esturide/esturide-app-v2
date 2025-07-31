@@ -12,15 +12,28 @@ import UserHome from '~/home';
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
 
 import '@/index.css';
+import { UserManagerProvider } from '@/context/UserManager.tsx';
+import UserIndex from '@/app';
+import IndexLayout from '@layouts/route/IndexLayout.tsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/home',
     element: <HomeLayout />,
     children: [
       {
         index: true,
         element: <UserHome />,
+      },
+    ],
+  },
+  {
+    path: '/',
+    element: <IndexLayout />,
+    children: [
+      {
+        index: true,
+        element: <UserIndex />,
       },
     ],
   },
@@ -42,7 +55,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <JotaiProvider>
       <DeviceManagementProvider>
-        <RouterProvider router={router} />
+        <UserManagerProvider>
+          <RouterProvider router={router} />
+        </UserManagerProvider>
       </DeviceManagementProvider>
     </JotaiProvider>
   </React.StrictMode>,
