@@ -3,9 +3,8 @@ import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
 import { ItemType } from '@components/navbar/types.ts';
 import { FaHome, FaPlus, FaUser } from 'react-icons/fa';
 import { FaMessage } from 'react-icons/fa6';
-import { CounterProvider } from '@/context/CounterContext.tsx';
 import { useUserManager } from '@/context/UserManager.tsx';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const HomeLayout = () => {
   const { isAuthenticated, token } = useUserManager();
@@ -48,9 +47,7 @@ const HomeLayout = () => {
 
   return (
     <ResponsiveLayout items={items}>
-      <CounterProvider>
-        <Outlet />
-      </CounterProvider>
+      <Outlet />
     </ResponsiveLayout>
   );
 };

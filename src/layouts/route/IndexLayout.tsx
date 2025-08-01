@@ -1,15 +1,10 @@
-import { Outlet, useNavigate } from 'react-router-dom';
-import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
+import { Outlet } from 'react-router-dom';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { ItemType } from '@components/navbar/types.ts';
-import { FaHome, FaPlus, FaUser } from 'react-icons/fa';
-import { FaMessage } from 'react-icons/fa6';
-import { CounterProvider } from '@/context/CounterContext.tsx';
-import { useUserManager } from '@/context/UserManager.tsx';
-import { useEffect, useState } from 'react';
+import { FaHome, FaInfoCircle, FaFacebookMessenger } from 'react-icons/fa';
+import DesktopNavigationBar from '@components/navbar/DesktopNavigationBar.tsx';
 
 const IndexLayout = () => {
-  const { isAuthenticated, token } = useUserManager();
-
   const items: ItemType[] = [
     {
       label: 'Inicio',
@@ -17,15 +12,34 @@ const IndexLayout = () => {
       current: false,
       icon: FaHome,
     },
+    {
+      label: 'Sobre',
+      href: '/',
+      current: false,
+      icon: FaInfoCircle,
+    },
+    {
+      label: 'Contacto',
+      href: '/',
+      current: false,
+      icon: FaFacebookMessenger,
+    },
   ];
 
-  return (
-    <ResponsiveLayout items={items}>
-      <CounterProvider>
+  if (isMobile) {
+    return (
+      <MobileView>
         <Outlet />
-      </CounterProvider>
-    </ResponsiveLayout>
-  );
+      </MobileView>
+    );
+  } else {
+    return (
+      <BrowserView>
+        <DesktopNavigationBar items={items} />
+        <Outlet />
+      </BrowserView>
+    );
+  }
 };
 
 export default IndexLayout;
