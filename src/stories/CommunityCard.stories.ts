@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 export const Basic: Story = {
   args: {
     communityName: 'CUT',
-    description: "Comunidad del CUTONALA",
-    lastMessageTime: "2:00"
+    description: 'Comunidad del CUTONALA',
+    lastMessageTime: '2:00',
   },
 };
