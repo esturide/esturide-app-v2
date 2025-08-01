@@ -4,17 +4,18 @@ import { Provider as JotaiProvider } from 'jotai';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { DeviceManagementProvider } from '@/context/DeviceManagment.tsx';
 
+import UserIndex from '~/index.tsx';
 import LoginPage from '~/login.tsx';
 import UserRegister from '~/register';
-import StreetRouteDemo from '~/demo/street-route.tsx';
 import UserHome from '~/home';
+import StreetRouteDemo from '~/demo/street-route.tsx';
 
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
+import IndexLayout from '@layouts/route/IndexLayout.tsx';
+
+import { UserManagerProvider } from '@/context/UserManager.tsx';
 
 import '@/index.css';
-import { UserManagerProvider } from '@/context/UserManager.tsx';
-import UserIndex from '@/app';
-import IndexLayout from '@layouts/route/IndexLayout.tsx';
 
 const router = createBrowserRouter([
   {

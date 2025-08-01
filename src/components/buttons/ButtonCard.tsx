@@ -26,20 +26,10 @@ const ButtonCard: React.FC<Props> = ({
     await onClick();
   };
 
-  const handleRelease = async () => {
-    setIsPressed(false);
-  };
-
   return (
     <button
       onClick={handlePress}
-      onMouseDown={handlePress}
-      onMouseUp={handleRelease}
-      onMouseLeave={handleRelease}
-      onTouchStart={handlePress}
-      onTouchEnd={handleRelease}
-      onKeyDown={e => e.key === 'Enter' && handlePress()}
-      onKeyUp={e => e.key === 'Enter' && handleRelease()}
+      onMouseLeave={() => setIsPressed(false)}
       className={`
         flex flex-col max-w-[327px] w-full text-left
         transition-all duration-300
@@ -48,7 +38,7 @@ const ButtonCard: React.FC<Props> = ({
     >
       <div
         className={`
-        flex gap-3 px-5 py-4 border border-solid border-stone-300 rounded-[32px]
+        flex gap-3 px-5 py-4 rounded-[32px]
         hover:shadow-md transition-shadow duration-300
         ${isPressed ? `bg-opacity-50 bg-blur-md ${color}` : 'bg-white'}
       `}
