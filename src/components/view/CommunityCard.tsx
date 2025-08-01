@@ -36,7 +36,7 @@ function CommunityCard({
         tabIndex={0}
         onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
-            if(onClick !== null) {
+            if (onClick !== null) {
               onClick();
             }
           }
@@ -48,8 +48,8 @@ function CommunityCard({
           <div className="flex absolute left-7 shrink-0 justify-center items-center pt-0 h-px top-[72px] w-[312px] max-md:w-[calc(100%_-_28px)] max-sm:w-[calc(100%_-_28px)]" />
 
           <span className="absolute w-2.5 h-5 text-base leading-5 text-right font-[590] left-[313px] text-zinc-700 text-opacity-30 top-[9px] max-sm:text-sm">
-          A
-        </span>
+            A
+          </span>
 
           <time className="absolute h-4 text-sm font-bold text-right left-[238px] text-zinc-700 text-opacity-60 top-[9px] w-[65px] max-sm:text-xs">
             {lastMessageTime}

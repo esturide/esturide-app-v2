@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { ItemType } from '@components/navbar/types.ts';
-import { FaHome, FaInfoCircle, FaFacebookMessenger } from 'react-icons/fa';
+import { FaFacebookMessenger, FaHome, FaInfoCircle } from 'react-icons/fa';
 import DesktopNavigationBar from '@components/navbar/DesktopNavigationBar.tsx';
 
 const IndexLayout = () => {

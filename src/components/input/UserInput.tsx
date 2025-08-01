@@ -1,8 +1,8 @@
 import React, {
-  useState,
   ChangeEvent,
   FocusEvent,
   PropsWithChildren,
+  useState,
 } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
