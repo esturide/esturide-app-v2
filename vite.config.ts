@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react';
 import legacy from '@vitejs/plugin-legacy';
-import terser from '@rollup/plugin-terser';
 import tailwindcss from '@tailwindcss/vite';
 
 import * as path from 'path';
@@ -30,14 +29,6 @@ export default defineConfig({
     legacy({
       targets: ['defaults', 'not IE 11'],
       additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
-    }),
-
-    terser({
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-      mangle: true,
     }),
 
     VitePWA({
