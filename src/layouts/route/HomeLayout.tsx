@@ -7,8 +7,8 @@ import { useUserManager } from '@/context/UserManager.tsx';
 import { useEffect } from 'react';
 
 const HomeLayout = () => {
-  const { isAuthenticated, token } = useUserManager();
   const navigate = useNavigate();
+  const { isAuthenticated, token } = useUserManager();
 
   useEffect(() => {
     console.log(isAuthenticated, token);
