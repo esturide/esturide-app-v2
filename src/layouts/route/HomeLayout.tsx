@@ -1,10 +1,10 @@
+import { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
 import { ItemType } from '@components/navbar/types.ts';
+import { useUserManager } from '@/context/UserManager.tsx';
 import { FaHome, FaPlus, FaUser } from 'react-icons/fa';
 import { FaMessage } from 'react-icons/fa6';
-import { useUserManager } from '@/context/UserManager.tsx';
-import { useEffect } from 'react';
 
 const HomeLayout = () => {
   const navigate = useNavigate();
