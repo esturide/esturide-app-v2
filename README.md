@@ -18,7 +18,7 @@ This repository houses the source code for the client application, which interac
 1. Install dependencies
 
    ```bash
-   npm install
+   yarn
    ```
 
 2. Start the app
