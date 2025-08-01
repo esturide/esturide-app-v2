@@ -13,7 +13,7 @@ function CommunityCard({
   description,
   hasUnreadMessage = false,
   lastMessageTime,
-  onClick = null,
+  onClick = () => {},
 }: Props) {
   React.useEffect(() => {
     const fontLinkId = 'community-card-fonts';
