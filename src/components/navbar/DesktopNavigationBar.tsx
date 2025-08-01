@@ -12,6 +12,7 @@ import { FaBell, FaUser } from 'react-icons/fa';
 import { LuMenu } from 'react-icons/lu';
 import { useUserManager } from '@/context/UserManager.tsx';
 import { useNavigate } from 'react-router-dom';
+import LogoResource from '@assets/images/logo.png';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -102,7 +103,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
             <div className="flex shrink-0 items-center">
               <img
                 alt="Your Company"
-                src="public/images/logo.png"
+                src={LogoResource}
                 className="h-8 w-auto"
               />
             </div>

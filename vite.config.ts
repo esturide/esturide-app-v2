@@ -10,6 +10,8 @@ import * as path from 'path';
 export default defineConfig({
   base: './',
 
+  assetsInclude: ['**/*.gif', '**/*.png', '**/*.ttf'],
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
