@@ -1,9 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import {
-  configHeaderAuthToken,
-  getRequestConfig,
-  getRequestRoot,
-} from '$libs/request/api.ts';
+import { configHeaderAuthToken, getRequestConfig, getRequestRoot } from '$libs/request/api.ts';
 
 export interface UserDataLogin {
   readonly code: number;

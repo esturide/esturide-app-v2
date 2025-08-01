@@ -1,8 +1,10 @@
 import React from 'react';
-import { DefaultColor, NavigationItemType } from './types';
+import { DefaultColor, ItemType } from './types';
+import { FaQuestion } from 'react-icons/fa';
+import { IconType } from 'react-icons';
 
 interface NavItemProps {
-  item: NavigationItemType;
+  item: ItemType;
   isActive: boolean;
   onClick: () => void;
   color: DefaultColor;
@@ -14,7 +16,11 @@ const NavItem: React.FC<NavItemProps> = ({
   onClick,
   color,
 }) => {
-  const Icon = item.icon;
+  let Icon: IconType = FaQuestion;
+
+  if (item.icon !== undefined) {
+    Icon = item.icon;
+  }
 
   return (
     <li className="flex-1">

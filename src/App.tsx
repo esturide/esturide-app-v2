@@ -1,20 +1,9 @@
 import '@styles/App.scss';
-import DesktopNavigationBar from '@components/navbar/DesktopNavigationBar.tsx';
 
 function App() {
   return (
     <>
-      <DesktopNavigationBar
-        items={[
-          { name: 'Home', href: '/', current: true },
-          { name: 'Login', href: '/login', current: false },
-          {
-            name: 'Street route (Demo)',
-            href: '/street-route',
-            current: false,
-          },
-        ]}
-      />
+      <p>Hello world from App</p>
     </>
   );
 }
