@@ -29,7 +29,7 @@
       "@assets/*": ["src/assets/*"],
       "@layouts/*": ["src/layouts/*"],
       "~/*": ["src/app/*"],
-      "$libs/*": ["src/libs/*"]
+      "$libs/*": ["src/libs/*"],
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"],
