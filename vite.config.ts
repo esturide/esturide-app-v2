@@ -12,6 +12,8 @@ export default defineConfig({
   base: './',
   publicDir: 'public',
 
+  assetsInclude: ['**/*.gif', '**/*.png', '**/*.ttf'],
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

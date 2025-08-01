@@ -12,6 +12,7 @@ import { FaBell, FaUser } from 'react-icons/fa';
 import { LuMenu } from 'react-icons/lu';
 import { useUserManager } from '@/context/UserManager.tsx';
 import { useNavigate } from 'react-router-dom';
+import LogoResource from '@assets/images/logo.png';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -101,8 +102,8 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
               <img
-                alt="Esturide"
-                src={'images/logo.png'}
+                alt="Your Company"
+                src={LogoResource}
                 className="h-8 w-auto"
               />
             </div>

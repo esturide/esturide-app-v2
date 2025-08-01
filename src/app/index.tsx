@@ -4,7 +4,7 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import Welcome from '@components/resources/Welcome.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import MainLayoutWithBackground from '@layouts/view/MainLayoutWithBackground.tsx';
-
+import BackgroundAnimationResource from '@assets/images/car-animated.gif';
 import { GrLogin, GrUserNew } from 'react-icons/gr';
 
 function UserIndex() {
@@ -41,7 +41,7 @@ function UserIndex() {
 
   return (
     <>
-      <MainLayoutWithBackground filename={'public/car-animated.gif'}>
+      <MainLayoutWithBackground filename={BackgroundAnimationResource}>
         <BrowserView>
           <Welcome />
           <UserOptions />
