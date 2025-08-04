@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
 import NavItem from '@components/navbar/NavItem.tsx';
 import { DefaultColor, ItemType } from '@components/navbar/types.ts';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 interface NavigationBarProps {
   items: ItemType[];
@@ -12,10 +14,11 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
   items,
   color = 'green',
 }) => {
-  const [activeItem, setActiveItem] = useState<string>(items[0]?.label || '');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const currentPath = location.pathname;
 
   const handleItemClick = async (item: ItemType) => {
-    setActiveItem(item.label);
     if (item.action) {
       await item.action();
     }
@@ -37,8 +40,11 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
             <NavItem
               key={index}
               item={item}
-              isActive={activeItem === item.label}
-              onClick={() => handleItemClick(item)}
+              isActive={item.href == currentPath}
+              onClick={() => {
+                handleItemClick(item);
+                navigate(item.href);
+              }}
               color={color}
             />
           ))}

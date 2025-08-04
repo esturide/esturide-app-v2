@@ -60,7 +60,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
         >
           <MenuItem>
             <a
-              href="/profile"
+              href="/home/profile"
               className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
             >
               Your Profile
@@ -68,7 +68,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
           </MenuItem>
           <MenuItem>
             <a
-              href="/settings"
+              href="/home/settings"
               className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
             >
               Settings

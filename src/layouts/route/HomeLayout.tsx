@@ -11,35 +11,33 @@ const HomeLayout = () => {
   const { isAuthenticated, token } = useUserManager();
 
   useEffect(() => {
-    console.log(isAuthenticated, token);
-
     if (!isAuthenticated) {
       navigate('/login');
     }
-  }, [isAuthenticated]);
+  }, [navigate, isAuthenticated]);
 
   const items: ItemType[] = [
     {
       label: 'Inicio',
-      href: '/',
+      href: '/home',
       current: false,
       icon: FaHome,
     },
     {
       label: 'Viajes',
-      href: '/',
+      href: '/home/request',
       current: false,
       icon: FaPlus,
     },
     {
       label: 'Notificaciones',
-      href: '/',
+      href: '/home/notify',
       current: false,
       icon: FaMessage,
     },
     {
       label: 'Perfil',
-      href: '/',
+      href: '/home/profile',
       current: false,
       icon: FaUser,
     },

@@ -36,6 +36,7 @@
     "leaflet-rotatedmarker": "^0.2.0",
     "leaflet-routing-machine": "^3.2.12",
     "lint-staged": "^15.5.0",
+    "motion": "^12.23.12",
     "react": "^19.0.0-rc.1",
     "react-color": "^2.19.3",
     "react-datepicker": "^8.2.1",

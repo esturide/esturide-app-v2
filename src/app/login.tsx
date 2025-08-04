@@ -6,10 +6,18 @@ import UserInput from '@components/input/UserInput.tsx';
 import Button from '@components/buttons/Button.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 import { isMobileDevice } from '$libs/detectDevice.ts';
+import { useUserManager } from '@/context/UserManager.tsx';
 
 const LoginPage: React.FC = () => {
+  const { isAuthenticated, setAuthenticated, token } = useUserManager();
   const [isDesktopDevice, setIsDesktopDevice] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home');
+    }
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     setIsDesktopDevice(!isMobileDevice());

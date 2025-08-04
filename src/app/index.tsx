@@ -6,11 +6,20 @@ import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import MainLayoutWithBackground from '@layouts/view/MainLayoutWithBackground.tsx';
 import BackgroundAnimationResource from '@assets/images/car-animated.gif';
 import { GrLogin, GrUserNew } from 'react-icons/gr';
+import { useUserManager } from '@/context/UserManager.tsx';
+import { useEffect } from 'react';
 
 function UserIndex() {
-  const UserOptions = () => {
-    const navigate = useNavigate();
+  const { isAuthenticated, setAuthenticated, token } = useUserManager();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home');
+    }
+  }, [isAuthenticated, navigate]);
+
+  const UserOptions = () => {
     const registerUser = async () => {
       navigate('/register');
     };

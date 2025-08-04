@@ -7,8 +7,11 @@ import { DeviceManagementProvider } from '@/context/DeviceManagment.tsx';
 import UserIndex from '~/index.tsx';
 import LoginPage from '~/login.tsx';
 import UserRegister from '~/register';
-import UserHome from '~/home';
-import StreetRouteDemo from '~/demo/street-route.tsx';
+import UserHome from '~/user';
+import UserTravels from '~/user/travels';
+import UserNotify from '~/user/notify.tsx';
+import UserProfile from '~/user/profile';
+import UserSettings from '~/user/profile/settings.tsx';
 
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
 import IndexLayout from '@layouts/route/IndexLayout.tsx';
@@ -25,6 +28,22 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <UserHome />,
+      },
+      {
+        path: 'request',
+        element: <UserTravels />,
+      },
+      {
+        path: 'notify',
+        element: <UserNotify />,
+      },
+      {
+        path: 'profile',
+        element: <UserProfile />,
+      },
+      {
+        path: 'settings',
+        element: <UserSettings />,
       },
     ],
   },
@@ -45,10 +64,6 @@ const router = createBrowserRouter([
   {
     path: '/register',
     element: <UserRegister />,
-  },
-  {
-    path: '/street-route',
-    element: <StreetRouteDemo />,
   },
 ]);
 
