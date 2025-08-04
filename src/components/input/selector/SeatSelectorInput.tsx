@@ -131,8 +131,7 @@ function SeatSelectorInput() {
 
   return (
     <div
-      className="overflow-hidden mx-auto w-full bg-white max-w-[480px]"
-      role="main"
+      className="overflow-hidden bg-white max-w-[480px]"
       aria-label="Driver journey seat selection"
     >
       <header className="overflow-hidden w-full bg-gray-900">

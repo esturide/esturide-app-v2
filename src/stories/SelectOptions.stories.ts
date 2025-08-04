@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import SelectOptions from '@components/input/SelectOptions.tsx';
+import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 
 const meta = {
   title: 'Input/SelectOptions',

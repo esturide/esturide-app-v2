@@ -3,6 +3,7 @@ import SeatSelectorInput from '@components/input/car/SeatSelectorInput.tsx';
 import GenericModal from '@components/modal/GenericModal.tsx';
 import { useState } from 'react';
 import GlassButton from '@components/experimental/GlassButton.tsx';
+import QuantitySelector from '@components/input/selector/QuantitySelector.tsx';
 
 function UserHome() {
   const [showModal, setShowModal] = useState(false);
@@ -30,7 +31,10 @@ function UserHome() {
           setShowModal(!isOpen);
         }}
       >
-        <SeatSelectorInput />
+        <div className={'flex flex-row'}>
+          <QuantitySelector label={'Selecciona'} />
+          <SeatSelectorInput />
+        </div>
       </GenericModal>
     </>
   );

@@ -7,7 +7,7 @@ import Button from '@components/buttons/Button.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import { FaCar, FaUser } from 'react-icons/fa';
-import SelectColor from '@components/input/SelectColor.tsx';
+import SelectColor from '@components/input/selector/SelectColor.tsx';
 import DateInput from '@components/input/DateInput.tsx';
 
 const UserRegister: React.FC = () => {

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ToggleSwitch from '@components/input/ToggleSwitch.tsx';
+import ToggleSwitch from '@components/input/switch/ToggleSwitch.tsx';
 
 const meta = {
   title: 'Input/ToggleSwitch',
