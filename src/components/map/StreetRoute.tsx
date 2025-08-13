@@ -10,9 +10,16 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 type Props = {
   from: LatLng;
   to: LatLng;
+  height?: number | string;
+  position?: 'sticky' | 'absolute' | 'relative' | 'fixed';
 };
 
-const StreetRoute: React.FC<Props> = ({ from, to }) => {
+const StreetRoute: React.FC<Props> = ({
+  from,
+  to,
+  height = '100vh',
+  position = 'sticky',
+}) => {
   const RoutingMachine: React.FC<Props> = ({ from, to }) => {
     const map = useMap();
 
@@ -43,11 +50,8 @@ const StreetRoute: React.FC<Props> = ({ from, to }) => {
     <MapView
       center={[from.lat, from.lng]}
       zoom={6}
-      style={{ height: '100vh', width: '100%' }}
+      style={{ height: height, width: '100%', position: position }}
     >
-      <div>
-        <p>Hello world</p>
-      </div>
       <RoutingMachine from={from} to={to} />
     </MapView>
   );

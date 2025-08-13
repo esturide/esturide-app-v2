@@ -95,17 +95,13 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
             {/* Mobile menu button*/}
             <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
               <span className="absolute -inset-0.5" />
-              <span className="sr-only">Open main menu</span>
+              <span className="sr-only">Open menu</span>
               <LuMenu />
             </DisclosureButton>
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src={LogoResource}
-                className="h-8 w-auto"
-              />
+              <img alt="logo" src={LogoResource} className="h-8 w-auto" />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">

@@ -26,7 +26,7 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 bg-white shadow-lg"
+      className={'fixed bottom-0 left-0 right-0 bg-white text-white shadow-md '}
       role="navigation"
     >
       <IconContext.Provider
@@ -35,14 +35,14 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
           color: color === 'green' ? '#4CAF50' : '#8E24AA',
         }}
       >
-        <ul className="flex justify-around items-center h-16">
+        <ul className="flex justify-between items-center h-24">
           {items.map((item, index) => (
             <NavItem
               key={index}
               item={item}
               isActive={item.href == currentPath}
-              onClick={() => {
-                handleItemClick(item);
+              onClick={async () => {
+                await handleItemClick(item);
                 navigate(item.href);
               }}
               color={color}
