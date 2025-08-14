@@ -26,20 +26,24 @@ const IndexLayout = () => {
     },
   ];
 
-  if (isMobile) {
-    return (
-      <MobileView>
-        <Outlet />
-      </MobileView>
-    );
-  } else {
-    return (
-      <BrowserView>
-        <DesktopNavigationBar items={items} />
-        <Outlet />
-      </BrowserView>
-    );
-  }
+  const ResponsiveLayout = () => {
+    if (isMobile) {
+      return (
+        <MobileView>
+          <Outlet />
+        </MobileView>
+      );
+    } else {
+      return (
+        <BrowserView>
+          <DesktopNavigationBar items={items} />
+          <Outlet />
+        </BrowserView>
+      );
+    }
+  };
+
+  return <ResponsiveLayout />;
 };
 
 export default IndexLayout;

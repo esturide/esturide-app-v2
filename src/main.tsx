@@ -16,9 +16,10 @@ import UserSettings from '~/user/profile/settings.tsx';
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
 import IndexLayout from '@layouts/route/IndexLayout.tsx';
 
-import { UserManagerProvider } from '@/context/UserManager.tsx';
+import EmptyLayout from '@layouts/route/EmptyLayout.tsx';
 
 import '@/index.css';
+import { UserManagerProvider } from '@/context/UserManager.tsx';
 
 const router = createBrowserRouter([
   {
@@ -59,11 +60,17 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <LoginPage />,
-  },
-  {
-    path: '/register',
-    element: <UserRegister />,
+    element: <EmptyLayout />,
+    children: [
+      {
+        index: true,
+        element: <LoginPage />,
+      },
+      {
+        path: 'register',
+        element: <UserRegister />,
+      },
+    ],
   },
 ]);
 

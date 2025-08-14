@@ -24,7 +24,7 @@ type Props = {
 
 const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
   const navigate = useNavigate();
-  const { isAuthenticated, token } = useUserManager();
+  const { isAuthenticated } = useUserManager();
 
   const Notifications = () => {
     const onCLick = async () => {

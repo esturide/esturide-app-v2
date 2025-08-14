@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
 import { ItemType } from '@components/navbar/types.ts';
@@ -8,7 +8,7 @@ import { FaMessage } from 'react-icons/fa6';
 
 const HomeLayout = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, token } = useUserManager();
+  const { isAuthenticated } = useUserManager();
 
   useEffect(() => {
     if (!isAuthenticated) {

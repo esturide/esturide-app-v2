@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import { BrowserView, MobileView } from 'react-device-detect';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 
 import Welcome from '@components/resources/Welcome.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
@@ -10,18 +10,14 @@ import { useUserManager } from '@/context/UserManager.tsx';
 import { useEffect } from 'react';
 
 function UserIndex() {
-  const { isAuthenticated, setAuthenticated, token } = useUserManager();
+  const { isAuthenticated } = useUserManager();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/home');
-    }
-  }, [isAuthenticated, navigate]);
+  useEffect(() => {}, [isAuthenticated, navigate]);
 
   const UserOptions = () => {
     const registerUser = async () => {
-      navigate('/register');
+      navigate('/login/register');
     };
 
     const loginUser = async () => {

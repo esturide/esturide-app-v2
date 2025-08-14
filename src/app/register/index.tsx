@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PresentationLayout from '@layouts/PresentationLayout.tsx';
-import Logo from '@components/resources/Logo.tsx';
 import UserInput from '@components/input/UserInput.tsx';
 import Button from '@components/buttons/Button.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
@@ -88,7 +86,7 @@ const UserRegister: React.FC = () => {
   };
 
   return (
-    <PresentationLayout title={'Iniciar sesion'} header={<Logo />}>
+    <>
       <div className="flex flex-col items-center mx-2 gap-3">
         {registerForm[currentForm]}
       </div>
@@ -100,7 +98,7 @@ const UserRegister: React.FC = () => {
       <div className="flex flex-col items-center">
         <HyperLink label={'¿Ya tienes cuenta?'} onClick={clickRegister} />
       </div>
-    </PresentationLayout>
+    </>
   );
 };
 

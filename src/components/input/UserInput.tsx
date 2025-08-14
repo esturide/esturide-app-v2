@@ -1,7 +1,7 @@
 import React, {
-  ChangeEvent,
   FocusEvent,
   PropsWithChildren,
+  useEffect,
   useState,
 } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -11,9 +11,7 @@ type Props = {
   value?: string;
   type?: 'text' | 'number' | 'password' | 'date';
   placeholder?: string;
-  onChange?: (value: string) => Promise<void>;
-  onBlur?: (value: string) => Promise<void>;
-  onFocus?: (value: string) => Promise<void>;
+  onInput?: (value: string) => void;
 };
 
 const UserInput: React.FC<Props> = ({
@@ -21,47 +19,26 @@ const UserInput: React.FC<Props> = ({
   value = '',
   type = 'text',
   placeholder = '',
-  onChange,
-  onBlur,
-  onFocus,
+  onInput,
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const [showPassword, setShowPassword] = useState(false);
 
+  useEffect(() => {
+    if (onInput) {
+      onInput(inputValue);
+    }
+  }, [inputValue]);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  };
-
-  const handleBlur = async (event: FocusEvent<HTMLInputElement>) => {
-    if (onBlur) {
-      await onBlur(event.target.value);
-    }
-  };
-
-  const handleFocus = async (event: FocusEvent<HTMLInputElement>) => {
-    if (onFocus) {
-      await onFocus(event.target.value);
-    }
-  };
-
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const targetValue = event.target.value;
-
-    if (onChange) {
-      await onChange(targetValue);
-    }
-
-    setInputValue(targetValue);
   };
 
   const InputContainer: React.FC<PropsWithChildren> = ({ children }) => {
     return (
       <div className="flex flex-col w-full">
         {label && (
-          <label
-            htmlFor="userInput"
-            className="my-2 mx-2 text-left text-sm font-medium text-teal-900"
-          >
+          <label className="my-2 mx-2 text-left text-sm font-medium text-teal-900">
             {label}
           </label>
         )}
@@ -74,11 +51,14 @@ const UserInput: React.FC<Props> = ({
     <InputContainer>
       <input
         type={type === 'password' && showPassword ? 'text' : type}
-        id="userInput"
-        value={inputValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
+        defaultValue={inputValue}
+        onBlur={(event: FocusEvent<HTMLInputElement>) => {
+          const value = event.target.value;
+
+          if (onInput) {
+            setInputValue(value);
+          }
+        }}
         placeholder={placeholder}
         className="px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]"
         aria-label={label || 'User input'}
