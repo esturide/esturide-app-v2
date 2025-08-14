@@ -1,6 +1,8 @@
+import ColorTheme from '$libs/types/theme.ts';
+
 type Props = {
   label: string;
-  theme?: 'indigo' | 'teal';
+  theme?: ColorTheme;
   onClick?: () => Promise<void>;
   disabled?: boolean;
   className?: string;

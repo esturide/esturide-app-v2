@@ -1,12 +1,11 @@
 'use client';
 import * as React from 'react';
 import { IconType } from 'react-icons';
-
-type ColorVariant = 'indigo' | 'teal';
+import ColorTheme from '$libs/types/theme.ts';
 
 interface IconButtonProps {
   icon: IconType;
-  color?: ColorVariant;
+  theme?: ColorTheme;
   onClick?: () => void;
   disabled?: boolean;
   ariaLabel?: string;
@@ -14,10 +13,10 @@ interface IconButtonProps {
 
 function IconButton({
   icon: Icon,
-  color = 'indigo',
+  theme = 'teal',
   onClick,
   disabled = false,
-  ariaLabel = 'Botón circular',
+  ariaLabel = 'Circular button',
 }: IconButtonProps) {
   const handleClick = () => {
     if (!disabled && onClick) {
@@ -32,25 +31,27 @@ function IconButton({
     }
   };
 
-  const getColorClasses = (colorVariant: ColorVariant) => {
-    const colorMap = {
-      indigo: {
+  const getColorClasses = (theme: ColorTheme) => {
+    if (theme == 'indigo') {
+      return {
         bg: 'bg-indigo-900',
         hover: 'hover:bg-indigo-800',
         active: 'active:bg-indigo-950',
         focus: 'focus:ring-indigo-500',
-      },
-      teal: {
+      };
+    } else if (theme == 'teal') {
+      return {
         bg: 'bg-teal-900',
         hover: 'hover:bg-teal-800',
         active: 'active:bg-teal-950',
         focus: 'focus:ring-teal-500',
-      },
-    };
-    return colorMap[colorVariant];
+      };
+    }
+
+    throw new TypeError('Key not found');
   };
 
-  const colorClasses = getColorClasses(color);
+  const colorClasses = getColorClasses(theme);
 
   return (
     <button

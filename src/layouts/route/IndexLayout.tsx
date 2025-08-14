@@ -1,10 +1,21 @@
-import { Outlet } from 'react-router-dom';
+import { useEffect } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
-import { ItemType } from '@components/navbar/types.ts';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { FaFacebookMessenger, FaHome, FaInfoCircle } from 'react-icons/fa';
+import { ItemType } from '@components/navbar/types.ts';
 import DesktopNavigationBar from '@components/navbar/DesktopNavigationBar.tsx';
+import { useUserManager } from '@/context/UserManager.tsx';
 
 const IndexLayout = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useUserManager();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/home');
+    }
+  }, [isAuthenticated]);
+
   const items: ItemType[] = [
     {
       label: 'Inicio',

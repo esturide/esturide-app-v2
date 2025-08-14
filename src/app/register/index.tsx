@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInput from '@components/input/UserInput.tsx';
-import Button from '@components/buttons/Button.tsx';
+import UserButton from '@components/buttons/UserButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import { FaCar, FaUser } from 'react-icons/fa';
@@ -92,7 +92,7 @@ const UserRegister: React.FC = () => {
       </div>
 
       <div className="mx-3 my-6">
-        <Button label={'Siguente'} onClick={nextForm} />
+        <UserButton label={'Siguente'} onClick={nextForm} />
       </div>
 
       <div className="flex flex-col items-center">

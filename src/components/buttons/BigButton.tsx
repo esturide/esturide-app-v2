@@ -1,9 +1,10 @@
 'use client';
 import * as React from 'react';
+import ColorTheme from '$libs/types/theme.ts';
 
 type Props = {
   label: string;
-  theme?: 'teal' | 'indigo';
+  theme?: ColorTheme;
   disabled?: boolean;
   onClick?: () => Promise<void>;
   minSize?: number;

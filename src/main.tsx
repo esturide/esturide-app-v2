@@ -15,11 +15,12 @@ import UserSettings from '~/user/profile/settings.tsx';
 
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
 import IndexLayout from '@layouts/route/IndexLayout.tsx';
-
 import EmptyLayout from '@layouts/route/EmptyLayout.tsx';
 
-import '@/index.css';
 import { UserManagerProvider } from '@/context/UserManager.tsx';
+
+import '@/index.css';
+import { UserThemeProvider } from '@/context/UserTheme.tsx';
 
 const router = createBrowserRouter([
   {
@@ -79,7 +80,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <JotaiProvider>
       <DeviceManagementProvider>
         <UserManagerProvider>
-          <RouterProvider router={router} />
+          <UserThemeProvider>
+            <RouterProvider router={router} />
+          </UserThemeProvider>
         </UserManagerProvider>
       </DeviceManagementProvider>
     </JotaiProvider>

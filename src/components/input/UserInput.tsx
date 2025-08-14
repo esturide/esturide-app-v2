@@ -12,6 +12,7 @@ type Props = {
   type?: 'text' | 'number' | 'password' | 'date';
   placeholder?: string;
   onInput?: (value: string) => void;
+  valid?: boolean;
 };
 
 const UserInput: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const UserInput: React.FC<Props> = ({
   type = 'text',
   placeholder = '',
   onInput,
+  valid = true,
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const [showPassword, setShowPassword] = useState(false);
@@ -60,7 +62,7 @@ const UserInput: React.FC<Props> = ({
           }
         }}
         placeholder={placeholder}
-        className="px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]"
+        className={`px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px] ${valid ? 'border-solid border-stone-300' : 'border-solid border-red-500 ring-2 ring-red-500'}`}
         aria-label={label || 'User input'}
       />
       {type === 'password' && (
