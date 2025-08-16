@@ -1,0 +1,105 @@
+import React, {
+  ChangeEvent,
+  FocusEvent,
+  PropsWithChildren,
+  useState,
+} from 'react';
+import { IconType } from 'react-icons';
+import { FaCircleCheck } from 'react-icons/fa6';
+
+type Props = {
+  label?: string;
+  value?: string;
+  placeholder?: string;
+  onChange?: (value: string) => Promise<void>;
+  onBlur?: (value: string) => Promise<void>;
+  onFocus?: (value: string) => Promise<void>;
+  onClick?: () => Promise<void>;
+  icon?: IconType;
+  readOnly?: boolean;
+};
+
+const UserInputIcon: React.FC<Props> = ({
+  label,
+  value = '',
+  placeholder = '',
+  onChange,
+  onBlur,
+  onFocus,
+  onClick,
+  icon = FaCircleCheck,
+  readOnly = false,
+}) => {
+  const Icon = icon;
+  const [inputValue, setInputValue] = useState(value);
+
+  const handleBlur = async (event: FocusEvent<HTMLInputElement>) => {
+    if (onBlur) {
+      await onBlur(event.target.value);
+    }
+  };
+
+  const handleFocus = async (event: FocusEvent<HTMLInputElement>) => {
+    if (onFocus) {
+      await onFocus(event.target.value);
+    }
+  };
+
+  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    const targetValue = event.target.value;
+
+    if (onChange) {
+      await onChange(targetValue);
+    }
+
+    setInputValue(targetValue);
+  };
+
+  const InputContainer: React.FC<PropsWithChildren> = ({ children }) => {
+    return (
+      <div className="flex flex-col w-full">
+        {label && (
+          <label
+            htmlFor="userInput"
+            className="my-2 mx-2 text-left text-sm font-medium text-teal-900"
+          >
+            {label}
+          </label>
+        )}
+        <div className="relative">{children}</div>
+      </div>
+    );
+  };
+
+  const onClickIcon = async () => {
+    if (onClick !== undefined) {
+      await onClick();
+    }
+  };
+
+  return (
+    <InputContainer>
+      <input
+        type="text"
+        id="userInput"
+        value={inputValue}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        placeholder={placeholder}
+        className="px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]"
+        aria-label={label || 'User input'}
+        readOnly={readOnly}
+      />
+      <button
+        type="button"
+        onClick={onClickIcon}
+        className="absolute inset-y-0 right-0 pr-3 flex items-center"
+      >
+        <Icon className="h-5 w-5 text-gray-400" />
+      </button>
+    </InputContainer>
+  );
+};
+
+export default UserInputIcon;

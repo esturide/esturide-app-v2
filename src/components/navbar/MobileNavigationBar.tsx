@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { IconContext } from 'react-icons';
+import { ItemType } from '@components/navbar/types.ts';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import NavItem from '@components/navbar/NavItem.tsx';
-import { DefaultColor, ItemType } from '@components/navbar/types.ts';
+import ColorTheme from '$libs/types/Theme.ts';
 
 interface NavigationBarProps {
   items: ItemType[];
-  color?: DefaultColor;
+  theme?: ColorTheme;
 }
 
 const MobileNavigationBar: React.FC<NavigationBarProps> = ({
   items,
-  color = 'green',
+  theme = 'teal',
 }) => {
-  const [activeItem, setActiveItem] = useState<string>(items[0]?.label || '');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const currentPath = location.pathname;
 
   const handleItemClick = async (item: ItemType) => {
-    setActiveItem(item.label);
     if (item.action) {
       await item.action();
     }
@@ -23,23 +27,26 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 bg-white shadow-lg"
+      className={'fixed bottom-0 w-full bg-white text-white shadow-md'}
       role="navigation"
     >
       <IconContext.Provider
         value={{
           size: '1.5em',
-          color: color === 'green' ? '#4CAF50' : '#8E24AA',
+          color: theme === 'teal' ? '#4CAF50' : '#8E24AA',
         }}
       >
-        <ul className="flex justify-around items-center h-16">
+        <ul className="flex justify-between items-center mt-5">
           {items.map((item, index) => (
             <NavItem
               key={index}
               item={item}
-              isActive={activeItem === item.label}
-              onClick={() => handleItemClick(item)}
-              color={color}
+              isActive={item.href == currentPath}
+              onClick={async () => {
+                await handleItemClick(item);
+                navigate(item.href);
+              }}
+              color={theme}
             />
           ))}
         </ul>

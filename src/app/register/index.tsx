@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PresentationLayout from '@layouts/PresentationLayout.tsx';
-import Logo from '@components/resources/Logo.tsx';
 import UserInput from '@components/input/UserInput.tsx';
-import Button from '@components/buttons/Button.tsx';
+import GenericButton from '@components/buttons/GenericButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import { FaCar, FaUser } from 'react-icons/fa';
-import SelectColor from '@components/input/SelectColor.tsx';
+import SelectColor from '@components/input/selector/SelectColor.tsx';
 import DateInput from '@components/input/DateInput.tsx';
 
 const UserRegister: React.FC = () => {
@@ -88,19 +86,19 @@ const UserRegister: React.FC = () => {
   };
 
   return (
-    <PresentationLayout title={'Iniciar sesion'} header={<Logo />}>
+    <>
       <div className="flex flex-col items-center mx-2 gap-3">
         {registerForm[currentForm]}
       </div>
 
       <div className="mx-3 my-6">
-        <Button label={'Siguente'} onClick={nextForm} />
+        <GenericButton label={'Siguente'} onClick={nextForm} />
       </div>
 
       <div className="flex flex-col items-center">
         <HyperLink label={'¿Ya tienes cuenta?'} onClick={clickRegister} />
       </div>
-    </PresentationLayout>
+    </>
   );
 };
 

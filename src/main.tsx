@@ -7,15 +7,21 @@ import { DeviceManagementProvider } from '@/context/DeviceManagment.tsx';
 import UserIndex from '~/index.tsx';
 import LoginPage from '~/login.tsx';
 import UserRegister from '~/register';
-import UserHome from '~/home';
-import StreetRouteDemo from '~/demo/street-route.tsx';
+import UserHome from '~/user';
+import UserTravels from '~/user/travels';
+import UserNotify from '~/user/notify.tsx';
+import UserProfile from '~/user/profile';
+import UserSettings from '~/user/profile/settings.tsx';
 
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
 import IndexLayout from '@layouts/route/IndexLayout.tsx';
+import EmptyLayout from '@layouts/route/EmptyLayout.tsx';
 
 import { UserManagerProvider } from '@/context/UserManager.tsx';
 
 import '@/index.css';
+import { UserThemeProvider } from '@/context/UserTheme.tsx';
+import { CookiesProvider } from 'react-cookie';
 
 const router = createBrowserRouter([
   {
@@ -25,6 +31,22 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <UserHome />,
+      },
+      {
+        path: 'request',
+        element: <UserTravels />,
+      },
+      {
+        path: 'notify',
+        element: <UserNotify />,
+      },
+      {
+        path: 'profile',
+        element: <UserProfile />,
+      },
+      {
+        path: 'settings',
+        element: <UserSettings />,
       },
     ],
   },
@@ -40,26 +62,32 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <LoginPage />,
-  },
-  {
-    path: '/register',
-    element: <UserRegister />,
-  },
-  {
-    path: '/street-route',
-    element: <StreetRouteDemo />,
+    element: <EmptyLayout />,
+    children: [
+      {
+        index: true,
+        element: <LoginPage />,
+      },
+      {
+        path: 'register',
+        element: <UserRegister />,
+      },
+    ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <JotaiProvider>
-      <DeviceManagementProvider>
-        <UserManagerProvider>
-          <RouterProvider router={router} />
-        </UserManagerProvider>
-      </DeviceManagementProvider>
-    </JotaiProvider>
+    <CookiesProvider defaultSetOptions={{ path: '/' }}>
+      <JotaiProvider>
+        <DeviceManagementProvider>
+          <UserManagerProvider>
+            <UserThemeProvider>
+              <RouterProvider router={router} />
+            </UserThemeProvider>
+          </UserManagerProvider>
+        </DeviceManagementProvider>
+      </JotaiProvider>
+    </CookiesProvider>
   </React.StrictMode>,
 );

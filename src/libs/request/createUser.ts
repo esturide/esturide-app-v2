@@ -1,16 +1,26 @@
+import axios, { AxiosInstance } from 'axios';
+
 interface UserForm {
-  code: number;
-  firstName: string;
-  maternalSurname: string;
-  paternalSurname: string;
-  curp: string;
-  birth: Date;
-  email: string;
-  password: string;
+  readonly code: number;
+  readonly firstName: string;
+  readonly maternalSurname: string;
+  readonly paternalSurname: string;
+  readonly curp: string;
+  readonly birthDate: Date;
+  readonly email: string;
+  readonly password: string;
 }
 
-export const createUser = async (user: UserForm) => {
-  console.log(JSON.stringify(user));
+export const createUser = async (root: AxiosInstance, user: UserForm) => {
+  try {
+    const response = await root.post('/user', user);
 
-  return false;
+    return response.status in [200, 201];
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return false;
+    }
+
+    throw error;
+  }
 };
