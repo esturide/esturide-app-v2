@@ -10,6 +10,7 @@ import { LatLng } from '$libs/types/LatLng.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import BigButton from '@components/buttons/BigButton.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
+import Scroll from '@layouts/scroll/Scroll.tsx';
 
 type StateView = 'view' | 'schedule' | 'driving' | 'unknown';
 const defaultDestination = 'CUTONALA';
@@ -59,7 +60,7 @@ const ScheduleTravelView = () => {
           <ScheduleConfigure />
         </div>
         <div className={'flex-1'}>
-          <StreetRoute from={from} to={to} position={'sticky'}></StreetRoute>
+          <StreetRoute from={from} to={to}></StreetRoute>
         </div>
       </div>
     </>

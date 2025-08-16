@@ -4,7 +4,6 @@ import { ItemType } from '@components/navbar/types.ts';
 import DesktopNavigationBar from '@components/navbar/DesktopNavigationBar.tsx';
 import MobileNavigationBar from '@components/navbar/MobileNavigationBar.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-import Scroll from '@layouts/scroll/Scroll.tsx';
 
 type Props = {
   items: ItemType[];
@@ -18,9 +17,7 @@ function ResponsiveLayout({ children, items }: React.PropsWithChildren<Props>) {
       <>
         <BrowserView>
           <DesktopNavigationBar items={items} />
-          <div className={'pt-16'}>
-            <Scroll>{children}</Scroll>
-          </div>
+          <div className={'pt-16'}>{children}</div>
         </BrowserView>
       </>
     );
@@ -30,7 +27,7 @@ function ResponsiveLayout({ children, items }: React.PropsWithChildren<Props>) {
     return (
       <>
         <MobileView>
-          <Scroll>{children}</Scroll>
+          {children}
           <MobileNavigationBar items={items} theme={theme} />
         </MobileView>
       </>

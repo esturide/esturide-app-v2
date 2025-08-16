@@ -17,8 +17,8 @@ type Props = {
 const StreetRoute: React.FC<Props> = ({
   from,
   to,
-  height = '100vh',
-  position = 'sticky',
+  height = '90vh',
+  position = 'fixed',
 }) => {
   const RoutingMachine: React.FC<Props> = ({ from, to }) => {
     const map = useMap();
