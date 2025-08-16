@@ -44,6 +44,6 @@ export const Basic: Story = {
         icon: FaUser,
       },
     ],
-    color: 'green',
+    theme: 'teal',
   },
 };
