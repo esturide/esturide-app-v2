@@ -33,8 +33,28 @@ const router = createBrowserRouter([
         element: <UserHome />,
       },
       {
-        path: 'request',
-        element: <UserTravels />,
+        path: 'travels',
+        element: <UserHome />,
+        children: [
+          {
+            path: 'ride',
+            children: [
+              {
+                index: true,
+                element: <UserTravels />,
+              },
+            ],
+          },
+          {
+            path: 'schedule',
+            children: [
+              {
+                index: true,
+                element: <UserTravels />,
+              },
+            ],
+          },
+        ],
       },
       {
         path: 'notify',

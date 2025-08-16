@@ -10,9 +10,9 @@ const DeviceManagmentContext = createContext<WindowSize>({
   height: window.innerHeight,
 });
 
-export const DeviceManagementProvider: React.FC<{
-  children: React.ReactNode;
-}> = ({ children }) => {
+export function DeviceManagementProvider({
+  children,
+}: React.PropsWithChildren) {
   const [size, setSize] = useState<WindowSize>({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -35,7 +35,7 @@ export const DeviceManagementProvider: React.FC<{
       {children}
     </DeviceManagmentContext.Provider>
   );
-};
+}
 
 export const useDeviceManagement = (): WindowSize => {
   const context = useContext(DeviceManagmentContext);

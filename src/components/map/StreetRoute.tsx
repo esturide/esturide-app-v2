@@ -12,6 +12,7 @@ type Props = {
   to: LatLng;
   height?: number | string;
   position?: 'sticky' | 'absolute' | 'relative' | 'fixed';
+  colorRoute?: string;
 };
 
 const StreetRoute: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const StreetRoute: React.FC<Props> = ({
   to,
   height = '90vh',
   position = 'fixed',
+  colorRoute = 'blue',
 }) => {
   const RoutingMachine: React.FC<Props> = ({ from, to }) => {
     const map = useMap();
@@ -29,11 +31,11 @@ const StreetRoute: React.FC<Props> = ({
       const routingControl = L.Routing.control({
         waypoints: [L.latLng(from.lat, from.lng), L.latLng(to.lat, to.lng)],
         lineOptions: {
-          styles: [{ color: '#0046ff', weight: 5 }],
+          styles: [{ color: colorRoute, weight: 5 }],
           extendToWaypoints: false,
           missingRouteTolerance: 0,
         },
-        routeWhileDragging: true,
+        routeWhileDragging: false,
         show: false,
         addWaypoints: false,
       }).addTo(map);

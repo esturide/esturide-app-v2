@@ -25,7 +25,7 @@ const HomeLayout = () => {
     },
     {
       label: 'Viajes',
-      href: '/home/request',
+      href: '/home/travels/schedule',
       current: false,
       icon: FaPlus,
     },

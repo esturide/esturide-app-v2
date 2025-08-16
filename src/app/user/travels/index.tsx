@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import ResponsiveLayout from '@layouts/view/ResponsiveLayout.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
-import StreetRoute from '@components/map/StreetRoute.tsx';
 import ScheduleTravelMessage from '@components/resources/message/ScheduleTravelMessage.tsx';
 
 import { FaAngleDown, FaExchangeAlt, FaFilter, FaSearch } from 'react-icons/fa';
@@ -10,7 +9,7 @@ import { LatLng } from '$libs/types/LatLng.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import BigButton from '@components/buttons/BigButton.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-import Scroll from '@layouts/scroll/Scroll.tsx';
+import StreetRouteResponsive from '@components/map/StreetRouteResponsive.tsx';
 
 type StateView = 'view' | 'schedule' | 'driving' | 'unknown';
 const defaultDestination = 'CUTONALA';
@@ -30,8 +29,8 @@ const ScheduleTravelView = () => {
 
   const ScheduleConfigure = () => {
     return (
-      <ResponsiveLayout>
-        <div className={'flex flex-row justify-between gap-2 m-1'}>
+      <>
+        <div className={'flex flex-row justify-between gap-2'}>
           <div className={'grow flex flex-col gap-2'}>
             <UserInputIcon icon={FaSearch} />
             <UserInputIcon
@@ -49,18 +48,19 @@ const ScheduleTravelView = () => {
         <div className={'flex flex-col gap-4 mt-4 mb-2 justify-between'}>
           <BigButton label={'Agendar'} theme={theme} />
         </div>
-      </ResponsiveLayout>
+      </>
     );
   };
 
   return (
     <>
-      <div className={'flex flex-col md:flex-row gap-2'}>
-        <div className={'md:p-4'}>
+      <div className={'flex flex-col sm:flex-row'}>
+        <div className={'p-4 justify-between items-center'}>
           <ScheduleConfigure />
         </div>
+
         <div className={'flex-1'}>
-          <StreetRoute from={from} to={to}></StreetRoute>
+          <StreetRouteResponsive from={from} to={to} colorRoute={'#14b8a6'} />
         </div>
       </div>
     </>
