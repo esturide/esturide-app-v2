@@ -4,7 +4,7 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import ColorTheme from '$libs/types/theme.ts';
+import ColorTheme from '$libs/types/Theme.ts';
 
 interface ThemeProps {
   theme: ColorTheme;

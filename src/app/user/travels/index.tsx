@@ -4,22 +4,19 @@ import IconButton from '@components/buttons/IconButton.tsx';
 import StreetRoute from '@components/map/StreetRoute.tsx';
 import ScheduleTravelMessage from '@components/resources/message/ScheduleTravelMessage.tsx';
 
-import {
-  FaAngleDown,
-  FaExchangeAlt,
-  FaFilter,
-  FaPlus,
-  FaSearch,
-} from 'react-icons/fa';
+import { FaAngleDown, FaExchangeAlt, FaFilter, FaSearch } from 'react-icons/fa';
 
 import { LatLng } from '$libs/types/LatLng.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import BigButton from '@components/buttons/BigButton.tsx';
+import { useUserTheme } from '@/context/UserTheme.tsx';
 
 type StateView = 'view' | 'schedule' | 'driving' | 'unknown';
 const defaultDestination = 'CUTONALA';
 
 const ScheduleTravelView = () => {
+  const { theme } = useUserTheme();
+
   const from: LatLng = {
     lat: 20.566131156580823,
     lng: -103.29118486392122,
@@ -44,12 +41,12 @@ const ScheduleTravelView = () => {
           </div>
 
           <div className={'flex flex-col gap-2 justify-center items-center'}>
-            <IconButton icon={FaExchangeAlt} color={'teal'} />
-            <IconButton icon={FaFilter} color={'teal'} />
+            <IconButton icon={FaExchangeAlt} theme={theme} />
+            <IconButton icon={FaFilter} theme={theme} />
           </div>
         </div>
-        <div className={'flex flex-col gap-4 mb-2 justify-between'}>
-          <BigButton label={'Agendar'} />
+        <div className={'flex flex-col gap-4 mt-4 mb-2 justify-between'}>
+          <BigButton label={'Agendar'} theme={theme} />
         </div>
       </ResponsiveLayout>
     );
@@ -57,18 +54,12 @@ const ScheduleTravelView = () => {
 
   return (
     <>
-      <div className={'flex flex-col'}>
-        <div className={'grow'}>
+      <div className={'flex flex-col md:flex-row gap-2'}>
+        <div className={'md:p-4'}>
           <ScheduleConfigure />
         </div>
-
-        <div className={'grow'}>
-          <StreetRoute
-            from={from}
-            to={to}
-            position={'sticky'}
-            height={'100vh'}
-          ></StreetRoute>
+        <div className={'flex-1'}>
+          <StreetRoute from={from} to={to} position={'sticky'}></StreetRoute>
         </div>
       </div>
     </>
@@ -80,6 +71,7 @@ const DrivingTravelView = () => {
 };
 
 function UserTravels() {
+  const { theme } = useUserTheme();
   const [currentState, setCurrentState] = useState<StateView>('view');
 
   if (currentState == 'schedule') {
@@ -90,22 +82,16 @@ function UserTravels() {
 
   return (
     <ResponsiveLayout>
-      <div className={'flex flex-col gap-4 my-3'}>
-        <div className={'grow'}>
-          <ScheduleTravelMessage />
-        </div>
+      <div className={'flex flex-col'}>
+        <ScheduleTravelMessage />
 
-        <div className={'flex flex-row justify-end items-end align-bottom'}>
-          <div className={'relative'}>
-            <IconButton
-              icon={FaPlus}
-              onClick={async () => {
-                setCurrentState('schedule');
-              }}
-              color={'teal'}
-            />
-          </div>
-        </div>
+        <BigButton
+          label={'Agendar'}
+          theme={theme}
+          onClick={async () => {
+            setCurrentState('schedule');
+          }}
+        />
       </div>
     </ResponsiveLayout>
   );

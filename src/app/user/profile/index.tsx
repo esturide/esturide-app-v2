@@ -1,23 +1,24 @@
-import SorryMessage from '@components/resources/SorryMessage.tsx';
 import { useUserManager } from '@/context/UserManager.tsx';
-import UserButton from '@components/buttons/UserButton.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
-import { useUserTheme } from '@/context/UserTheme.tsx';
+import TouchableOption from '@components/buttons/TouchableOption.tsx';
+import { FaArrowRight } from 'react-icons/fa';
 
 function UserProfile() {
   const { logout } = useUserManager();
-  const { theme } = useUserTheme();
 
   return (
     <>
       <MainLayout>
-        <UserButton
-          label={'Cerrar sesion'}
-          theme={theme}
-          onClick={async () => {
-            await logout();
-          }}
-        />
+        <div>
+          <TouchableOption label={'Cambiar role'} icon={FaArrowRight} />
+          <TouchableOption
+            label={'Cerrar sesion'}
+            icon={FaArrowRight}
+            onClick={async () => {
+              await logout();
+            }}
+          />
+        </div>
       </MainLayout>
     </>
   );

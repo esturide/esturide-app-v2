@@ -1,7 +1,6 @@
-'use client';
-import * as React from 'react';
+import React from 'react';
 import { IconType } from 'react-icons';
-import ColorTheme from '$libs/types/theme.ts';
+import ColorTheme from '$libs/types/Theme.ts';
 
 interface IconButtonProps {
   icon: IconType;
@@ -45,6 +44,13 @@ function IconButton({
         hover: 'hover:bg-teal-800',
         active: 'active:bg-teal-950',
         focus: 'focus:ring-teal-500',
+      };
+    } else if (theme == 'gray') {
+      return {
+        bg: 'bg-gray-900',
+        hover: 'hover:bg-gray-800',
+        active: 'active:bg-gray-950',
+        focus: 'focus:ring-gray-500',
       };
     }
 

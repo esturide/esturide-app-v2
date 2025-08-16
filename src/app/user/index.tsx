@@ -1,5 +1,4 @@
 import SorryMessage from '@components/resources/SorryMessage.tsx';
-import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 
 function UserHome() {
   return (
@@ -10,7 +9,6 @@ function UserHome() {
         }
         title={'Próximamente'}
       />
-      <SpinnerLoader />
     </>
   );
 }

@@ -1,5 +1,5 @@
-import { Outlet, useNavigate } from 'react-router-dom';
-import { BrowserView, isMobile, MobileView } from 'react-device-detect';
+import { useNavigate } from 'react-router-dom';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 import Welcome from '@components/resources/Welcome.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
@@ -33,6 +33,7 @@ function UserIndex() {
           color={'bg-blue-300'}
           onClick={registerUser}
         />
+
         <ButtonCard
           icon={GrLogin}
           title={'Iniciar sesion'}

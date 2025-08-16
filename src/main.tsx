@@ -21,6 +21,7 @@ import { UserManagerProvider } from '@/context/UserManager.tsx';
 
 import '@/index.css';
 import { UserThemeProvider } from '@/context/UserTheme.tsx';
+import { CookiesProvider } from 'react-cookie';
 
 const router = createBrowserRouter([
   {
@@ -77,14 +78,16 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <JotaiProvider>
-      <DeviceManagementProvider>
-        <UserManagerProvider>
-          <UserThemeProvider>
-            <RouterProvider router={router} />
-          </UserThemeProvider>
-        </UserManagerProvider>
-      </DeviceManagementProvider>
-    </JotaiProvider>
+    <CookiesProvider defaultSetOptions={{ path: '/' }}>
+      <JotaiProvider>
+        <DeviceManagementProvider>
+          <UserManagerProvider>
+            <UserThemeProvider>
+              <RouterProvider router={router} />
+            </UserThemeProvider>
+          </UserManagerProvider>
+        </DeviceManagementProvider>
+      </JotaiProvider>
+    </CookiesProvider>
   </React.StrictMode>,
 );

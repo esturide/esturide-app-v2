@@ -5,6 +5,7 @@ import { ItemType } from '@components/navbar/types.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
 import { FaHome, FaPlus, FaUser } from 'react-icons/fa';
 import { FaMessage } from 'react-icons/fa6';
+import Scroll from '@layouts/scroll/Scroll.tsx';
 
 const HomeLayout = () => {
   const navigate = useNavigate();
@@ -12,9 +13,9 @@ const HomeLayout = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      navigate('/login');
+      navigate('/login', { replace: true });
     }
-  }, [navigate, isAuthenticated]);
+  }, [isAuthenticated]);
 
   const items: ItemType[] = [
     {

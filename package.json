@@ -39,6 +39,7 @@
     "motion": "^12.23.12",
     "react": "^19.0.0-rc.1",
     "react-color": "^2.19.3",
+    "react-cookie": "^8.0.1",
     "react-datepicker": "^8.2.1",
     "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.0-rc.1",

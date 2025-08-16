@@ -5,7 +5,7 @@ import {
   MdArrowLeft,
   MdArrowRight,
 } from 'react-icons/md';
-import ColorTheme from '$libs/types/theme.ts';
+import ColorTheme from '$libs/types/Theme.ts';
 
 type Props = {
   onClick?: () => Promise<void>;

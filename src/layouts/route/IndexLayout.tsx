@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from 'react';
 import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { Outlet, useNavigate } from 'react-router-dom';
@@ -12,7 +13,7 @@ const IndexLayout = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate('/home');
+      navigate('/home', { replace: true });
     }
   }, [isAuthenticated]);
 
@@ -37,24 +38,24 @@ const IndexLayout = () => {
     },
   ];
 
-  const ResponsiveLayout = () => {
+  const ResponsiveLayout = ({ children }: React.PropsWithChildren) => {
     if (isMobile) {
-      return (
-        <MobileView>
-          <Outlet />
-        </MobileView>
-      );
+      return <MobileView>{children}</MobileView>;
     } else {
       return (
         <BrowserView>
           <DesktopNavigationBar items={items} />
-          <Outlet />
+          {children}
         </BrowserView>
       );
     }
   };
 
-  return <ResponsiveLayout />;
+  return (
+    <ResponsiveLayout>
+      <Outlet />
+    </ResponsiveLayout>
+  );
 };
 
 export default IndexLayout;

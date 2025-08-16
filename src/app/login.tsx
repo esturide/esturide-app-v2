@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInput from '@components/input/UserInput.tsx';
-import UserButton from '@components/buttons/UserButton.tsx';
+import GenericButton from '@components/buttons/GenericButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 import { isMobileDevice } from '$libs/detectDevice.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
+import loaderEffect from '$libs/loaderEffect.ts';
+import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
+import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -13,6 +16,7 @@ const LoginPage: React.FC = () => {
   const [userCode, setUserCode] = useState<number>(0);
   const [password, setPassword] = useState<string>('');
   const [validCode, setValidCode] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setIsDesktopDevice(!isMobileDevice());
@@ -38,12 +42,22 @@ const LoginPage: React.FC = () => {
   };
 
   const onLogin = async () => {
-    const status = await login(userCode, password);
+    await loaderEffect(async () => {
+      const status = await login(userCode, password);
 
-    if (status) {
-      navigate('/home');
-    }
+      if (status) {
+        navigate('/home');
+      }
+    }, setLoading);
   };
+
+  if (loading) {
+    return (
+      <FullscreenContainer>
+        <SpinnerLoader />
+      </FullscreenContainer>
+    );
+  }
 
   return (
     <>
@@ -53,9 +67,9 @@ const LoginPage: React.FC = () => {
       </div>
 
       <div className="mx-3 my-6 flex flex-col items-center gap-6">
-        <UserButton label={'Iniciar sesion'} onClick={onLogin} />
+        <GenericButton label={'Iniciar sesion'} onClick={onLogin} />
         {isDesktopDevice && (
-          <UserButton label={'Regresar'} onClick={returnToHome} />
+          <GenericButton label={'Regresar'} onClick={returnToHome} />
         )}
       </div>
 

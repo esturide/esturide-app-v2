@@ -1,13 +1,14 @@
 import React from 'react';
-import { DefaultColor, ItemType } from './types';
+import { ItemType } from './types';
 import { FaQuestion } from 'react-icons/fa';
 import { IconType } from 'react-icons';
+import ColorTheme from '$libs/types/Theme.ts';
 
 interface NavItemProps {
   item: ItemType;
   isActive: boolean;
   onClick: () => void;
-  color: DefaultColor;
+  color: ColorTheme;
 }
 
 const NavItem: React.FC<NavItemProps> = ({

@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import ColorTheme from '$libs/types/theme.ts';
+import ColorTheme from '$libs/types/Theme.ts';
 
 type Props = {
   label: string;
@@ -26,8 +26,10 @@ function BigButton({
       case 'indigo':
         return 'bg-indigo-700 hover:bg-indigo-800 focus:bg-indigo-800 focus:ring-indigo-500';
       case 'teal':
-      default:
         return 'bg-teal-700 hover:bg-teal-800 focus:bg-teal-800 focus:ring-teal-500';
+      case 'gray':
+      default:
+        return 'bg-gray-700 hover:bg-gray-800 focus:bg-gray-800 focus:ring-gray-500';
     }
   };
 

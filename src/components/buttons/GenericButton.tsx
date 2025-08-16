@@ -1,6 +1,6 @@
 import React from 'react';
 import '@styles/button/Button.scss';
-import ColorTheme from '$libs/types/theme.ts';
+import ColorTheme from '$libs/types/Theme.ts';
 
 type Props = {
   label: string;
@@ -9,7 +9,7 @@ type Props = {
   type?: 'round' | 'semi-round';
 };
 
-const UserButton: React.FC<Props> = ({
+const GenericButton: React.FC<Props> = ({
   label,
   onClick = async () => {},
   theme = 'teal',
@@ -50,4 +50,4 @@ const UserButton: React.FC<Props> = ({
   }
 };
 
-export default UserButton;
+export default GenericButton;
