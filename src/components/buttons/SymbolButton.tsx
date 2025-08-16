@@ -5,15 +5,18 @@ import {
   MdArrowLeft,
   MdArrowRight,
 } from 'react-icons/md';
+import ColorTheme from '$libs/types/Theme.ts';
 
 type Props = {
   onClick?: () => Promise<void>;
   direction: 'forward' | 'backward' | 'left' | 'right';
+  theme?: ColorTheme;
 };
 
 const SymbolButton: React.FC<Props> = ({
   direction,
   onClick = async () => {},
+  theme = 'gray',
 }) => {
   const directions = {
     forward: <MdArrowForward className="w-full h-full" color="white" />,

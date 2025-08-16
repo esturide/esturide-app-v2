@@ -1,45 +1,44 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
 import { ItemType } from '@components/navbar/types.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
 import { FaHome, FaPlus, FaUser } from 'react-icons/fa';
 import { FaMessage } from 'react-icons/fa6';
+import Scroll from '@layouts/scroll/Scroll.tsx';
 
 const HomeLayout = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, token } = useUserManager();
+  const { isAuthenticated } = useUserManager();
 
   useEffect(() => {
-    console.log(isAuthenticated, token);
-
     if (!isAuthenticated) {
-      navigate('/login');
+      navigate('/login', { replace: true });
     }
   }, [isAuthenticated]);
 
   const items: ItemType[] = [
     {
       label: 'Inicio',
-      href: '/',
+      href: '/home',
       current: false,
       icon: FaHome,
     },
     {
       label: 'Viajes',
-      href: '/',
+      href: '/home/request',
       current: false,
       icon: FaPlus,
     },
     {
       label: 'Notificaciones',
-      href: '/',
+      href: '/home/notify',
       current: false,
       icon: FaMessage,
     },
     {
       label: 'Perfil',
-      href: '/',
+      href: '/home/profile',
       current: false,
       icon: FaUser,
     },
