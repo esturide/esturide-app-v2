@@ -1,8 +1,12 @@
-import React from 'react';
-import { isMobile } from 'react-device-detect';
+import React, { useEffect } from 'react';
+import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 
 function MainLayout({ children }: React.PropsWithChildren) {
-  if (isMobile) {
+  const { size } = useDeviceManagement();
+
+  useEffect(() => {}, [size]);
+
+  if (['sm', 'md'].includes(size)) {
     return (
       <div
         className={

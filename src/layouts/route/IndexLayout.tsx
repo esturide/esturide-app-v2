@@ -1,14 +1,14 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { BrowserView, isMobile, MobileView } from 'react-device-detect';
+import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { FaFacebookMessenger, FaHome, FaInfoCircle } from 'react-icons/fa';
 import { ItemType } from '@components/navbar/types.ts';
-import DesktopNavigationBar from '@components/navbar/DesktopNavigationBar.tsx';
 import { useUserManager } from '@/context/UserManager.tsx';
+import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
+import DesktopView from '@layouts/view/DesktopView.tsx';
 
 const IndexLayout = () => {
   const navigate = useNavigate();
+  const { isMobile } = useDeviceManagement();
   const { isAuthenticated } = useUserManager();
 
   useEffect(() => {
@@ -40,14 +40,9 @@ const IndexLayout = () => {
 
   const ResponsiveLayout = ({ children }: React.PropsWithChildren) => {
     if (isMobile) {
-      return <MobileView>{children}</MobileView>;
+      return <>{children}</>;
     } else {
-      return (
-        <BrowserView>
-          <DesktopNavigationBar items={items} />
-          <div className={'pt-16'}>{children}</div>
-        </BrowserView>
-      );
+      return <DesktopView items={items}>{children}</DesktopView>;
     }
   };
 
