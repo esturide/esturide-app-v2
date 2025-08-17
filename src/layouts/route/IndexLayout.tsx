@@ -45,7 +45,7 @@ const IndexLayout = () => {
       return (
         <BrowserView>
           <DesktopNavigationBar items={items} />
-          {children}
+          <div className={'pt-16'}>{children}</div>
         </BrowserView>
       );
     }
