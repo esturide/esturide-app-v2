@@ -15,7 +15,7 @@ function MobileView({
 }: React.PropsWithChildren<Props>) {
   return (
     <>
-      {children}
+      <div className={'h-screen max-md:overflow-y-scroll'}>{children}</div>
       <MobileNavigationBar items={items} theme={theme} />
     </>
   );

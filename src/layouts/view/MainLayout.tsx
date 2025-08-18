@@ -23,7 +23,7 @@ function MainLayout({ children }: React.PropsWithChildren) {
           'mx-auto max-w-7xl px-6 py-8 lg:px-8 flex flex-col items-center justify-center'
         }
       >
-        <div>{children}</div>
+        {children}
       </div>
     );
   }

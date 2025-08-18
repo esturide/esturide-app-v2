@@ -1,20 +1,29 @@
 import { useUserManager } from '@/context/UserManager.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
-import TouchableOption from '@components/buttons/TouchableOption.tsx';
-import { FaArrowRight } from 'react-icons/fa';
 import SelectOptions, {
   StringOption,
 } from '@components/input/selector/SelectOptions.tsx';
-import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
-import { useEffect } from 'react';
+import GenericButton from '@components/buttons/GenericButton.tsx';
+import React, { useEffect, useState } from 'react';
+import ColorTheme from '$libs/types/Theme.ts';
+import loaderEffect from '$libs/loaderEffect.ts';
+import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
+import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
 
 function UserProfile() {
-  const { logout } = useUserManager();
-  const { size } = useDeviceManagement();
+  const { logout, refreshRole, role } = useUserManager();
+  const [loading, setLoading] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<ColorTheme>('gray');
 
   useEffect(() => {
-    console.log(size);
-  }, [size]);
+    if (role === 'driver') {
+      setCurrentTheme('teal');
+    } else if (role === 'passenger') {
+      setCurrentTheme('indigo');
+    } else {
+      setCurrentTheme('gray');
+    }
+  }, [role]);
 
   const options: StringOption[] = [
     {
@@ -25,28 +34,62 @@ function UserProfile() {
       id: 1,
       description: 'Conductor',
     },
+    {
+      id: 2,
+      description: 'Staff',
+    },
+    {
+      id: 3,
+      description: 'Administrador',
+    },
   ];
 
-  return (
-    <>
-      <MainLayout>
-        <div className={'flex flex-col items-center justify-center'}>
-          <TouchableOption label={'Cambiar role'} icon={FaArrowRight} />
-          <TouchableOption
-            label={'Cerrar sesion'}
-            icon={FaArrowRight}
-            onClick={async () => {
-              await logout();
-            }}
-          />
-        </div>
+  if (loading) {
+    return (
+      <FullscreenContainer>
+        <SpinnerLoader />
+      </FullscreenContainer>
+    );
+  }
 
-        <SelectOptions
-          options={options}
-          onSelect={async function (index: number) {}}
+  return (
+    <MainLayout>
+      <div
+        className={
+          'flex flex-col items-center justify-center h-full w-full gap-2'
+        }
+      >
+        <GenericButton
+          label={'Cerrar sesion'}
+          theme={currentTheme}
+          onClick={async () => {
+            await logout();
+          }}
         />
-      </MainLayout>
-    </>
+      </div>
+
+      <SelectOptions
+        theme={currentTheme}
+        options={options}
+        onSelect={async function (index: number) {
+          await loaderEffect(async () => {
+            if (index === 0) {
+              await refreshRole('passenger');
+            } else if (index == 1) {
+              await refreshRole('driver');
+            } else if (index == 2) {
+              await refreshRole('admin');
+            } else if (index == 3) {
+              await refreshRole('passenger');
+            } else if (index == 4) {
+              await refreshRole('passenger');
+            } else {
+              await refreshRole('not-verified');
+            }
+          }, setLoading);
+        }}
+      />
+    </MainLayout>
   );
 }
 

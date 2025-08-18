@@ -11,7 +11,7 @@ import { configHeaderAuthToken, getRequestRoot } from '$libs/request/api.ts';
 import { atomWithStorage } from 'jotai/utils';
 import createCookieStorage from '$libs/storage/cookies.ts';
 import UserRole from '$libs/types/UserRole.ts';
-import { setUserRole } from '$libs/request/role.ts';
+import { getUserRole, setUserRole } from '$libs/request/role.ts';
 
 interface UserManagerProps {
   isAuthenticated: boolean;
@@ -32,6 +32,7 @@ const authTokenStorage = atomWithStorage<string>('authToken', '', storage);
 
 const UserManagerContext = createContext<UserManagerProps>({
   isAuthenticated: false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   login: async (code: number, password: string) => {
     return false;
   },
@@ -41,6 +42,7 @@ const UserManagerContext = createContext<UserManagerProps>({
   refresh: async () => {
     return false;
   },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   refreshRole: async (role: UserRole) => {
     return false;
   },
@@ -51,12 +53,12 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [authToken, setAuthToken] = useAtom(authTokenStorage);
-  const [isAuthenticated, setIsAuthenticated] = useState(authToken.length != 0);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    authToken?.length != 0,
+  );
   const [currentRole, setCurrentRole] = useState<UserRole>('not-verified');
 
-  useEffect(() => {
-    console.log(`${currentRole} ${authToken}`);
-  }, [currentRole, authToken, isAuthenticated]);
+  useEffect(() => {}, [currentRole, authToken, isAuthenticated]);
 
   useEffect(() => {
     configHeaderAuthToken(authToken);
@@ -66,13 +68,24 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
     setIsAuthenticated(authToken.length != 0);
   }, [authToken]);
 
+  useEffect(() => {
+    const request = async () => {
+      if (isAuthenticated) {
+        const status = await getUserRole(getRequestRoot(), setCurrentRole);
+        console.log(`${status} ${currentRole}`);
+      }
+    };
+
+    request();
+  }, [isAuthenticated]);
+
   const removeAuthToken = async () => {
     await setAuthToken('');
     await storage.removeItem('authToken');
   };
 
   const login = async (code: number, password: string) => {
-    const status = await loginUser(
+    const statusLogin = await loginUser(
       getRequestRoot(),
       {
         code: code,
@@ -81,7 +94,9 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
       setAuthToken,
     );
 
-    return status;
+    const statusRole = await getUserRole(getRequestRoot(), setCurrentRole);
+
+    return statusLogin && statusRole;
   };
 
   const logout = async () => {

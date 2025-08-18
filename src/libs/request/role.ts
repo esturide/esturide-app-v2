@@ -34,7 +34,7 @@ export const setUserRole = async (
   setToken: (token: string) => void,
 ) => {
   try {
-    const response: AxiosResponse = await root.post(
+    const response: AxiosResponse = await root.put(
       `/auth/role`,
       {
         role: role,
@@ -44,8 +44,10 @@ export const setUserRole = async (
 
     const status = [200, 201].includes(response.status);
 
+    console.log(response);
+
     if (status) {
-      setToken(response.data.token);
+      setToken(response.data);
     }
 
     return status;

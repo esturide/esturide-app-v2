@@ -10,7 +10,11 @@ function DesktopView({ children, items }: React.PropsWithChildren<Props>) {
   return (
     <>
       <DesktopNavigationBar items={items} />
-      <div className={'pt-16'}>{children}</div>
+      <div
+        className={'h-screen pt-16 bg-red-300 px-2 max-md:overflow-y-scroll'}
+      >
+        {children}
+      </div>
     </>
   );
 }

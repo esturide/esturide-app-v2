@@ -1,7 +1,5 @@
 import React from 'react';
 import { ItemType } from '@components/navbar/types.ts';
-import DesktopNavigationBar from '@components/navbar/DesktopNavigationBar.tsx';
-import MobileNavigationBar from '@components/navbar/MobileNavigationBar.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import MobileView from '@layouts/view/MobileView.tsx';

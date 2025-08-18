@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCheckCircle, FaChevronDown } from 'react-icons/fa';
 import {
   Label,
@@ -7,6 +7,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from '@headlessui/react';
+import ColorTheme from '$libs/types/Theme.ts';
 
 interface Option {
   id: number;
@@ -26,6 +27,7 @@ type Props = {
   defaultValue?: number;
   options: AvatarOption[] | StringOption[] | Option[];
   onSelect: (index: number) => Promise<void>;
+  theme?: ColorTheme;
 };
 
 const isAvatar = (option: any): option is AvatarOption => {
@@ -49,13 +51,16 @@ const SelectOptions: React.FC<Props> = ({
   options,
   defaultValue = 0,
   onSelect = null,
+  theme = 'teal',
 }) => {
   const [selected, setSelected] = useState<Option>(options[defaultValue]);
 
   const ShowSelectedOption = () => {
     if (isAvatar(selected)) {
       return (
-        <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm/6">
+        <ListboxButton
+          className={`grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-${theme}-600 sm:text-sm/6`}
+        >
           <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
             <img
               alt=""
@@ -72,7 +77,9 @@ const SelectOptions: React.FC<Props> = ({
       );
     } else if (isStringOption(selected)) {
       return (
-        <ListboxButton className="grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm/6">
+        <ListboxButton
+          className={`grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-${theme}-600 sm:text-sm/6`}
+        >
           <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
             <span className="block truncate">{selected.description}</span>
           </span>
@@ -93,7 +100,7 @@ const SelectOptions: React.FC<Props> = ({
             <ListboxOption
               key={option.id}
               value={option}
-              className="group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-teal-600 data-focus:text-white data-focus:outline-hidden"
+              className={`group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-${theme}-600 data-focus:text-white data-focus:outline-hidden`}
             >
               <div className="flex items-center">
                 <img
@@ -106,7 +113,9 @@ const SelectOptions: React.FC<Props> = ({
                 </span>
               </div>
 
-              <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-teal-600 group-not-data-selected:hidden group-data-focus:text-white">
+              <span
+                className={`absolute inset-y-0 right-0 flex items-center pr-4 text-${theme}-600 group-not-data-selected:hidden group-data-focus:text-white`}
+              >
                 <FaCheckCircle aria-hidden="true" className="size-5" />
               </span>
             </ListboxOption>
@@ -120,7 +129,7 @@ const SelectOptions: React.FC<Props> = ({
             <ListboxOption
               key={option.id}
               value={option}
-              className="group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-teal-600 data-focus:text-white data-focus:outline-hidden"
+              className={`group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-${theme}-600 data-focus:text-white data-focus:outline-hidden`}
             >
               <div className="flex items-center">
                 <div></div>
@@ -129,7 +138,9 @@ const SelectOptions: React.FC<Props> = ({
                 </span>
               </div>
 
-              <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-teal-600 group-not-data-selected:hidden group-data-focus:text-white">
+              <span
+                className={`absolute inset-y-0 right-0 flex items-center pr-4 text-${theme}-600 group-not-data-selected:hidden group-data-focus:text-white`}
+              >
                 <FaCheckCircle aria-hidden="true" className="size-5" />
               </span>
             </ListboxOption>
