@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
   const [isDesktopDevice, setIsDesktopDevice] = useState(false);
   const [userCode, setUserCode] = useState<number>(0);
   const [password, setPassword] = useState<string>('');
-  const [validCode, setValidCode] = useState(true);
+  const [isValidCode, setIsValidCode] = useState(true);
   const [isValidLogin, setIsValidLogin] = useState(true);
   const [loading, setLoading] = useState(false);
 
@@ -34,19 +34,23 @@ const LoginPage: React.FC = () => {
   };
 
   const onInputCode = (value: string) => {
-    const num = Number(value);
+    if (value.length != 0) {
+      const num = Number(value);
 
-    if (!isNaN(num)) {
-      setValidCode(num > 0);
-      setUserCode(num);
+      if (!isNaN(num)) {
+        setIsValidCode(num > 0);
+        setUserCode(num);
+      } else {
+        setIsValidCode(false);
+      }
     } else {
-      setValidCode(false);
+      setIsValidCode(true);
     }
   };
 
   const onLogin = async () => {
     await loaderEffect(async () => {
-      if (validCode) {
+      if (isValidCode) {
         const status = await login(userCode, password);
 
         if (status) {
@@ -76,8 +80,8 @@ const LoginPage: React.FC = () => {
         <UserInput
           label={'Usuario'}
           onInput={onInputCode}
-          valid={validCode && isValidLogin}
-          invalidMessage={validCode ? '' : 'Numero de usuario invalido'}
+          valid={isValidCode}
+          invalidMessage={'Numero de usuario invalido'}
         />
         <UserInput
           label={'Contraseña'}
