@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import GenericButton from '@components/buttons/GenericButton.tsx';
+import UserButton from '@components/buttons/UserButton.tsx';
 
 const meta = {
   title: 'Input/Button',
-  component: GenericButton,
+  component: UserButton,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof GenericButton>;
+} satisfies Meta<typeof UserButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

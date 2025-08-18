@@ -39,7 +39,7 @@ const ButtonCard: React.FC<Props> = ({
       <div
         className={`
         flex gap-3 px-5 py-4 rounded-[32px]
-        hover:shadow-md transition-shadow duration-300
+        hover:shadow-md transition-shadow duration-300 border border-gray-100 shadow
         ${isPressed ? `bg-opacity-50 bg-blur-md ${color}` : 'bg-white'}
       `}
       >

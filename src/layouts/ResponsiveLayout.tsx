@@ -1,10 +1,9 @@
 import React from 'react';
-import { BrowserView, isMobile, MobileView } from 'react-device-detect';
 import { ItemType } from '@components/navbar/types.ts';
-import DesktopNavigationBar from '@components/navbar/DesktopNavigationBar.tsx';
-import MobileNavigationBar from '@components/navbar/MobileNavigationBar.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-import Scroll from '@layouts/scroll/Scroll.tsx';
+import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
+import MobileView from '@layouts/view/MobileView.tsx';
+import DesktopView from '@layouts/view/DesktopView.tsx';
 
 type Props = {
   items: ItemType[];
@@ -12,28 +11,17 @@ type Props = {
 
 function ResponsiveLayout({ children, items }: React.PropsWithChildren<Props>) {
   const { theme } = useUserTheme();
+  const { isMobile } = useDeviceManagement();
 
   const DesktopViewLayout = () => {
-    return (
-      <>
-        <BrowserView>
-          <DesktopNavigationBar items={items} />
-          <div className={'pt-16'}>
-            <Scroll>{children}</Scroll>
-          </div>
-        </BrowserView>
-      </>
-    );
+    return <DesktopView items={items}>{children}</DesktopView>;
   };
 
   const MobileViewLayout = () => {
     return (
-      <>
-        <MobileView>
-          <Scroll>{children}</Scroll>
-          <MobileNavigationBar items={items} theme={theme} />
-        </MobileView>
-      </>
+      <MobileView theme={theme} items={items}>
+        {children}
+      </MobileView>
     );
   };
 
@@ -45,7 +33,11 @@ function ResponsiveLayout({ children, items }: React.PropsWithChildren<Props>) {
     }
   };
 
-  return <ResponseLayout />;
+  return (
+    <div className={'overflow-auto scrollbar-hide'}>
+      <ResponseLayout />
+    </div>
+  );
 }
 
 export default ResponsiveLayout;

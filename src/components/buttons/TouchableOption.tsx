@@ -37,7 +37,7 @@ function TouchableOption({
       role="button"
       tabIndex={0}
     >
-      <div className="flex flex-col justify-center items-start px-5 py-3.5 w-full outline-none">
+      <div className="flex flex-col justify-stretch">
         <div className="flex items-center justify-between w-full">
           <span className="opacity-75 text-neutral-600">{label}</span>
           {Icon && (

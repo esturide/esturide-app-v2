@@ -1,44 +1,64 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+type ScreenSize = 'sm' | 'md' | 'lg' | 'xl' | 'unknown';
+
 interface WindowSize {
-  width: number;
-  height: number;
+  size: ScreenSize;
+  isMobile: boolean;
 }
 
-const DeviceManagmentContext = createContext<WindowSize>({
-  width: window.innerWidth,
-  height: window.innerHeight,
+const DeviceManagementContext = createContext<WindowSize>({
+  size: 'unknown',
+  isMobile: false,
 });
 
-export const DeviceManagementProvider: React.FC<{
-  children: React.ReactNode;
-}> = ({ children }) => {
-  const [size, setSize] = useState<WindowSize>({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+export function DeviceManagementProvider({
+  children,
+}: React.PropsWithChildren) {
+  const [size, setSize] = useState<ScreenSize>('unknown');
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      const width = window.innerWidth;
+      if (width < 640) {
+        setSize('sm');
+      } else if (width >= 640 && width < 1024) {
+        setSize('md');
+      } else {
+        setSize('lg');
+      }
     };
 
+    handleResize();
+
     window.addEventListener('resize', handleResize);
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    if (['sm'].includes(size)) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [size]);
+
   return (
-    <DeviceManagmentContext.Provider value={size}>
+    <DeviceManagementContext.Provider
+      value={{
+        size: size,
+        isMobile: isMobile,
+      }}
+    >
       {children}
-    </DeviceManagmentContext.Provider>
+    </DeviceManagementContext.Provider>
   );
-};
+}
 
 export const useDeviceManagement = (): WindowSize => {
-  const context = useContext(DeviceManagmentContext);
+  const context = useContext(DeviceManagementContext);
 
   if (!context) {
     throw new Error('useWindowSize must be used within a WindowSizeProvider');

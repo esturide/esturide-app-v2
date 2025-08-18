@@ -10,12 +10,16 @@ import { loginUser } from '$libs/request/login.ts';
 import { configHeaderAuthToken, getRequestRoot } from '$libs/request/api.ts';
 import { atomWithStorage } from 'jotai/utils';
 import createCookieStorage from '$libs/storage/cookies.ts';
+import UserRole from '$libs/types/UserRole.ts';
+import { getUserRole, setUserRole } from '$libs/request/role.ts';
 
 interface UserManagerProps {
   isAuthenticated: boolean;
   login: (code: number, password: string) => Promise<boolean>;
   logout: () => Promise<boolean>;
   refresh: () => Promise<boolean>;
+  refreshRole: (role: UserRole) => Promise<boolean>;
+  role: UserRole;
 }
 
 const storage = createCookieStorage<string>({
@@ -28,6 +32,7 @@ const authTokenStorage = atomWithStorage<string>('authToken', '', storage);
 
 const UserManagerContext = createContext<UserManagerProps>({
   isAuthenticated: false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   login: async (code: number, password: string) => {
     return false;
   },
@@ -37,24 +42,37 @@ const UserManagerContext = createContext<UserManagerProps>({
   refresh: async () => {
     return false;
   },
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  refreshRole: async (role: UserRole) => {
+    return false;
+  },
+  role: 'not-verified',
 });
 
 export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [authToken, setAuthToken] = useAtom(authTokenStorage);
-  const [isAuthenticated, setIsAuthenticated] = useState(authToken.length != 0);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    authToken?.length != 0,
+  );
+  const [currentRole, setCurrentRole] = useState<UserRole>('not-verified');
 
   useEffect(() => {
-    console.log(authToken, isAuthenticated);
-  }, [authToken, isAuthenticated]);
-
-  useEffect(() => {
-    configHeaderAuthToken(authToken);
+    if (authToken.length != 0) {
+      configHeaderAuthToken(authToken);
+      setIsAuthenticated(authToken.length != 0);
+    }
   }, [authToken]);
 
   useEffect(() => {
-    setIsAuthenticated(authToken.length != 0);
+    const request = async () => {
+      if (authToken.length != 0) {
+        await getUserRole(getRequestRoot(), setCurrentRole);
+      }
+    };
+
+    request();
   }, [authToken]);
 
   const removeAuthToken = async () => {
@@ -63,7 +81,7 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   };
 
   const login = async (code: number, password: string) => {
-    const status = await loginUser(
+    const statusLogin = await loginUser(
       getRequestRoot(),
       {
         code: code,
@@ -72,7 +90,9 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
       setAuthToken,
     );
 
-    return status;
+    const statusRole = await getUserRole(getRequestRoot(), setCurrentRole);
+
+    return statusLogin && statusRole;
   };
 
   const logout = async () => {
@@ -86,11 +106,23 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
     return authToken.length != 0;
   };
 
+  const refreshRole = async (role: UserRole) => {
+    const status = await setUserRole(getRequestRoot(), role, setAuthToken);
+
+    if (status) {
+      setCurrentRole(role);
+    }
+
+    return status;
+  };
+
   const props: UserManagerProps = {
     isAuthenticated: isAuthenticated,
     login: login,
     logout: logout,
     refresh: refresh,
+    refreshRole: refreshRole,
+    role: currentRole,
   };
 
   return (

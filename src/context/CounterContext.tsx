@@ -5,7 +5,7 @@ import React, {
   useContext,
   useEffect,
 } from 'react';
-import GenericButton from '@components/buttons/GenericButton.tsx';
+import UserButton from '@components/buttons/UserButton.tsx';
 
 interface CounterInterface {
   counter: number;
@@ -20,7 +20,7 @@ const Add = () => {
 
   return (
     <div>
-      <GenericButton
+      <UserButton
         label={'Increment'}
         onClick={async () => setCount(count + 1)}
       />
