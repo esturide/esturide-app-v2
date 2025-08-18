@@ -1,7 +1,5 @@
 import SorryMessage from '@components/resources/SorryMessage.tsx';
 import addNotification from 'react-push-notification';
-import UserButton from '@components/buttons/UserButton.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
 import { toast } from 'react-toastify';
 
 function UserHome() {
@@ -26,13 +24,6 @@ function UserHome() {
         }
         title={'Próximamente'}
       />
-
-      <MainLayout>
-        <div className={'flex flex-col gap-2 w-full'}>
-          <UserButton onClick={onShowNotify} label={'Notificacion'} />
-          <UserButton onClick={onShowToast} label={'Toast'} />
-        </div>
-      </MainLayout>
     </>
   );
 }
