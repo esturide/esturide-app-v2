@@ -23,6 +23,8 @@ import { UserThemeProvider } from '@/context/UserTheme.tsx';
 import { CookiesProvider } from 'react-cookie';
 
 import '@/index.css';
+import { Notifications } from 'react-push-notification';
+import { Bounce, ToastContainer } from 'react-toastify';
 
 const router = createBrowserRouter([
   {
@@ -104,7 +106,21 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <DeviceManagementProvider>
           <UserManagerProvider>
             <UserThemeProvider>
+              <Notifications />
               <RouterProvider router={router} />
+              <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                transition={Bounce}
+              />
             </UserThemeProvider>
           </UserManagerProvider>
         </DeviceManagementProvider>

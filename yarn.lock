@@ -6919,6 +6919,11 @@ react-modal-sheet@^4.0.1:
   resolved "https://registry.npmjs.org/react-modal-sheet/-/react-modal-sheet-4.0.1.tgz"
   integrity sha512-koDkfvXHIZhQh+DOE3mcEr2XnJiZIXneGzPuA7VbPIvHQm4BGdSjA1aCEMytTo5UHkfGvQWHvB7P5nejQYRtDQ==
 
+react-push-notification@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/react-push-notification/-/react-push-notification-1.5.4.tgz#98d708cbb48375856158fcd94403d35d994f3174"
+  integrity sha512-ZsiJfz8dNvfz0ClKcrzaKojIAdYou+s2N2M4Z6EuAlQlBsVqex/Wv0hldgueSLKihmGbZouj/oPih/gy5xlKIQ==
+
 react-refresh@^0.17.0:
   version "0.17.0"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.17.0.tgz#b7e579c3657f23d04eccbe4ad2e58a8ed51e7e53"
