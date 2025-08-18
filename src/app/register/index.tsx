@@ -5,7 +5,7 @@ import UserInput from '@components/input/UserInput.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import SelectColor from '@components/input/selector/SelectColor.tsx';
 import DateInput from '@components/input/DateInput.tsx';
-import GenericButton from '@components/buttons/GenericButton.tsx';
+import UserButton from '@components/buttons/UserButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 
 const UserRegister: React.FC = () => {
@@ -97,13 +97,9 @@ const UserRegister: React.FC = () => {
 
       <div className={' h-fit'}>
         <div className="flex flex-col gap-2 my-3">
-          <GenericButton label={'Siguente'} onClick={next} />
+          <UserButton label={'Siguente'} onClick={next} />
           {currentForm > 0 && (
-            <GenericButton
-              label={'Regresar'}
-              onClick={previous}
-              theme={'gray'}
-            />
+            <UserButton label={'Regresar'} onClick={previous} theme={'gray'} />
           )}
         </div>
 

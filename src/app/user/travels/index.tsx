@@ -7,7 +7,7 @@ import { FaAngleDown, FaExchangeAlt, FaFilter, FaSearch } from 'react-icons/fa';
 
 import { LatLng } from '$libs/types/LatLng.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
-import BigButton from '@components/buttons/BigButton.tsx';
+import OptionButton from '@components/buttons/OptionButton.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import StreetRouteResponsive from '@components/map/StreetRouteResponsive.tsx';
 
@@ -46,7 +46,7 @@ const ScheduleTravelView = () => {
           </div>
         </div>
         <div className={'flex flex-col gap-4 mt-4 mb-2 justify-between'}>
-          <BigButton label={'Agendar'} theme={theme} />
+          <OptionButton label={'Agendar'} theme={theme} />
         </div>
       </>
     );
@@ -86,7 +86,7 @@ function UserTravels() {
       <div className={'flex flex-col'}>
         <ScheduleTravelMessage />
 
-        <BigButton
+        <OptionButton
           label={'Agendar'}
           theme={theme}
           onClick={async () => {

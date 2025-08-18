@@ -10,7 +10,7 @@ type Props = {
   minSize?: number;
 };
 
-function BigButton({
+function OptionButton({
   label,
   theme = 'teal',
   disabled = false,
@@ -40,25 +40,23 @@ function BigButton({
   };
 
   return (
-    <div className="flex overflow-hidden flex-col justify-center rounded-lg">
-      <button
-        className={`flex gap-2.5 justify-center items-center px-5 py-4 w-full rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${getThemeClasses()}`}
-        type="button"
-        aria-label={`${label} button`}
-        disabled={disabled}
-        aria-disabled={disabled}
-        onClick={handleClick}
+    <button
+      className={`flex gap-2.5 justify-center items-center px-5 py-4 w-full rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ${getThemeClasses()}`}
+      type="button"
+      aria-label={`${label} button`}
+      disabled={disabled}
+      aria-disabled={disabled}
+      onClick={handleClick}
+    >
+      <span
+        className={`flex flex-1 shrink gap-2 justify-center items-center self-stretch  basis-0 min-w-${minSize}`}
       >
-        <span
-          className={`flex flex-1 shrink gap-2 justify-center items-center self-stretch  basis-0 min-w-${minSize}`}
-        >
-          <span className="self-stretch my-auto text-white font-bold">
-            {label}
-          </span>
+        <span className="self-stretch my-auto text-white font-bold">
+          {label}
         </span>
-      </button>
-    </div>
+      </span>
+    </button>
   );
 }
 
-export default BigButton;
+export default OptionButton;
