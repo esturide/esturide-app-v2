@@ -1,8 +1,6 @@
 import { useUserManager } from '@/context/UserManager.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
-import SelectOptions, {
-  StringOption,
-} from '@components/input/selector/SelectOptions.tsx';
+import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
 import React, { useEffect, useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
@@ -10,7 +8,6 @@ import loaderEffect from '$libs/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
 import UserRole from '$libs/types/UserRole.ts';
-import OptionButton from '@components/buttons/OptionButton.tsx';
 
 const roleOptions: UserRole[] = [
   'not-verified',
@@ -67,29 +64,6 @@ function UserProfile() {
     }, setLoading);
   };
 
-  const options: StringOption[] = [
-    {
-      id: 0,
-      description: 'No verificado',
-    },
-    {
-      id: 1,
-      description: 'Pasajero',
-    },
-    {
-      id: 2,
-      description: 'Conductor',
-    },
-    {
-      id: 3,
-      description: 'Staff',
-    },
-    {
-      id: 4,
-      description: 'Administrador',
-    },
-  ];
-
   useEffect(() => {
     setCurrentTheme(selectThemeFromRole(currentRole));
     setCurrentOption(searchRoleFromList(currentRole));
@@ -116,15 +90,6 @@ function UserProfile() {
           onClick={async () => {
             await logout();
           }}
-        />
-
-        <OptionButton
-          label={'Cerrar sesion'}
-          theme={currentTheme}
-          onClick={async () => {
-            await logout();
-          }}
-          disabled
         />
       </div>
 
