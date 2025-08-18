@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 
 function MainLayout({ children }: React.PropsWithChildren) {
   const { size } = useDeviceManagement();
-
-  useEffect(() => {
-    console.log(size);
-  }, [size]);
 
   if (['sm', 'md'].includes(size)) {
     return (
