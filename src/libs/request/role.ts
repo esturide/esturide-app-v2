@@ -49,8 +49,6 @@ export const setUserRole = async (
     const status = [200, 201].includes(response.status);
     const dataResponse: ResponseData<TokenResponse> = response.data;
 
-    console.log(dataResponse.data);
-
     if (status) {
       setToken(dataResponse.data.token);
     }

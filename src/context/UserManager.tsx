@@ -60,12 +60,8 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
 
   useEffect(() => {
     if (authToken.length != 0) {
-      console.log(`Current token: ${authToken}`);
-
       configHeaderAuthToken(authToken);
       setIsAuthenticated(authToken.length != 0);
-    } else {
-      console.log('Token not found!');
     }
   }, [authToken]);
 
@@ -95,11 +91,6 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
     );
 
     const statusRole = await getUserRole(getRequestRoot(), setCurrentRole);
-    const status = statusLogin && statusRole;
-
-    if (status) {
-      console.log(`Login successfully, current role: ${currentRole}`);
-    }
 
     return statusLogin && statusRole;
   };

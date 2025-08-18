@@ -50,6 +50,22 @@ function UserProfile() {
   );
   const [currentRole, setCurrentRole] = useState<UserRole>(role);
 
+  const onSelectRole = async (index: number) => {
+    await loaderEffect(async () => {
+      const selectRoleOption = roleOptions[index];
+
+      if (selectRoleOption != role) {
+        const status = await refreshRole(selectRoleOption);
+
+        if (status) {
+          setCurrentRole(selectRoleOption);
+          setCurrentTheme(selectThemeFromRole(selectRoleOption));
+          setCurrentOption(index);
+        }
+      }
+    }, setLoading);
+  };
+
   const options: StringOption[] = [
     {
       id: 0,
@@ -105,21 +121,29 @@ function UserProfile() {
       <SelectOptions
         theme={currentTheme}
         defaultValue={currentOption}
-        options={options}
-        onSelect={async function (index: number) {
-          await loaderEffect(async () => {
-            const currentRoleOption = roleOptions[index];
-            console.log(`Role selected: ${index} ${currentRoleOption}`);
-
-            const status = await refreshRole(currentRoleOption);
-
-            if (status) {
-              setCurrentRole(currentRoleOption);
-              setCurrentTheme(selectThemeFromRole(currentRoleOption));
-              setCurrentOption(index);
-            }
-          }, setLoading);
-        }}
+        onSelect={onSelectRole}
+        options={[
+          {
+            id: 0,
+            description: 'No verificado',
+          },
+          {
+            id: 1,
+            description: 'Pasajero',
+          },
+          {
+            id: 2,
+            description: 'Conductor',
+          },
+          {
+            id: 3,
+            description: 'Staff',
+          },
+          {
+            id: 4,
+            description: 'Administrador',
+          },
+        ]}
       />
     </MainLayout>
   );
