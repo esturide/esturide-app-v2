@@ -56,11 +56,16 @@ const SelectOptions: React.FC<Props> = ({
   const [selected, setSelected] = useState<Option>(options[defaultValue]);
 
   const ShowSelectedOption = () => {
+    const allButtonColor = {
+      gray: 'grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6',
+      teal: 'grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm/6',
+      indigo:
+        'grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6hidden',
+    };
+
     if (isAvatar(selected)) {
       return (
-        <ListboxButton
-          className={`grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-${theme}-600 sm:text-sm/6`}
-        >
+        <ListboxButton className={allButtonColor[theme]}>
           <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
             <img
               alt=""
@@ -77,9 +82,7 @@ const SelectOptions: React.FC<Props> = ({
       );
     } else if (isStringOption(selected)) {
       return (
-        <ListboxButton
-          className={`grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-${theme}-600 sm:text-sm/6`}
-        >
+        <ListboxButton className={allButtonColor[theme]}>
           <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
             <span className="block truncate">{selected.description}</span>
           </span>
@@ -93,6 +96,20 @@ const SelectOptions: React.FC<Props> = ({
   };
 
   const AllElements = () => {
+    const allButtonColor = {
+      gray: 'group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-gray-600 data-focus:text-white data-focus:outline-hidden',
+      teal: 'group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-teal-600 data-focus:text-white data-focus:outline-hidden',
+      indigo:
+        'group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden',
+    };
+
+    const allIconColors = {
+      gray: 'absolute inset-y-0 right-0 flex items-center pr-4 text-gray-600 group-not-data-selected:hidden group-data-focus:text-white',
+      teal: 'absolute inset-y-0 right-0 flex items-center pr-4 text-teal-600 group-not-data-selected:hidden group-data-focus:text-white',
+      indigo:
+        'absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-data-selected:hidden group-data-focus:text-white',
+    };
+
     if (isAvatarArray(options)) {
       return (
         <>
@@ -100,7 +117,7 @@ const SelectOptions: React.FC<Props> = ({
             <ListboxOption
               key={option.id}
               value={option}
-              className={`group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-${theme}-600 data-focus:text-white data-focus:outline-hidden`}
+              className={allButtonColor[theme]}
             >
               <div className="flex items-center">
                 <img
@@ -113,9 +130,7 @@ const SelectOptions: React.FC<Props> = ({
                 </span>
               </div>
 
-              <span
-                className={`absolute inset-y-0 right-0 flex items-center pr-4 text-${theme}-600 group-not-data-selected:hidden group-data-focus:text-white`}
-              >
+              <span className={allIconColors[theme]}>
                 <FaCheckCircle aria-hidden="true" className="size-5" />
               </span>
             </ListboxOption>
@@ -129,7 +144,7 @@ const SelectOptions: React.FC<Props> = ({
             <ListboxOption
               key={option.id}
               value={option}
-              className={`group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-${theme}-600 data-focus:text-white data-focus:outline-hidden`}
+              className={allButtonColor[theme]}
             >
               <div className="flex items-center">
                 <div></div>
@@ -138,9 +153,7 @@ const SelectOptions: React.FC<Props> = ({
                 </span>
               </div>
 
-              <span
-                className={`absolute inset-y-0 right-0 flex items-center pr-4 text-${theme}-600 group-not-data-selected:hidden group-data-focus:text-white`}
-              >
+              <span className={allIconColors[theme]}>
                 <FaCheckCircle aria-hidden="true" className="size-5" />
               </span>
             </ListboxOption>
