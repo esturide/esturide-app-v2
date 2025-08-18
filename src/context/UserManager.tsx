@@ -58,26 +58,26 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   );
   const [currentRole, setCurrentRole] = useState<UserRole>('not-verified');
 
-  useEffect(() => {}, [currentRole, authToken, isAuthenticated]);
-
   useEffect(() => {
-    configHeaderAuthToken(authToken);
-  }, [authToken]);
+    if (authToken.length != 0) {
+      console.log(`Current token: ${authToken}`);
 
-  useEffect(() => {
-    setIsAuthenticated(authToken.length != 0);
+      configHeaderAuthToken(authToken);
+      setIsAuthenticated(authToken.length != 0);
+    } else {
+      console.log('Token not found!');
+    }
   }, [authToken]);
 
   useEffect(() => {
     const request = async () => {
-      if (isAuthenticated) {
-        const status = await getUserRole(getRequestRoot(), setCurrentRole);
-        console.log(`${status} ${currentRole}`);
+      if (authToken.length != 0) {
+        await getUserRole(getRequestRoot(), setCurrentRole);
       }
     };
 
     request();
-  }, [isAuthenticated]);
+  }, [authToken]);
 
   const removeAuthToken = async () => {
     await setAuthToken('');
@@ -95,6 +95,11 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
     );
 
     const statusRole = await getUserRole(getRequestRoot(), setCurrentRole);
+    const status = statusLogin && statusRole;
+
+    if (status) {
+      console.log(`Login successfully, current role: ${currentRole}`);
+    }
 
     return statusLogin && statusRole;
   };

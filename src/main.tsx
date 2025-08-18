@@ -19,9 +19,10 @@ import EmptyLayout from '@layouts/route/EmptyLayout.tsx';
 
 import { UserManagerProvider } from '@/context/UserManager.tsx';
 
-import '@/index.css';
 import { UserThemeProvider } from '@/context/UserTheme.tsx';
 import { CookiesProvider } from 'react-cookie';
+
+import '@/index.css';
 
 const router = createBrowserRouter([
   {

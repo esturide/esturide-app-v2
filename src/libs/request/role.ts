@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
 import UserRole from '$libs/types/UserRole.ts';
+import { ResponseData } from '$libs/request/response';
+import TokenResponse from '$libs/request/response/TokenResponse.ts';
 
 export const getUserRole = async (
   root: AxiosInstance,
@@ -14,8 +16,10 @@ export const getUserRole = async (
 
     const status = [200, 201].includes(response.status);
 
+    const dataResponse: ResponseData<UserRole> = response.data;
+
     if (status) {
-      setCurrentRole(response.data.role);
+      setCurrentRole(dataResponse.data);
     }
 
     return status;
@@ -34,7 +38,7 @@ export const setUserRole = async (
   setToken: (token: string) => void,
 ) => {
   try {
-    const response: AxiosResponse = await root.put(
+    const response: AxiosResponse = await root.post(
       `/auth/role`,
       {
         role: role,
@@ -43,11 +47,12 @@ export const setUserRole = async (
     );
 
     const status = [200, 201].includes(response.status);
+    const dataResponse: ResponseData<TokenResponse> = response.data;
 
-    console.log(response);
+    console.log(dataResponse.data);
 
     if (status) {
-      setToken(response.data);
+      setToken(dataResponse.data.token);
     }
 
     return status;

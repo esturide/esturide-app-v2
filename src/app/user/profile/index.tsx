@@ -9,40 +9,74 @@ import ColorTheme from '$libs/types/Theme.ts';
 import loaderEffect from '$libs/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
+import UserRole from '$libs/types/UserRole.ts';
+
+const roleOptions: UserRole[] = [
+  'not-verified',
+  'passenger',
+  'driver',
+  'staff',
+  'admin',
+];
+
+const searchRoleFromList = (role: UserRole): number => {
+  for (let i = 0; i < roleOptions.length; i++) {
+    if (roleOptions[i] == role) {
+      return i;
+    }
+  }
+
+  return 0;
+};
+
+const selectThemeFromRole = (role: UserRole): ColorTheme => {
+  if (role === 'driver') {
+    return 'teal';
+  } else if (role === 'passenger') {
+    return 'indigo';
+  }
+
+  return 'gray';
+};
 
 function UserProfile() {
   const { logout, refreshRole, role } = useUserManager();
   const [loading, setLoading] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState<ColorTheme>('gray');
-
-  useEffect(() => {
-    if (role === 'driver') {
-      setCurrentTheme('teal');
-    } else if (role === 'passenger') {
-      setCurrentTheme('indigo');
-    } else {
-      setCurrentTheme('gray');
-    }
-  }, [role]);
+  const [currentOption, setCurrentOption] = useState<number>(
+    searchRoleFromList(role),
+  );
+  const [currentTheme, setCurrentTheme] = useState<ColorTheme>(
+    selectThemeFromRole(role),
+  );
+  const [currentRole, setCurrentRole] = useState<UserRole>(role);
 
   const options: StringOption[] = [
     {
       id: 0,
-      description: 'Pasajero',
+      description: 'No verificado',
     },
     {
       id: 1,
-      description: 'Conductor',
+      description: 'Pasajero',
     },
     {
       id: 2,
-      description: 'Staff',
+      description: 'Conductor',
     },
     {
       id: 3,
+      description: 'Staff',
+    },
+    {
+      id: 4,
       description: 'Administrador',
     },
   ];
+
+  useEffect(() => {
+    setCurrentTheme(selectThemeFromRole(currentRole));
+    setCurrentOption(searchRoleFromList(currentRole));
+  }, [currentRole]);
 
   if (loading) {
     return (
@@ -70,21 +104,19 @@ function UserProfile() {
 
       <SelectOptions
         theme={currentTheme}
+        defaultValue={currentOption}
         options={options}
         onSelect={async function (index: number) {
           await loaderEffect(async () => {
-            if (index === 0) {
-              await refreshRole('passenger');
-            } else if (index == 1) {
-              await refreshRole('driver');
-            } else if (index == 2) {
-              await refreshRole('admin');
-            } else if (index == 3) {
-              await refreshRole('passenger');
-            } else if (index == 4) {
-              await refreshRole('passenger');
-            } else {
-              await refreshRole('not-verified');
+            const currentRoleOption = roleOptions[index];
+            console.log(`Role selected: ${index} ${currentRoleOption}`);
+
+            const status = await refreshRole(currentRoleOption);
+
+            if (status) {
+              setCurrentRole(currentRoleOption);
+              setCurrentTheme(selectThemeFromRole(currentRoleOption));
+              setCurrentOption(index);
             }
           }, setLoading);
         }}
