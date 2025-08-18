@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import loaderEffect from '$libs/loaderEffect.ts';
 import UserInput from '@components/input/UserInput.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
-import { isMobileDevice } from '$libs/detectDevice.ts';
-import { useUserManager } from '@/context/UserManager.tsx';
-import loaderEffect from '$libs/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
-import addNotification from 'react-push-notification';
-import { toast } from 'react-toastify';
+import { useUserManager } from '@/context/UserManager.tsx';
+import { isMobileDevice } from '$libs/detectDevice.ts';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -55,13 +54,13 @@ const LoginPage: React.FC = () => {
 
         if (status) {
           navigate('/home');
+        } else {
+          toast.error('Datos de usuario invalidos.', {
+            position: 'bottom-right',
+          });
         }
 
         setIsValidLogin(status);
-      } else {
-        toast.error('Datos de usuario invalidos.', {
-          position: 'bottom-right',
-        });
       }
     }, setLoading);
   };
@@ -80,8 +79,8 @@ const LoginPage: React.FC = () => {
         <UserInput
           label={'Usuario'}
           onInput={onInputCode}
-          valid={isValidCode}
-          invalidMessage={'Numero de usuario invalido'}
+          valid={isValidCode && isValidLogin}
+          invalidMessage={isValidCode ? '' : 'Numero de usuario invalido'}
         />
         <UserInput
           label={'Contraseña'}
