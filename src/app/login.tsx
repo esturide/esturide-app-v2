@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import loaderEffect from '$libs/loaderEffect.ts';
 import UserInput from '@components/input/UserInput.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
-import { isMobileDevice } from '$libs/detectDevice.ts';
-import { useUserManager } from '@/context/UserManager.tsx';
-import loaderEffect from '$libs/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
+import { useUserManager } from '@/context/UserManager.tsx';
+import { isMobileDevice } from '$libs/detectDevice.ts';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -15,7 +16,8 @@ const LoginPage: React.FC = () => {
   const [isDesktopDevice, setIsDesktopDevice] = useState(false);
   const [userCode, setUserCode] = useState<number>(0);
   const [password, setPassword] = useState<string>('');
-  const [validCode, setValidCode] = useState(true);
+  const [isValidCode, setIsValidCode] = useState(true);
+  const [isValidLogin, setIsValidLogin] = useState(true);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -31,22 +33,34 @@ const LoginPage: React.FC = () => {
   };
 
   const onInputCode = (value: string) => {
-    const num = Number(value);
+    if (value.length != 0) {
+      const num = Number(value);
 
-    if (!isNaN(num)) {
-      setValidCode(true);
-      setUserCode(num);
+      if (!isNaN(num)) {
+        setIsValidCode(num > 0);
+        setUserCode(num);
+      } else {
+        setIsValidCode(false);
+      }
     } else {
-      setValidCode(false);
+      setIsValidCode(true);
     }
   };
 
   const onLogin = async () => {
     await loaderEffect(async () => {
-      const status = await login(userCode, password);
+      if (isValidCode) {
+        const status = await login(userCode, password);
 
-      if (status) {
-        navigate('/home');
+        if (status) {
+          navigate('/home');
+        } else {
+          toast.error('Datos de usuario invalidos.', {
+            position: 'bottom-right',
+          });
+        }
+
+        setIsValidLogin(status);
       }
     }, setLoading);
   };
@@ -62,8 +76,19 @@ const LoginPage: React.FC = () => {
   return (
     <>
       <div className="flex flex-col items-center mb-4 mx-2 gap-6">
-        <UserInput label={'Usuario'} onInput={onInputCode} valid={validCode} />
-        <UserInput label={'Contraseña'} type="password" onInput={setPassword} />
+        <UserInput
+          label={'Usuario'}
+          onInput={onInputCode}
+          valid={isValidCode && isValidLogin}
+          invalidMessage={isValidCode ? '' : 'Numero de usuario invalido'}
+        />
+        <UserInput
+          label={'Contraseña'}
+          type="password"
+          onInput={setPassword}
+          valid={isValidLogin}
+          invalidMessage={'Contraseña o numero de usuario incorrecto'}
+        />
       </div>
 
       <div className="mx-3 my-6 flex flex-col items-center gap-6">
