@@ -154,15 +154,12 @@ const SelectOptions: React.FC<Props> = ({
     setSelected(option);
 
     if (onSelect) {
-      const index = options.findIndex(option => option.id === selected.id);
-      const idOption = options[index].id;
-
-      await onSelect(idOption);
+      await onSelect(option.id);
     }
   };
 
   return (
-    <div className="flex flex-col w-full p-4 rounded-md">
+    <div className="flex flex-col w-full py-4 rounded-md">
       <Listbox value={selected} onChange={onChangeValue}>
         {label && (
           <Label className="block text-sm/6 font-medium text-gray-900">
