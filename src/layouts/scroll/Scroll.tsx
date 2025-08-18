@@ -18,12 +18,10 @@ const Scroll: React.FC<PropsWithChildren<Props>> = ({
     if (maxHeight <= 1) {
       throw new Error('Max height is less than 1');
     }
-  }, [maxHeight]);
+  }, [maxHeight, minHeight]);
 
   return (
-    <div
-      className={`w-full px-1 lg:h-full overflow-y-auto max-md:overflow-y-scroll `}
-    >
+    <div className={`h-${minHeight} md:h-auto px-2 max-md:overflow-y-scroll`}>
       {children}
     </div>
   );
