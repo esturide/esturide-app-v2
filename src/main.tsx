@@ -19,9 +19,10 @@ import EmptyLayout from '@layouts/route/EmptyLayout.tsx';
 
 import { UserManagerProvider } from '@/context/UserManager.tsx';
 
-import '@/index.css';
 import { UserThemeProvider } from '@/context/UserTheme.tsx';
 import { CookiesProvider } from 'react-cookie';
+
+import '@/index.css';
 
 const router = createBrowserRouter([
   {
@@ -33,8 +34,28 @@ const router = createBrowserRouter([
         element: <UserHome />,
       },
       {
-        path: 'request',
-        element: <UserTravels />,
+        path: 'travels',
+        element: <UserHome />,
+        children: [
+          {
+            path: 'ride',
+            children: [
+              {
+                index: true,
+                element: <UserTravels />,
+              },
+            ],
+          },
+          {
+            path: 'schedule',
+            children: [
+              {
+                index: true,
+                element: <UserTravels />,
+              },
+            ],
+          },
+        ],
       },
       {
         path: 'notify',

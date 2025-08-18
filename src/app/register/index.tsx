@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserInput from '@components/input/UserInput.tsx';
-import GenericButton from '@components/buttons/GenericButton.tsx';
-import HyperLink from '@components/input/HyperLink.tsx';
-import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import { FaCar, FaUser } from 'react-icons/fa';
+import UserInput from '@components/input/UserInput.tsx';
+import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import SelectColor from '@components/input/selector/SelectColor.tsx';
 import DateInput from '@components/input/DateInput.tsx';
+import UserButton from '@components/buttons/UserButton.tsx';
+import HyperLink from '@components/input/HyperLink.tsx';
 
 const UserRegister: React.FC = () => {
   const [currentForm, setCurrentForm] = useState(0);
@@ -18,30 +18,30 @@ const UserRegister: React.FC = () => {
 
   const FirstRegister = () => {
     return (
-      <>
+      <div>
         <UserInput label={'Nombre'} />
         <UserInput label={'Primer apellido'} />
         <UserInput label={'Segundo apellido'} />
         <DateInput label={'Nacimiento'} />
         <UserInput label={'Codigo'} type="number" />
-      </>
+      </div>
     );
   };
 
   const SecondRegister = () => {
     return (
-      <>
+      <div>
         <UserInput label={'Usuario'} />
         <UserInput label={'Email'} />
         <UserInput label={'Contraseña'} type="password" />
         <UserInput label={'Confirmar contraseña'} type="password" />
-      </>
+      </div>
     );
   };
 
   const ThirdRegister = () => {
     return (
-      <>
+      <div className={'flex flex-col items-center my-2 gap-3'}>
         <ButtonCard
           title={'Conductor'}
           content={['Solicitar y ofrecer viajes.', 'Registrar vehículos.']}
@@ -54,7 +54,7 @@ const UserRegister: React.FC = () => {
           icon={FaUser}
           color={'bg-indigo-300'}
         />
-      </>
+      </div>
     );
   };
 
@@ -81,24 +81,33 @@ const UserRegister: React.FC = () => {
     <FirstDriverRegister />,
   ];
 
-  const nextForm = async () => {
-    setCurrentForm((currentForm + 1) % registerForm.length);
+  const next = async () => {
+    setCurrentForm((currentForm + 1) % registerForm.length); // {registerForm[currentForm]}
+  };
+
+  const previous = async () => {
+    setCurrentForm((currentForm - 1) % registerForm.length);
   };
 
   return (
-    <>
-      <div className="flex flex-col items-center mx-2 gap-3">
+    <div className={'flex flex-col justify-stretch w-full'}>
+      <div className="flex-grow h-50 md:h-auto px-2 max-md:overflow-y-scroll">
         {registerForm[currentForm]}
       </div>
 
-      <div className="mx-3 my-6">
-        <GenericButton label={'Siguente'} onClick={nextForm} />
-      </div>
+      <div className={' h-fit'}>
+        <div className="flex flex-col gap-2 my-3">
+          <UserButton label={'Siguente'} onClick={next} />
+          {currentForm > 0 && (
+            <UserButton label={'Regresar'} onClick={previous} theme={'gray'} />
+          )}
+        </div>
 
-      <div className="flex flex-col items-center">
-        <HyperLink label={'¿Ya tienes cuenta?'} onClick={clickRegister} />
+        <div className="flex flex-col items-center">
+          <HyperLink label={'¿Ya tienes cuenta?'} onClick={clickRegister} />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

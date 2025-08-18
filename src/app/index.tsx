@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { BrowserView, MobileView } from 'react-device-detect';
 
 import Welcome from '@components/resources/Welcome.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
@@ -8,6 +7,7 @@ import BackgroundAnimationResource from '@assets/images/car-animated.gif';
 import { GrLogin, GrUserNew } from 'react-icons/gr';
 import { useUserManager } from '@/context/UserManager.tsx';
 import { useEffect } from 'react';
+import MainLayout from '@layouts/view/MainLayout.tsx';
 
 function UserIndex() {
   const { isAuthenticated } = useUserManager();
@@ -25,7 +25,7 @@ function UserIndex() {
     };
 
     return (
-      <div className={'flex flex-col lg:flex-row gap-4 my-3'}>
+      <div className={'flex flex-col md:flex-row gap-4 my-3'}>
         <ButtonCard
           icon={GrUserNew}
           title={'Registrarse'}
@@ -45,20 +45,21 @@ function UserIndex() {
     );
   };
 
-  return (
-    <>
+  const Background = ({ children }: React.PropsWithChildren) => {
+    return (
       <MainLayoutWithBackground filename={BackgroundAnimationResource}>
-        <BrowserView>
-          <Welcome />
-          <UserOptions />
-        </BrowserView>
-
-        <MobileView>
-          <Welcome />
-          <UserOptions />
-        </MobileView>
+        {children}
       </MainLayoutWithBackground>
-    </>
+    );
+  };
+
+  return (
+    <Background>
+      <MainLayout>
+        <Welcome />
+        <UserOptions />
+      </MainLayout>
+    </Background>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInput from '@components/input/UserInput.tsx';
-import GenericButton from '@components/buttons/GenericButton.tsx';
+import UserButton from '@components/buttons/UserButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 import { isMobileDevice } from '$libs/detectDevice.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
@@ -67,9 +67,9 @@ const LoginPage: React.FC = () => {
       </div>
 
       <div className="mx-3 my-6 flex flex-col items-center gap-6">
-        <GenericButton label={'Iniciar sesion'} onClick={onLogin} />
+        <UserButton label={'Iniciar sesion'} onClick={onLogin} />
         {isDesktopDevice && (
-          <GenericButton label={'Regresar'} onClick={returnToHome} />
+          <UserButton label={'Regresar'} onClick={returnToHome} />
         )}
       </div>
 
