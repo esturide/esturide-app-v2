@@ -8,6 +8,7 @@ import loaderEffect from '$libs/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
 import UserRole from '$libs/types/UserRole.ts';
+import error from '$libs/toast/error.ts';
 
 const roleOptions: UserRole[] = [
   'not-verified',
@@ -59,6 +60,8 @@ function UserProfile() {
           setCurrentRole(selectRoleOption);
           setCurrentTheme(selectThemeFromRole(selectRoleOption));
           setCurrentOption(index);
+        } else {
+          await error('Permisos invalidos.');
         }
       }
     }, setLoading);

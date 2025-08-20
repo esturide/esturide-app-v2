@@ -10,6 +10,7 @@ import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
 import Scroll from '@layouts/scroll/Scroll.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
+import error from '$libs/toast/error.ts';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -54,16 +55,12 @@ const LoginPage: React.FC = () => {
         if (status) {
           navigate('/home', { replace: true });
         } else {
-          toast.error('Datos de usuario invalidos.', {
-            position: 'bottom-right',
-          });
+          await error('Datos de usuario invalidos.');
         }
 
         setIsValidLogin(status);
       } else {
-        toast.error('Rellene los datos.', {
-          position: 'bottom-right',
-        });
+        await error('Rellene los datos.');
       }
     }, setLoading);
   };
