@@ -13,7 +13,7 @@ import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const { login } = useUserManager();
+  const { login, isAuthenticated } = useUserManager();
   const { size } = useDeviceManagement();
   const [userCode, setUserCode] = useState<number>(0);
   const [password, setPassword] = useState<string>('');
@@ -49,10 +49,10 @@ const LoginPage: React.FC = () => {
       if (isValidCode && password.length != 0) {
         const status = await login(userCode, password);
 
-        console.log(`Current status ${status}`);
+        console.log(`Current status: ${status} ${isAuthenticated}`);
 
         if (status) {
-          navigate('/home');
+          navigate('/home', { replace: true });
         } else {
           toast.error('Datos de usuario invalidos.', {
             position: 'bottom-right',

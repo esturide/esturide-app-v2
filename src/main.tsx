@@ -22,9 +22,10 @@ import { UserManagerProvider } from '@/context/UserManager.tsx';
 import { UserThemeProvider } from '@/context/UserTheme.tsx';
 import { CookiesProvider } from 'react-cookie';
 
-import '@/index.css';
 import { Notifications } from 'react-push-notification';
 import { Bounce, ToastContainer } from 'react-toastify';
+
+import '@/index.css';
 
 const router = createBrowserRouter([
   {
