@@ -2,7 +2,6 @@ import React, {
   createContext,
   PropsWithChildren,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { useAtom } from 'jotai';

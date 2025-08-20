@@ -94,7 +94,7 @@ const UserRegister: React.FC = () => {
     <div className={'flex flex-col justify-stretch w-full'}>
       <Scroll>{registerForm[currentForm]}</Scroll>
 
-      <div className={' h-fit'}>
+      <div className={'h-fit'}>
         <div className="flex flex-col gap-2 my-3">
           <UserButton label={'Siguente'} onClick={next} />
           {currentForm > 0 && (
