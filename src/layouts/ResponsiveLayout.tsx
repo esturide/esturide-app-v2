@@ -11,7 +11,7 @@ type Props = {
 
 function ResponsiveLayout({ children, items }: React.PropsWithChildren<Props>) {
   const { theme } = useUserTheme();
-  const { isMobile } = useDeviceManagement();
+  const { isMobile, isTablet } = useDeviceManagement();
 
   const DesktopViewLayout = () => {
     return <DesktopView items={items}>{children}</DesktopView>;
@@ -26,7 +26,7 @@ function ResponsiveLayout({ children, items }: React.PropsWithChildren<Props>) {
   };
 
   const ResponseLayout = () => {
-    if (isMobile) {
+    if (isMobile || isTablet) {
       return <MobileViewLayout />;
     } else {
       return <DesktopViewLayout />;

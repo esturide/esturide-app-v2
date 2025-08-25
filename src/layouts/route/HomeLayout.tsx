@@ -5,6 +5,7 @@ import { FaMessage } from 'react-icons/fa6';
 import { ItemType } from '@components/navbar/types.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
 import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
+import MainLayout from '@layouts/view/MainLayout.tsx';
 
 const HomeLayout = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const HomeLayout = () => {
     },
     {
       label: 'Viajes',
-      href: '/home/travels/schedule',
+      href: '/home/travels',
       current: false,
       icon: FaPlus,
     },
@@ -45,7 +46,9 @@ const HomeLayout = () => {
 
   return (
     <ResponsiveLayout items={items}>
-      <Outlet />
+      <MainLayout>
+        <Outlet />
+      </MainLayout>
     </ResponsiveLayout>
   );
 };

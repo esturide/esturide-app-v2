@@ -5,17 +5,20 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { DeviceManagementProvider } from '@/context/DeviceManagment.tsx';
 
 import UserIndex from '~/index.tsx';
+import UserHome from '~/user';
 import LoginPage from '~/login.tsx';
 import UserRegister from '~/register';
 import UserTravels from '~/user/travels';
 import UserNotify from '~/user/notify.tsx';
 import UserProfile from '~/user/profile';
 import UserSettings from '~/user/profile/settings.tsx';
-import TravelSchedule from '~/user/travels/schedule';
+import ScheduleTravel from '~/user/travels/schedule';
+import RideTravel from '~/user/travels/ride';
 
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
 import IndexLayout from '@layouts/route/IndexLayout.tsx';
 import EmptyLayout from '@layouts/route/EmptyLayout.tsx';
+import TravelLayout from '@layouts/route/TravelLayout.tsx';
 
 import { UserManagerProvider } from '@/context/UserManager.tsx';
 
@@ -34,16 +37,22 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <UserHome />,
       },
       {
         path: 'travels',
+        element: <TravelLayout />,
         children: [
+          {
+            index: true,
+            element: <UserTravels />,
+          },
           {
             path: 'ride',
             children: [
               {
                 index: true,
-                element: <UserTravels />,
+                element: <RideTravel />,
               },
             ],
           },
@@ -52,7 +61,7 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <TravelSchedule />,
+                element: <ScheduleTravel />,
               },
             ],
           },

@@ -1,5 +1,4 @@
 import { useUserManager } from '@/context/UserManager.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
 import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
 import React, { useEffect, useState } from 'react';
@@ -9,6 +8,8 @@ import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
 import UserRole from '$libs/types/UserRole.ts';
 import error from '$libs/toast/error.ts';
+import selectThemeFromRole from '$libs/select/color.ts';
+import { useUserTheme } from '@/context/UserTheme.tsx';
 
 const roleOptions: UserRole[] = [
   'not-verified',
@@ -28,17 +29,8 @@ const searchRoleFromList = (role: UserRole): number => {
   return 0;
 };
 
-const selectThemeFromRole = (role: UserRole): ColorTheme => {
-  if (role === 'driver') {
-    return 'teal';
-  } else if (role === 'passenger') {
-    return 'indigo';
-  }
-
-  return 'gray';
-};
-
 function UserProfile() {
+  const { setTheme } = useUserTheme();
   const { logout, refreshRole, role } = useUserManager();
   const [loading, setLoading] = useState(false);
   const [currentOption, setCurrentOption] = useState<number>(
@@ -57,8 +49,12 @@ function UserProfile() {
         const status = await refreshRole(selectRoleOption);
 
         if (status) {
-          setCurrentRole(selectRoleOption);
-          setCurrentTheme(selectThemeFromRole(selectRoleOption));
+          const roleOption = selectRoleOption;
+          const theme = selectThemeFromRole(roleOption);
+
+          setCurrentTheme(theme);
+          setTheme(theme);
+          setCurrentRole(roleOption);
           setCurrentOption(index);
         } else {
           await error('Permisos invalidos.');
@@ -81,11 +77,9 @@ function UserProfile() {
   }
 
   return (
-    <MainLayout>
+    <>
       <div
-        className={
-          'flex flex-col items-center justify-center h-full w-full gap-2'
-        }
+        className={'flex flex-col items-center justify-center  w-full gap-2'}
       >
         <UserButton
           label={'Cerrar sesion'}
@@ -123,7 +117,7 @@ function UserProfile() {
           },
         ]}
       />
-    </MainLayout>
+    </>
   );
 }
 

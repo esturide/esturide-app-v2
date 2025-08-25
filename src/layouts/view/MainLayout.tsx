@@ -8,17 +8,17 @@ function MainLayout({ children }: React.PropsWithChildren) {
     return (
       <div
         className={
-          'mx-auto max-w-7xl px-6 py-4 lg:px-8 flex flex-col items-start justify-center'
+          'mx-auto max-w-7xl px-6 py-4 h-screen flex flex-col overflow-auto scroll-auto'
         }
       >
         {children}
       </div>
     );
-  } else if (['lg'].includes(size)) {
+  } else if (['lg', 'xl'].includes(size)) {
     return (
       <div
         className={
-          'mx-auto max-w-2xl py-8 px-6 flex flex-col items-center justify-center'
+          'mx-auto max-w-2xl py-8 px-8 h-full flex flex-col overflow-auto scroll-auto'
         }
       >
         {children}
@@ -28,7 +28,7 @@ function MainLayout({ children }: React.PropsWithChildren) {
     return (
       <div
         className={
-          'mx-auto max-w-7xl px-6 py-8 lg:px-8 flex flex-col items-center justify-center'
+          'mx-auto max-w-7xl px-6 py-8 lg:px-8 flex flex-col items-center justify-center overflow-auto scroll-auto'
         }
       >
         {children}

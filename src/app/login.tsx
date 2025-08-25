@@ -50,8 +50,6 @@ const LoginPage: React.FC = () => {
       if (isValidCode && password.length != 0) {
         const status = await login(userCode, password);
 
-        console.log(`Current status: ${status} ${isAuthenticated}`);
-
         if (status) {
           navigate('/home', { replace: true });
         } else {

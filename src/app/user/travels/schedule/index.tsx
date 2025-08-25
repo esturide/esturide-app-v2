@@ -1,21 +1,22 @@
-import { useState } from 'react';
-import ResponsiveLayout from '@layouts/view/ResponsiveLayout.tsx';
-import IconButton from '@components/buttons/IconButton.tsx';
-import ScheduleTravelMessage from '@components/resources/message/ScheduleTravelMessage.tsx';
-
 import { FaAngleDown, FaExchangeAlt, FaFilter, FaSearch } from 'react-icons/fa';
-
 import { LatLng } from '$libs/types/LatLng.ts';
+import { useUserTheme } from '@/context/UserTheme.tsx';
+import { useUserManager } from '@/context/UserManager.tsx';
+import IconButton from '@components/buttons/IconButton.tsx';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import OptionButton from '@components/buttons/OptionButton.tsx';
-import { useUserTheme } from '@/context/UserTheme.tsx';
 import StreetRouteResponsive from '@components/map/StreetRouteResponsive.tsx';
+import { Navigate } from 'react-router';
 
-type StateView = 'view' | 'schedule' | 'driving' | 'unknown';
 const defaultDestination = 'CUTONALA';
 
-const ScheduleTravelView = () => {
+function ScheduleTravel() {
+  const { role } = useUserManager();
   const { theme } = useUserTheme();
+
+  if (role !== 'driver') {
+    return <Navigate to={'/home/travels'} replace />;
+  }
 
   const from: LatLng = {
     lat: 20.566131156580823,
@@ -65,37 +66,6 @@ const ScheduleTravelView = () => {
       </div>
     </>
   );
-};
-
-const DrivingTravelView = () => {
-  return <></>;
-};
-
-function TravelSchedule() {
-  const { theme } = useUserTheme();
-  const [currentState, setCurrentState] = useState<StateView>('view');
-
-  if (currentState == 'schedule') {
-    return <ScheduleTravelView />;
-  } else if (currentState === 'driving') {
-    return <DrivingTravelView />;
-  }
-
-  return (
-    <ResponsiveLayout>
-      <div className={'flex flex-col'}>
-        <ScheduleTravelMessage />
-
-        <OptionButton
-          label={'Agendar'}
-          theme={theme}
-          onClick={async () => {
-            setCurrentState('schedule');
-          }}
-        />
-      </div>
-    </ResponsiveLayout>
-  );
 }
 
-export default TravelSchedule;
+export default ScheduleTravel;
