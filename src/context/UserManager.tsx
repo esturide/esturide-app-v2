@@ -28,7 +28,9 @@ const storage = createCookieStorage<string>({
   sameSite: 'lax',
 });
 
-const authTokenStorage = atomWithStorage<string>('authToken', '', storage);
+const authTokenStorage = atomWithStorage<string>('authToken', '', storage, {
+  getOnInit: true,
+});
 
 const UserManagerContext = createContext<UserManagerProps>({
   isAuthenticated: false,
@@ -57,6 +59,10 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
     authToken?.length != 0,
   );
   const [currentRole, setCurrentRole] = useState<UserRole>('not-verified');
+
+  useEffect(() => {
+    console.log(authToken);
+  }, []);
 
   const removeAuthToken = async () => {
     await setAuthToken('');
