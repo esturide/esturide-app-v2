@@ -80,7 +80,7 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   };
 
   const login = async (code: number, password: string) => {
-    const status = await loginUser(
+    return await loginUser(
       getRequestRoot(),
       {
         code: code,
@@ -88,8 +88,6 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
       },
       setAuthToken,
     );
-
-    return status;
   };
 
   const logout = async () => {
