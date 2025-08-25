@@ -12,6 +12,10 @@ import { atomWithStorage } from 'jotai/utils';
 import createCookieStorage from '$libs/storage/cookies.ts';
 import UserRole from '$libs/types/UserRole.ts';
 import { getUserRole, setUserRole } from '$libs/request/role.ts';
+import loaderEffect from '$libs/loaderEffect.ts';
+import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
+import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
+import CenterElementsLayouts from '@layouts/container/CenterElementsLayouts.tsx';
 
 interface UserManagerProps {
   isAuthenticated: boolean;
@@ -55,24 +59,34 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [authToken, setAuthToken] = useAtom(authTokenStorage);
+  const [headAuthTokenLoad, setHeadAuthTokenLoad] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(
     authToken?.length != 0,
   );
   const [currentRole, setCurrentRole] = useState<UserRole>('not-verified');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const requestRole = async () => {
+    if (isAuthenticated && headAuthTokenLoad) {
+      await getUserRole(getRequestRoot(), setCurrentRole);
+    }
+  };
 
   useEffect(() => {
-    const request = async () => {
-      setIsAuthenticated(authToken.length != 0);
-
-      if (isAuthenticated) {
-        configHeaderAuthToken(authToken);
-
-        await getUserRole(getRequestRoot(), setCurrentRole);
-      }
-    };
-
-    request();
+    setIsAuthenticated(authToken.length != 0);
   }, [authToken]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      configHeaderAuthToken(authToken);
+    }
+
+    setHeadAuthTokenLoad(isAuthenticated);
+  }, [isAuthenticated, authToken]);
+
+  useEffect(() => {
+    loaderEffect(requestRole, setIsLoading);
+  }, [headAuthTokenLoad]);
 
   const removeAuthToken = async () => {
     await setAuthToken('');
@@ -105,7 +119,6 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
     const status = await setUserRole(getRequestRoot(), role, setAuthToken);
 
     if (status) {
-      configHeaderAuthToken(authToken);
       setCurrentRole(role);
     }
 
@@ -124,6 +137,13 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   return (
     <UserManagerContext.Provider value={props}>
       {children}
+      {isLoading && (
+        <FullScreenContainer>
+          <CenterElementsLayouts>
+            <SpinnerLoader />
+          </CenterElementsLayouts>
+        </FullScreenContainer>
+      )}
     </UserManagerContext.Provider>
   );
 };

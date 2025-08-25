@@ -62,7 +62,7 @@ function ScheduleTravel() {
 
   const ScheduleTravelForm = () => {
     return (
-      <form className={'grow px-4 lg:h-screen'}>
+      <form className={'grow p-4 lg:h-screen'}>
         <>
           <LayoutOption>
             <UserInputIcon icon={FaSearch} />
@@ -101,7 +101,7 @@ function ScheduleTravel() {
           </LayoutOption>
         </>
 
-        <div className={'flex flex-row gap-4 py-4 items-center'}>
+        <div className={'flex flex-row gap-4 items-center'}>
           <CancelButton />
 
           <OptionButton label={'Agendar'} theme={theme} />
