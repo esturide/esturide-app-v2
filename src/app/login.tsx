@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { useUserManager } from '@/context/UserManager.tsx';
 import loaderEffect from '$libs/loaderEffect.ts';
 import UserInput from '@components/input/UserInput.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
-import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
+import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import Scroll from '@layouts/scroll/Scroll.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import error from '$libs/toast/error.ts';
@@ -65,9 +64,9 @@ const LoginPage: React.FC = () => {
 
   if (loading) {
     return (
-      <FullscreenContainer>
+      <PartialScreenContainer>
         <SpinnerLoader />
-      </FullscreenContainer>
+      </PartialScreenContainer>
     );
   }
 

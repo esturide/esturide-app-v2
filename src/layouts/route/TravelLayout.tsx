@@ -6,12 +6,6 @@ function TravelLayout() {
   const navigate = useNavigate();
   const { role } = useUserManager();
 
-  useEffect(() => {
-    if (!['passenger', 'driver'].includes(role)) {
-      navigate('/');
-    }
-  }, [role]);
-
   return (
     <>
       <Outlet />

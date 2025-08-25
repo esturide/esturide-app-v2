@@ -1,6 +1,6 @@
 import React from 'react';
 
-function FullscreenContainer({ children }: React.PropsWithChildren) {
+function PartialScreenContainer({ children }: React.PropsWithChildren) {
   return (
     <div className="absolute top-0 left-0 bg-white h-screen w-screen">
       <div className={'flex h-screen items-center justify-center'}>
@@ -10,4 +10,4 @@ function FullscreenContainer({ children }: React.PropsWithChildren) {
   );
 }
 
-export default FullscreenContainer;
+export default PartialScreenContainer;

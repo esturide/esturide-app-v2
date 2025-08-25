@@ -17,6 +17,7 @@ type Props = {
   onClick?: () => Promise<void>;
   icon?: IconType;
   readOnly?: boolean;
+  name?: string;
 };
 
 const UserInputIcon: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const UserInputIcon: React.FC<Props> = ({
   onClick,
   icon = FaCircleCheck,
   readOnly = false,
+  name = undefined,
 }) => {
   const Icon = icon;
   const [inputValue, setInputValue] = useState(value);
@@ -81,7 +83,7 @@ const UserInputIcon: React.FC<Props> = ({
     <InputContainer>
       <input
         type="text"
-        id="userInput"
+        name={name}
         value={inputValue}
         onChange={handleChange}
         onBlur={handleBlur}

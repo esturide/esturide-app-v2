@@ -5,29 +5,15 @@ import React, { useEffect, useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
 import loaderEffect from '$libs/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
-import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
 import UserRole from '$libs/types/UserRole.ts';
 import error from '$libs/toast/error.ts';
-import selectThemeFromRole from '$libs/select/color.ts';
+import {
+  roleOptions,
+  searchRoleFromList,
+  selectThemeFromRole,
+} from '$libs/select/color.ts';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-
-const roleOptions: UserRole[] = [
-  'not-verified',
-  'passenger',
-  'driver',
-  'staff',
-  'admin',
-];
-
-const searchRoleFromList = (role: UserRole): number => {
-  for (let i = 0; i < roleOptions.length; i++) {
-    if (roleOptions[i] == role) {
-      return i;
-    }
-  }
-
-  return 0;
-};
+import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 
 function UserProfile() {
   const { setTheme } = useUserTheme();
@@ -49,12 +35,7 @@ function UserProfile() {
         const status = await refreshRole(selectRoleOption);
 
         if (status) {
-          const roleOption = selectRoleOption;
-          const theme = selectThemeFromRole(roleOption);
-
-          setCurrentTheme(theme);
-          setTheme(theme);
-          setCurrentRole(roleOption);
+          setCurrentRole(selectRoleOption);
           setCurrentOption(index);
         } else {
           await error('Permisos invalidos.');
@@ -70,9 +51,9 @@ function UserProfile() {
 
   if (loading) {
     return (
-      <FullscreenContainer>
+      <PartialScreenContainer>
         <SpinnerLoader />
-      </FullscreenContainer>
+      </PartialScreenContainer>
     );
   }
 

@@ -3,6 +3,7 @@ import OptionButton from '@components/buttons/OptionButton.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useUserManager } from '@/context/UserManager.tsx';
+import { Navigate } from 'react-router';
 
 function UserTravels() {
   const navigate = useNavigate();
@@ -43,6 +44,8 @@ function UserTravels() {
         />
       </div>
     );
+  } else {
+    return <Navigate to={'/home'} replace />;
   }
 }
 
