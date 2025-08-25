@@ -11,6 +11,7 @@ import StreetRouteResponsive from '@components/map/StreetRouteResponsive.tsx';
 import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
 import { TiCancel } from 'react-icons/ti';
 import { useNavigate } from 'react-router-dom';
+import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 
 function ScheduleTravel() {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ function ScheduleTravel() {
 
   const LayoutOption = ({ children }: React.PropsWithChildren) => {
     return (
-      <div className={'flex justify-between gap-2 py-2 flex-row'}>
+      <div className={'flex justify-between items-center gap-2 flex-row'}>
         {children}
       </div>
     );
@@ -66,13 +67,37 @@ function ScheduleTravel() {
           <LayoutOption>
             <UserInputIcon icon={FaSearch} />
 
-            <FilterButton />
+            <ChangeButton />
           </LayoutOption>
 
           <LayoutOption>
-            <UserInputIcon icon={FaSearch} />
+            <SelectOptions
+              options={[
+                {
+                  id: 0,
+                  description: 'No verificado',
+                },
+                {
+                  id: 1,
+                  description: 'Pasajero',
+                },
+                {
+                  id: 2,
+                  description: 'Conductor',
+                },
+                {
+                  id: 3,
+                  description: 'Staff',
+                },
+                {
+                  id: 4,
+                  description: 'Administrador',
+                },
+              ]}
+              onSelect={async (index: number) => {}}
+            />
 
-            <ChangeButton />
+            <FilterButton />
           </LayoutOption>
         </>
 
