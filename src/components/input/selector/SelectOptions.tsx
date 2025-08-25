@@ -57,10 +57,10 @@ const SelectOptions: React.FC<Props> = ({
 
   const ShowSelectedOption = () => {
     const allButtonColor = {
-      gray: 'grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6',
-      teal: 'grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm/6',
+      gray: 'px-4 py-2 grid w-full cursor-default grid-cols-1 rounded-t-[40px] rounded-b-[40px] bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6',
+      teal: 'px-4 py-2 grid w-full cursor-default grid-cols-1 rounded-t-[40px] rounded-b-[40px] bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm/6',
       indigo:
-        'grid w-full cursor-default grid-cols-1 rounded-md bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6hidden',
+        'px-4 py-2 grid w-full cursor-default grid-cols-1 rounded-t-[40px] rounded-b-[40px] bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6hidden',
     };
 
     if (isAvatar(selected)) {
