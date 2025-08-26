@@ -1,9 +1,4 @@
-import React, {
-  ChangeEvent,
-  FocusEvent,
-  PropsWithChildren,
-  useState,
-} from 'react';
+import React, { FocusEvent, PropsWithChildren, useState } from 'react';
 import { IconType } from 'react-icons';
 import { FaCircleCheck } from 'react-icons/fa6';
 import ColorTheme from '$libs/types/Theme.ts';
@@ -12,10 +7,8 @@ type Props = {
   label?: string;
   value?: string;
   placeholder?: string;
-  onChange?: (value: string) => Promise<void>;
-  onBlur?: (value: string) => Promise<void>;
-  onFocus?: (value: string) => Promise<void>;
   onClick?: () => Promise<void>;
+  onInput?: (value: string) => void;
   icon?: IconType;
   readOnly?: boolean;
   theme?: ColorTheme;
@@ -26,45 +19,20 @@ const UserInputIcon: React.FC<Props> = ({
   label,
   value = '',
   placeholder = '',
-  onChange,
-  onBlur,
-  onFocus,
   onClick,
+  onInput,
   icon = FaCircleCheck,
   readOnly = false,
   theme = 'teal',
   name = undefined,
 }) => {
   const Icon = icon;
-  const [inputValue, setInputValue] = useState(value);
 
   const allThemes = {
-    gray: 'px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
-    teal: 'px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
+    gray: 'px-3 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
+    teal: 'px-3 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
     indigo:
-      'px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
-  };
-
-  const handleBlur = async (event: FocusEvent<HTMLInputElement>) => {
-    if (onBlur) {
-      await onBlur(event.target.value);
-    }
-  };
-
-  const handleFocus = async (event: FocusEvent<HTMLInputElement>) => {
-    if (onFocus) {
-      await onFocus(event.target.value);
-    }
-  };
-
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const targetValue = event.target.value;
-
-    if (onChange) {
-      await onChange(targetValue);
-    }
-
-    setInputValue(targetValue);
+      'px-3 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
   };
 
   const InputContainer: React.FC<PropsWithChildren> = ({ children }) => {
@@ -94,10 +62,7 @@ const UserInputIcon: React.FC<Props> = ({
       <input
         type="text"
         name={name}
-        value={inputValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
+        defaultValue={value}
         placeholder={placeholder}
         className={allThemes[theme]}
         aria-label={label || 'User input'}

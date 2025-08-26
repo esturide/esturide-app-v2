@@ -12,11 +12,9 @@ import {
   searchRoleFromList,
   selectThemeFromRole,
 } from '$libs/select/color.ts';
-import { useUserTheme } from '@/context/UserTheme.tsx';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 
 function UserProfile() {
-  const { setTheme } = useUserTheme();
   const { logout, refreshRole, role } = useUserManager();
   const [loading, setLoading] = useState(false);
   const [currentOption, setCurrentOption] = useState<number>(

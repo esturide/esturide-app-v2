@@ -8,6 +8,7 @@ type Props = {
   disabled?: boolean;
   onClick?: () => Promise<void>;
   minSize?: number;
+  type?: 'button' | 'submit';
 };
 
 function OptionButton({
@@ -16,6 +17,7 @@ function OptionButton({
   disabled = false,
   minSize = 60,
   onClick,
+  type = 'button',
 }: Props) {
   const allThemes = {
     gray: 'flex gap-2.5 justify-center items-center px-5 py-4 w-full rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gray-700 hover:bg-gray-800 focus:bg-gray-800 focus:ring-gray-500',
@@ -33,7 +35,7 @@ function OptionButton({
   return (
     <button
       className={allThemes[theme]}
-      type="button"
+      type={type}
       aria-label={`${label} button`}
       disabled={disabled}
       aria-disabled={disabled}
