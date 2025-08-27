@@ -3,12 +3,21 @@ import OptionButton from '@components/buttons/OptionButton.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useUserManager } from '@/context/UserManager.tsx';
-import { Navigate } from 'react-router';
+import SorryMessage from '@components/resources/SorryMessage.tsx';
 
 function UserTravels() {
   const navigate = useNavigate();
   const { role } = useUserManager();
   const { theme } = useUserTheme();
+
+  const InvalidRole = () => {
+    return (
+      <SorryMessage
+        message={'Esta seccion no esta disponible para tu rol actual.'}
+        title={'Próximamente'}
+      />
+    );
+  };
 
   if (role === 'driver') {
     return (
@@ -45,7 +54,7 @@ function UserTravels() {
       </div>
     );
   } else {
-    return <Navigate to={'/home'} replace />;
+    return <InvalidRole />;
   }
 }
 
