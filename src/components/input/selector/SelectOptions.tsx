@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { PropsWithChildren, useId, useState } from 'react';
 import { FaCheckCircle, FaChevronDown } from 'react-icons/fa';
 import {
   Label,
@@ -53,7 +53,14 @@ const SelectOptions: React.FC<Props> = ({
   onSelect = null,
   theme = 'teal',
 }) => {
+  const id = useId();
   const [selected, setSelected] = useState<Option>(options[defaultValue]);
+
+  const allThemesText = {
+    gray: 'my-2 mx-2 text-left text-sm font-medium text-gray-900',
+    teal: 'my-2 mx-2 text-left text-sm font-medium text-teal-900',
+    indigo: 'my-2 mx-2 text-left text-sm font-medium text-indigo-900',
+  };
 
   const ShowSelectedOption = () => {
     const allButtonColor = {
@@ -158,7 +165,10 @@ const SelectOptions: React.FC<Props> = ({
               </div>
 
               <span className={allIconColors[theme]}>
-                <FaCheckCircle aria-hidden="true" className="size-5" />
+                <FaCheckCircle
+                  aria-hidden="true"
+                  className="h-5 w-5 text-gray-400"
+                />
               </span>
             </ListboxOption>
           ))}
@@ -176,17 +186,18 @@ const SelectOptions: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col w-full py-4 rounded-md">
+    <div className="flex flex-col w-full">
       <Listbox value={selected} onChange={onChangeValue}>
         {label && (
-          <Label className="block text-sm/6 font-medium text-gray-900">
+          <Label id={id} className={allThemesText[theme]}>
             {label}
           </Label>
         )}
-        <div className="relative mt-2">
+        <div className="relative">
           <ShowSelectedOption />
 
           <ListboxOptions
+            id={id}
             transition
             className={
               'absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'

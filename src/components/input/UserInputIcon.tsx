@@ -1,4 +1,4 @@
-import React, { FocusEvent, PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useRef, useId } from 'react';
 import { IconType } from 'react-icons';
 import { FaCircleCheck } from 'react-icons/fa6';
 import ColorTheme from '$libs/types/Theme.ts';
@@ -7,8 +7,7 @@ type Props = {
   label?: string;
   value?: string;
   placeholder?: string;
-  onClick?: () => Promise<void>;
-  onInput?: (value: string) => void;
+  onClick?: (value: string) => Promise<void>;
   icon?: IconType;
   readOnly?: boolean;
   theme?: ColorTheme;
@@ -20,12 +19,13 @@ const UserInputIcon: React.FC<Props> = ({
   value = '',
   placeholder = '',
   onClick,
-  onInput,
   icon = FaCircleCheck,
   readOnly = false,
   theme = 'teal',
   name = undefined,
 }) => {
+  const id = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
   const Icon = icon;
 
   const allThemes = {
@@ -35,14 +35,17 @@ const UserInputIcon: React.FC<Props> = ({
       'px-3 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
   };
 
+  const allThemesText = {
+    gray: 'my-2 mx-2 text-left text-sm font-medium text-gray-900',
+    teal: 'my-2 mx-2 text-left text-sm font-medium text-teal-900',
+    indigo: 'my-2 mx-2 text-left text-sm font-medium text-indigo-900',
+  };
+
   const InputContainer: React.FC<PropsWithChildren> = ({ children }) => {
     return (
       <div className="flex flex-col w-full">
         {label && (
-          <label
-            htmlFor="userInput"
-            className="my-2 mx-2 text-left text-sm font-medium text-teal-900"
-          >
+          <label id={id} className={allThemesText[theme]}>
             {label}
           </label>
         )}
@@ -53,13 +56,14 @@ const UserInputIcon: React.FC<Props> = ({
 
   const onClickIcon = async () => {
     if (onClick !== undefined) {
-      await onClick();
+      await onClick(inputRef.current !== null ? inputRef.current.value : '');
     }
   };
 
   return (
     <InputContainer>
       <input
+        id={id}
         type="text"
         name={name}
         defaultValue={value}
@@ -67,6 +71,7 @@ const UserInputIcon: React.FC<Props> = ({
         className={allThemes[theme]}
         aria-label={label || 'User input'}
         readOnly={readOnly}
+        ref={inputRef}
       />
       <button
         type="button"
