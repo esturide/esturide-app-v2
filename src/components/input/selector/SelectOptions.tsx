@@ -72,7 +72,9 @@ const SelectOptions: React.FC<Props> = ({
               src={selected.avatar}
               className="size-5 shrink-0 rounded-full"
             />
-            <span className="block truncate">{selected.name}</span>
+            <span className="block truncate text-base font-medium tracking-normal text-left text-black">
+              {selected.name}
+            </span>
           </span>
           <FaChevronDown
             aria-hidden="true"
@@ -84,7 +86,9 @@ const SelectOptions: React.FC<Props> = ({
       return (
         <ListboxButton className={allButtonColor[theme]}>
           <span className="col-start-1 row-start-1 flex items-center gap-3 pr-6">
-            <span className="block truncate">{selected.description}</span>
+            <span className="block truncate text-base font-medium tracking-normal text-left text-black">
+              {selected.description}
+            </span>
           </span>
           <FaChevronDown
             aria-hidden="true"
@@ -97,10 +101,10 @@ const SelectOptions: React.FC<Props> = ({
 
   const AllElements = () => {
     const allButtonColor = {
-      gray: 'group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-gray-600 data-focus:text-white data-focus:outline-hidden',
-      teal: 'group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-teal-600 data-focus:text-white data-focus:outline-hidden',
+      gray: 'group relative cursor-default py-2 pr-9 text-gray-900 select-none data-focus:bg-gray-600 data-focus:text-white data-focus:outline-hidden',
+      teal: 'group relative cursor-default py-2 pr-9 text-gray-900 select-none data-focus:bg-teal-600 data-focus:text-white data-focus:outline-hidden',
       indigo:
-        'group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden',
+        'group relative cursor-default py-2 pr-9 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden',
     };
 
     const allIconColors = {
@@ -125,7 +129,7 @@ const SelectOptions: React.FC<Props> = ({
                   src={option.avatar}
                   className="size-5 shrink-0 rounded-full"
                 />
-                <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
+                <span className="ml-3 block truncate text-base tracking-normal text-left group-data-selected:font-semibold">
                   {option.name}
                 </span>
               </div>
@@ -148,7 +152,7 @@ const SelectOptions: React.FC<Props> = ({
             >
               <div className="flex items-center">
                 <div></div>
-                <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
+                <span className="ml-3 block truncate text-base tracking-normal text-left group-data-selected:font-semibold">
                   {option.description}
                 </span>
               </div>
@@ -185,7 +189,7 @@ const SelectOptions: React.FC<Props> = ({
           <ListboxOptions
             transition
             className={
-              'absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[10px]'
+              'absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'
             }
           >
             <AllElements />
