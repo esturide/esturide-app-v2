@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { FaExchangeAlt } from 'react-icons/fa';
+import React, { useEffect, useRef, useState } from 'react';
 import { TiCancel } from 'react-icons/ti';
 import ColorTheme from '$libs/types/Theme.ts';
-import SelectOptions, {
-  StringOption,
-} from '@components/input/selector/SelectOptions.tsx';
 import OptionButton from '@components/buttons/OptionButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
+import ConfigAddress from '@components/forms/inputs/ConfigAddress.tsx';
+import LocationsResponse from '$libs/request/response/location.ts';
 import SearchAddress from '@components/forms/inputs/SearchAddress.tsx';
+import { StringOption } from '@components/input/selector/SelectOptions.tsx';
 
 const defaultLocationList: StringOption[] = [
   {
@@ -44,29 +43,31 @@ const defaultLocationList: StringOption[] = [
   },
 ] as const;
 
-type Props = {
-  theme: ColorTheme;
+const searchCurrentItem = (index: number) => {
+  for (const item of defaultLocationList) {
+    if (item.id == index) {
+      return item;
+    }
+  }
 };
 
-function ScheduleTravelForm({ theme }: Props) {
-  const [currentOptionIndex, setCurrentOptionIndex] = useState(0);
-  const [currentOptionAddress, setCurrentOptionAddress] = useState<string>('');
+type Props = {
+  theme: ColorTheme;
+  onSchedule?: (current: string, address: LocationsResponse) => Promise<void>;
+  onCancel?: () => Promise<void>;
+};
+
+function ScheduleTravelForm({ theme, onCancel }: Props) {
+  const [onSwapView, setOnSwapView] = useState(false);
   const [currentAddress, setCurrentAddress] = useState('');
-  const [returnHome, setReturnHome] = useState(false);
-  const [showResults, setShowResults] = useState(false);
+  const [currentOption, setCurrentOption] = useState(0);
 
   useEffect(() => {
-    console.log(currentAddress);
-  }, [currentAddress]);
-
-  useEffect(() => {
-    console.log(currentOptionAddress);
-  }, [currentOptionAddress]);
-
-  const onSearch = async () => {};
+    console.log(currentOption);
+  }, [currentOption]);
 
   const CancelButton = () => {
-    return <IconButton icon={TiCancel} theme={'gray'} />;
+    return <IconButton icon={TiCancel} theme={'gray'} onClick={onCancel} />;
   };
 
   const LayoutInputContainer = ({ children }: React.PropsWithChildren) => {
@@ -77,50 +78,32 @@ function ScheduleTravelForm({ theme }: Props) {
     );
   };
 
-  const AllAddress = () => {};
-
-  const ConfigAddress = () => {
-    const ChangeButton = () => {
-      return (
-        <IconButton
-          icon={FaExchangeAlt}
-          theme={theme}
-          onClick={() => setReturnHome(!returnHome)}
-        />
-      );
+  const AddressInputForms = () => {
+    const onSwap = () => {
+      setOnSwapView(!onSwapView);
     };
 
-    return (
-      <>
-        <SelectOptions
-          defaultValue={currentOptionIndex}
-          options={defaultLocationList}
-          onSelect={async (index: number) => {
-            setCurrentOptionIndex(index);
-
-            defaultLocationList.forEach(item => {
-              if (item.id == index) {
-                setCurrentOptionAddress(item.description);
-              }
-            });
-          }}
-        />
-
-        <ChangeButton />
-      </>
-    );
-  };
-
-  const InputForms = () => {
-    if (returnHome) {
+    if (onSwapView) {
       return (
         <>
           <LayoutInputContainer>
-            <SearchAddress />
+            <SearchAddress
+              label={'Inicio de viaje'}
+              theme={theme}
+              value={currentAddress}
+              onChange={setCurrentAddress}
+            />
           </LayoutInputContainer>
 
           <LayoutInputContainer>
-            <ConfigAddress />
+            <ConfigAddress
+              label={'Fin del viaje'}
+              theme={theme}
+              onSwap={onSwap}
+              defaultLocationList={defaultLocationList}
+              onSelect={setCurrentOption}
+              select={currentOption}
+            />
           </LayoutInputContainer>
         </>
       );
@@ -128,11 +111,23 @@ function ScheduleTravelForm({ theme }: Props) {
       return (
         <>
           <LayoutInputContainer>
-            <ConfigAddress />
+            <ConfigAddress
+              label={'Inicio de viaje'}
+              theme={theme}
+              onSwap={onSwap}
+              defaultLocationList={defaultLocationList}
+              onSelect={setCurrentOption}
+              select={currentOption}
+            />
           </LayoutInputContainer>
 
           <LayoutInputContainer>
-            <SearchAddress />
+            <SearchAddress
+              label={'Fin del viaje'}
+              theme={theme}
+              value={currentAddress}
+              onChange={setCurrentAddress}
+            />
           </LayoutInputContainer>
         </>
       );
@@ -141,8 +136,8 @@ function ScheduleTravelForm({ theme }: Props) {
 
   return (
     <form className={'grow p-4 lg:h-screen flex flex-col justify-start gap-4'}>
-      <div className={'grow flex flex-col gap-4'}>
-        <InputForms />
+      <div className={'grow flex flex-col'}>
+        <AddressInputForms />
       </div>
 
       <div className={'flex flex-row gap-4 items-center'}>

@@ -1,4 +1,4 @@
-import React, { useId, useState } from 'react';
+import React, { useId, useRef, useState } from 'react';
 import { FaCheckCircle, FaChevronDown } from 'react-icons/fa';
 import {
   Label,
@@ -23,11 +23,13 @@ export interface StringOption extends Option {
 }
 
 type Props = {
+  name?: string;
   label?: string;
   defaultValue?: number;
   options: AvatarOption[] | StringOption[] | Option[];
-  onSelect: (index: number) => Promise<void>;
+  onSelect?: (index: number) => void;
   theme?: ColorTheme;
+  disabled?: boolean;
 };
 
 const isAvatar = (option: any): option is AvatarOption => {
@@ -47,13 +49,16 @@ function isOptionArray(arr: any[]): arr is StringOption[] {
 }
 
 const SelectOptions: React.FC<Props> = ({
+  name = undefined,
   label = null,
   options,
   defaultValue = 0,
   onSelect = null,
   theme = 'teal',
+  disabled = false,
 }) => {
   const id = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [selected, setSelected] = useState<Option>(options[defaultValue]);
 
   const allThemesText = {
@@ -158,7 +163,6 @@ const SelectOptions: React.FC<Props> = ({
               className={allButtonColor[theme]}
             >
               <div className="flex items-center">
-                <div></div>
                 <span className="ml-3 block truncate text-base tracking-normal text-left group-data-selected:font-semibold">
                   {option.description}
                 </span>
@@ -178,16 +182,21 @@ const SelectOptions: React.FC<Props> = ({
   };
 
   const onChangeValue = async (option: Option) => {
-    setSelected(option);
-
     if (onSelect) {
-      await onSelect(option.id);
+      onSelect(option.id);
     }
+
+    setSelected(option);
   };
 
   return (
     <div className="flex flex-col w-full">
-      <Listbox value={selected} onChange={onChangeValue}>
+      <Listbox
+        value={selected}
+        onChange={onChangeValue}
+        disabled={disabled}
+        name={name}
+      >
         {label && (
           <Label id={id} className={allThemesText[theme]}>
             {label}

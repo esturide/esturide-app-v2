@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
 import LocationsResponse from '$libs/request/response/location.ts';
 import { searchLocationFromAddress } from '$libs/request/search.ts';

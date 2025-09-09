@@ -7,7 +7,7 @@ type Props = {
   label?: string;
   value?: string;
   placeholder?: string;
-  onClick?: (value: string) => Promise<void>;
+  onChange?: (value: string) => void;
   icon?: IconType;
   readOnly?: boolean;
   theme?: ColorTheme;
@@ -18,15 +18,15 @@ const UserInputIcon: React.FC<Props> = ({
   label,
   value = '',
   placeholder = '',
-  onClick,
+  onChange,
   icon = FaCircleCheck,
   readOnly = false,
   theme = 'teal',
   name = undefined,
 }) => {
   const id = useId();
-  const inputRef = useRef<HTMLInputElement>(null);
   const Icon = icon;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const allThemes = {
     gray: 'px-3 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
@@ -54,9 +54,9 @@ const UserInputIcon: React.FC<Props> = ({
     );
   };
 
-  const onClickIcon = async () => {
-    if (onClick !== undefined) {
-      await onClick(inputRef.current !== null ? inputRef.current.value : '');
+  const onSearchEvent = async () => {
+    if (onChange !== undefined) {
+      onChange(inputRef.current !== null ? inputRef.current.value : '');
     }
   };
 
@@ -71,11 +71,11 @@ const UserInputIcon: React.FC<Props> = ({
         className={allThemes[theme]}
         aria-label={label || 'User input'}
         readOnly={readOnly}
+        onBlur={onSearchEvent}
         ref={inputRef}
       />
       <button
         type="button"
-        onClick={onClickIcon}
         className="absolute inset-y-0 right-0 pr-3 flex items-center"
       >
         <Icon className="h-5 w-5 text-gray-400" />

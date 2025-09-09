@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Navigate } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { LatLng } from '$libs/types/LatLng.ts';
@@ -7,15 +7,11 @@ import { useUserManager } from '@/context/UserManager.tsx';
 import StreetRouteResponsive from '@components/map/StreetRouteResponsive.tsx';
 import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
 import ScheduleTravelForm from '@components/forms/ScheduleTravelForm.tsx';
-import { Sheet } from 'react-modal-sheet';
-import ModalSheet from '@components/modal/ModalSheet.tsx';
-import SearchAddressForm from '@components/forms/SearchAddressForm.tsx';
 
 function ScheduleTravel() {
   const navigate = useNavigate();
   const { role } = useUserManager();
   const { theme } = useUserTheme();
-  const [openModal, setOpenModal] = useState(true);
   const [fromLocation, setFromLocation] = useState<LatLng>({
     lat: 20.566131156580823,
     lng: -103.29118486392122,
@@ -32,7 +28,12 @@ function ScheduleTravel() {
   return (
     <FullScreenContainer>
       <div className={'flex max-lg:flex-col flex-row items-stretch'}>
-        <ScheduleTravelForm theme={theme} />
+        <ScheduleTravelForm
+          theme={theme}
+          onCancel={async () => {
+            navigate(-1);
+          }}
+        />
 
         <div className={'flex-10'}>
           <StreetRouteResponsive
@@ -42,10 +43,6 @@ function ScheduleTravel() {
           />
         </div>
       </div>
-
-      <ModalSheet isOpen={openModal} setOpen={setOpenModal}>
-        <SearchAddressForm theme={theme} />
-      </ModalSheet>
     </FullScreenContainer>
   );
 }

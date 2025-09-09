@@ -1,41 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaSearch } from 'react-icons/fa';
+import ColorTheme from '$libs/types/Theme.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
-import LocationsResponse from '$libs/request/response/location.ts';
-import { searchLocationFromAddress } from '$libs/request/search.ts';
-import { getRequestRoot } from '$libs/request/api.ts';
 
 type Props = {
-  onSearch?: (results: LocationsResponse[]) => void;
+  theme: ColorTheme;
+  label?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 };
 
-const SearchAddress = ({ onSearch }: Props) => {
-  const [addressResults, setAddressResults] = useState<LocationsResponse[]>([]);
-
-  useEffect(() => {
-    console.log(searchLocationFromAddress);
-  }, [searchLocationFromAddress]);
-
-  const onClick = async (address: string) => {
-    console.log('!');
-
-    const status = await searchLocationFromAddress(
-      getRequestRoot(),
-      address,
-      setAddressResults,
-    );
-
-    if (onSearch !== undefined && status) {
-      onSearch(addressResults);
-    }
-  };
-
+const SearchAddress = ({ theme, label, value, onChange }: Props) => {
   return (
     <UserInputIcon
+      name={'search-address'}
       placeholder={'Direccion'}
       icon={FaSearch}
-      name={'address'}
-      onClick={onClick}
+      label={label}
+      theme={theme}
+      value={value}
+      onChange={onChange}
     />
   );
 };
