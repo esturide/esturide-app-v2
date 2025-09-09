@@ -21,6 +21,14 @@ function ScheduleTravel() {
     lng: -103.22847750386998,
   });
 
+  const onSchedule = async (
+    current: string,
+    address: string,
+    swap: boolean,
+  ) => {
+    console.log(current, address, swap);
+  };
+
   if (role !== 'driver') {
     return <Navigate to={'/home/travels'} replace />;
   }
@@ -33,9 +41,7 @@ function ScheduleTravel() {
           onCancel={async () => {
             navigate(-1);
           }}
-          onSchedule={async (current, address, swap) => {
-            console.log(current, address, swap);
-          }}
+          onSchedule={onSchedule}
         />
 
         <div className={'flex-10'}>

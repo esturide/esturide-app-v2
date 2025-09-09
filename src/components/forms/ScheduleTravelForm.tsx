@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { TiCancel } from 'react-icons/ti';
 import ColorTheme from '$libs/types/Theme.ts';
 import OptionButton from '@components/buttons/OptionButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
 import ConfigAddress from '@components/forms/inputs/ConfigAddress.tsx';
-import LocationsResponse from '$libs/request/response/location.ts';
 import SearchAddress from '@components/forms/inputs/SearchAddress.tsx';
 import { StringOption } from '@components/input/selector/SelectOptions.tsx';
 
