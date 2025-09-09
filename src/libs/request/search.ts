@@ -9,8 +9,9 @@ export const searchLocationFromAddress = async (
   setResult: (locations: LocationsResponse[]) => void,
 ) => {
   try {
-    const response: AxiosResponse = await root.get(
-      `location/search/${address}`,
+    const response: AxiosResponse = await root.post(
+      `/location/search`,
+      { address: address },
       getRequestConfig(),
     );
 

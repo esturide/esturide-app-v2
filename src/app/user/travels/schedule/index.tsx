@@ -7,17 +7,15 @@ import { useUserManager } from '@/context/UserManager.tsx';
 import StreetRouteResponsive from '@components/map/StreetRouteResponsive.tsx';
 import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
 import ScheduleTravelForm from '@components/forms/ScheduleTravelForm.tsx';
-import GenericModal from '@components/modal/GenericModal.tsx';
 import { Sheet } from 'react-modal-sheet';
 import ModalSheet from '@components/modal/ModalSheet.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
-import UserButton from '@components/buttons/UserButton.tsx';
+import SearchAddressForm from '@components/forms/SearchAddressForm.tsx';
 
 function ScheduleTravel() {
   const navigate = useNavigate();
   const { role } = useUserManager();
   const { theme } = useUserTheme();
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(true);
   const [fromLocation, setFromLocation] = useState<LatLng>({
     lat: 20.566131156580823,
     lng: -103.29118486392122,
@@ -36,7 +34,7 @@ function ScheduleTravel() {
       <div className={'flex max-lg:flex-col flex-row items-stretch'}>
         <ScheduleTravelForm theme={theme} />
 
-        <div className={'flex-24'}>
+        <div className={'flex-10'}>
           <StreetRouteResponsive
             from={fromLocation}
             to={toLocation}
@@ -46,7 +44,7 @@ function ScheduleTravel() {
       </div>
 
       <ModalSheet isOpen={openModal} setOpen={setOpenModal}>
-        <p>My Modal</p>
+        <SearchAddressForm theme={theme} />
       </ModalSheet>
     </FullScreenContainer>
   );

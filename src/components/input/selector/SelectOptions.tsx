@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useId, useState } from 'react';
+import React, { useId, useState } from 'react';
 import { FaCheckCircle, FaChevronDown } from 'react-icons/fa';
 import {
   Label,
