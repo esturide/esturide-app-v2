@@ -5,13 +5,13 @@ import ColorTheme from '$libs/types/Theme.ts';
 import SelectOptions, {
   StringOption,
 } from '@components/input/selector/SelectOptions.tsx';
+import { PrimitiveAtom, useAtom } from 'jotai/index';
 
 type Props = {
   theme: ColorTheme;
   label?: string;
   onSwap?: () => void;
-  onSelect?: (option: number) => void;
-  select?: number;
+  selected: PrimitiveAtom<number>;
   defaultLocationList: StringOption[];
 };
 
@@ -19,10 +19,11 @@ function ConfigAddress({
   theme,
   label,
   onSwap,
-  onSelect,
-  select,
+  selected,
   defaultLocationList,
 }: Props) {
+  const [select, onSelect] = useAtom(selected);
+
   const ChangeButton = () => {
     return <IconButton icon={FaExchangeAlt} theme={theme} onClick={onSwap} />;
   };

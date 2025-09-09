@@ -2,15 +2,18 @@ import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 import ColorTheme from '$libs/types/Theme.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
+import { PrimitiveAtom } from 'jotai';
+import { useAtom } from 'jotai';
 
 type Props = {
   theme: ColorTheme;
   label?: string;
-  value?: string;
-  onChange?: (value: string) => void;
+  address: PrimitiveAtom<string>;
 };
 
-const SearchAddress = ({ theme, label, value, onChange }: Props) => {
+const SearchAddress = ({ theme, label, address }: Props) => {
+  const [value, onChange] = useAtom(address);
+
   return (
     <UserInputIcon
       name={'search-address'}

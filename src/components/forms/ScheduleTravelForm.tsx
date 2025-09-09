@@ -8,6 +8,7 @@ import SearchAddress from '@components/forms/inputs/SearchAddress.tsx';
 import { StringOption } from '@components/input/selector/SelectOptions.tsx';
 import { LatLng } from '$libs/types/LatLng.ts';
 import messageInformation from '$libs/toast/message.ts';
+import { atom } from 'jotai';
 
 export interface CurrentOption {
   name: string;
@@ -112,28 +113,11 @@ function ScheduleTravelForm({
   onSchedule,
   onCancel,
 }: Props) {
-  const [address, setAddress] = useState('');
-  const [option, setOption] = useState(0);
+  const swapAtom = atom(false);
+  const addressAtom = atom<string>('');
+  const currentAtom = atom(0);
 
-  useEffect(() => {
-    if (swap) {
-      messageInformation('Viaje de regreso a casa.');
-    } else {
-      messageInformation('Viaje de salida de casa.');
-    }
-  }, []);
-
-  const onClickSchedule = async () => {
-    const item = searchCurrentItem(option);
-
-    if (onSchedule && item !== undefined) {
-      await onSchedule(
-        { name: item.description, location: item.location },
-        address,
-        swap,
-      );
-    }
-  };
+  const onClickSchedule = async () => {};
 
   const CancelButton = () => {
     return <IconButton icon={TiCancel} theme={'gray'} onClick={onCancel} />;
@@ -159,8 +143,7 @@ function ScheduleTravelForm({
             <SearchAddress
               label={'Inicio de viaje'}
               theme={theme}
-              value={address}
-              onChange={setAddress}
+              address={addressAtom}
             />
           </LayoutInputContainer>
 
@@ -170,8 +153,7 @@ function ScheduleTravelForm({
               theme={theme}
               onSwap={onSwap}
               defaultLocationList={defaultLocationList}
-              onSelect={setOption}
-              select={option}
+              selected={currentAtom}
             />
           </LayoutInputContainer>
         </>
@@ -185,8 +167,7 @@ function ScheduleTravelForm({
               theme={theme}
               onSwap={onSwap}
               defaultLocationList={defaultLocationList}
-              onSelect={setOption}
-              select={option}
+              selected={currentAtom}
             />
           </LayoutInputContainer>
 
@@ -194,8 +175,7 @@ function ScheduleTravelForm({
             <SearchAddress
               label={'Fin del viaje'}
               theme={theme}
-              value={address}
-              onChange={setAddress}
+              address={addressAtom}
             />
           </LayoutInputContainer>
         </>
