@@ -33,6 +33,9 @@ function ScheduleTravel() {
           onCancel={async () => {
             navigate(-1);
           }}
+          onSchedule={async (current, address, swap) => {
+            console.log(current, address, swap);
+          }}
         />
 
         <div className={'flex-10'}>

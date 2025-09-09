@@ -53,18 +53,26 @@ const searchCurrentItem = (index: number) => {
 
 type Props = {
   theme: ColorTheme;
-  onSchedule?: (current: string, address: LocationsResponse) => Promise<void>;
+  onSchedule?: (
+    current: string,
+    address: string,
+    swap: boolean,
+  ) => Promise<void>;
   onCancel?: () => Promise<void>;
 };
 
-function ScheduleTravelForm({ theme, onCancel }: Props) {
-  const [onSwapView, setOnSwapView] = useState(false);
-  const [currentAddress, setCurrentAddress] = useState('');
-  const [currentOption, setCurrentOption] = useState(0);
+function ScheduleTravelForm({ theme, onSchedule, onCancel }: Props) {
+  const [swap, setSwap] = useState(false);
+  const [address, setAddress] = useState('');
+  const [option, setOption] = useState(0);
 
-  useEffect(() => {
-    console.log(currentOption);
-  }, [currentOption]);
+  const onClickSchedule = async () => {
+    const item = searchCurrentItem(option);
+
+    if (onSchedule && item !== undefined) {
+      await onSchedule(address, item.description, swap);
+    }
+  };
 
   const CancelButton = () => {
     return <IconButton icon={TiCancel} theme={'gray'} onClick={onCancel} />;
@@ -80,18 +88,18 @@ function ScheduleTravelForm({ theme, onCancel }: Props) {
 
   const AddressInputForms = () => {
     const onSwap = () => {
-      setOnSwapView(!onSwapView);
+      setSwap(!swap);
     };
 
-    if (onSwapView) {
+    if (swap) {
       return (
         <>
           <LayoutInputContainer>
             <SearchAddress
               label={'Inicio de viaje'}
               theme={theme}
-              value={currentAddress}
-              onChange={setCurrentAddress}
+              value={address}
+              onChange={setAddress}
             />
           </LayoutInputContainer>
 
@@ -101,8 +109,8 @@ function ScheduleTravelForm({ theme, onCancel }: Props) {
               theme={theme}
               onSwap={onSwap}
               defaultLocationList={defaultLocationList}
-              onSelect={setCurrentOption}
-              select={currentOption}
+              onSelect={setOption}
+              select={option}
             />
           </LayoutInputContainer>
         </>
@@ -116,8 +124,8 @@ function ScheduleTravelForm({ theme, onCancel }: Props) {
               theme={theme}
               onSwap={onSwap}
               defaultLocationList={defaultLocationList}
-              onSelect={setCurrentOption}
-              select={currentOption}
+              onSelect={setOption}
+              select={option}
             />
           </LayoutInputContainer>
 
@@ -125,8 +133,8 @@ function ScheduleTravelForm({ theme, onCancel }: Props) {
             <SearchAddress
               label={'Fin del viaje'}
               theme={theme}
-              value={currentAddress}
-              onChange={setCurrentAddress}
+              value={address}
+              onChange={setAddress}
             />
           </LayoutInputContainer>
         </>
@@ -143,7 +151,11 @@ function ScheduleTravelForm({ theme, onCancel }: Props) {
       <div className={'flex flex-row gap-4 items-center'}>
         <CancelButton />
 
-        <OptionButton label={'Agendar'} theme={theme} />
+        <OptionButton
+          label={'Agendar'}
+          theme={theme}
+          onClick={onClickSchedule}
+        />
       </div>
     </form>
   );
