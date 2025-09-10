@@ -14,17 +14,12 @@ import { getRequestRoot } from '$libs/request/api.ts';
 import error from '$libs/toast/error.ts';
 import loaderEffect from '$libs/loaderEffect.ts';
 import ScheduleForm from '@components/forms/ScheduleForm.tsx';
-import { LocationOption } from '$libs/const/defaultLocations.ts';
+import defaultLocationList, {
+  LocationOption,
+} from '$libs/const/defaultLocations.ts';
 
-const defaultTravelFrom: LatLng = {
-  lat: 20.56680439042432,
-  lng: -103.22286936854996,
-};
-
-const defaultTravelTo: LatLng = {
-  lat: 20.56680439042432,
-  lng: -103.22286936854996,
-};
+const defaultTravelFrom: LatLng = defaultLocationList[0].location;
+const defaultTravelTo: LatLng = defaultLocationList[1].location;
 
 function ScheduleTravel() {
   const navigate = useNavigate();
@@ -102,7 +97,13 @@ function ScheduleTravel() {
   return (
     <FullScreenContainer>
       <div className={'flex max-lg:flex-col flex-row items-stretch'}>
-        <ScheduleForm theme={theme} onSchedule={onSchedule} />
+        <div className={'flex-3'}>
+          <ScheduleForm
+            theme={theme}
+            onSchedule={onSchedule}
+            onCancel={() => navigate(-1)}
+          />
+        </div>
 
         <div className={'flex-10'}>
           <StreetRouteResponsive
