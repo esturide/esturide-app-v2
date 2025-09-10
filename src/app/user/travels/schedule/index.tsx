@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Navigate } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { LatLng } from '$libs/types/LatLng.ts';
@@ -7,16 +7,14 @@ import { useUserManager } from '@/context/UserManager.tsx';
 import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
 import StreetRouteResponsive from '@components/map/StreetRouteResponsive.tsx';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
-import ScheduleTravelForm, {
-  CurrentOption,
-} from '@components/forms/ScheduleTravelForm.tsx';
 import CenterElementsLayouts from '@layouts/container/CenterElementsLayouts.tsx';
 import LocationsResponse from '$libs/request/response/location.ts';
 import { searchLocationFromAddress } from '$libs/request/search.ts';
 import { getRequestRoot } from '$libs/request/api.ts';
 import error from '$libs/toast/error.ts';
 import loaderEffect from '$libs/loaderEffect.ts';
-import messageInformation from '$libs/toast/message.ts';
+import ScheduleForm from '@components/forms/ScheduleForm.tsx';
+import { LocationOption } from '$libs/const/defaultLocations.ts';
 
 const defaultTravelFrom: LatLng = {
   lat: 20.56680439042432,
@@ -34,7 +32,6 @@ function ScheduleTravel() {
   const { theme } = useUserTheme();
 
   const [loadingAddress, setLoadingAddress] = useState(false);
-  const [swap, setSwap] = useState(false);
   const [fromLocation, setFromLocation] = useState<LatLng>(defaultTravelTo);
   const [toLocation, setToLocation] = useState<LatLng>(defaultTravelFrom);
   const [resultLocations, setResultLocations] = useState<LocationsResponse[]>(
@@ -42,41 +39,48 @@ function ScheduleTravel() {
   );
 
   const onSchedule = async (
-    current: CurrentOption,
+    current: LocationOption,
     address: string,
     swap: boolean,
   ) => {
-    loaderEffect(async () => {
-      const status = await searchLocationFromAddress(
-        getRequestRoot(),
-        address,
-        setResultLocations,
-      );
+    await loaderEffect(async () => {
+      if (address.length > 0) {
+        const status = await searchLocationFromAddress(
+          getRequestRoot(),
+          address,
+          setResultLocations,
+        );
 
-      if (status) {
-        if (resultLocations.length > 0) {
-          const location = resultLocations[0];
+        console.log(current, address, swap);
+        console.log(status);
 
-          if (swap) {
-            setFromLocation({
-              lat: location.latitude,
-              lng: location.longitude,
-            });
+        if (status) {
+          if (resultLocations.length > 0) {
+            const location = resultLocations[0];
 
-            setToLocation(current.location);
+            if (swap) {
+              setFromLocation({
+                lat: location.latitude,
+                lng: location.longitude,
+              });
+
+              setToLocation(current.location);
+            } else {
+              setToLocation({
+                lat: location.latitude,
+                lng: location.longitude,
+              });
+
+              setFromLocation(current.location);
+            }
           } else {
-            setToLocation({
-              lat: location.latitude,
-              lng: location.longitude,
-            });
-
-            setFromLocation(current.location);
+            await error('Direccion no encontrada.');
           }
         } else {
-          await error('Direccion no encontrada.');
+          await error('Hubo un problema con el servidor, intenta de nuevo.');
         }
       } else {
-        await error('Hubo un problema con el servidor, intenta de nuevo.');
+        await error('No puedes dejar la direccion en blanco.');
       }
     }, setLoadingAddress);
   };
@@ -98,15 +102,7 @@ function ScheduleTravel() {
   return (
     <FullScreenContainer>
       <div className={'flex max-lg:flex-col flex-row items-stretch'}>
-        <ScheduleTravelForm
-          theme={theme}
-          onCancel={async () => {
-            navigate(-1);
-          }}
-          onSchedule={onSchedule}
-          swap={swap}
-          setSwap={setSwap}
-        />
+        <ScheduleForm theme={theme} onSchedule={onSchedule} />
 
         <div className={'flex-10'}>
           <StreetRouteResponsive

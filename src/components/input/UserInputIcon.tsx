@@ -54,7 +54,7 @@ const UserInputIcon: React.FC<Props> = ({
     );
   };
 
-  const onSearchEvent = async () => {
+  const onClickSearch = async () => {
     if (onChange !== undefined) {
       onChange(inputRef.current !== null ? inputRef.current.value : '');
     }
@@ -71,12 +71,12 @@ const UserInputIcon: React.FC<Props> = ({
         className={allThemes[theme]}
         aria-label={label || 'User input'}
         readOnly={readOnly}
-        onBlur={onSearchEvent}
         ref={inputRef}
       />
       <button
         type="button"
         className="absolute inset-y-0 right-0 pr-3 flex items-center"
+        onClick={onClickSearch}
       >
         <Icon className="h-5 w-5 text-gray-400" />
       </button>

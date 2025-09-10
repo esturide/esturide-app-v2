@@ -9,33 +9,23 @@ import SelectOptions, {
 type Props = {
   theme: ColorTheme;
   label?: string;
-  onSwap?: () => void;
-  onSelect?: (option: number) => void;
-  select?: number;
+  name?: string;
   defaultLocationList: StringOption[];
 };
 
 function ConfigAddress({
   theme,
   label,
-  onSwap,
-  onSelect,
-  select,
+  name = 'selected-address',
   defaultLocationList,
 }: Props) {
   const ChangeButton = () => {
-    return <IconButton icon={FaExchangeAlt} theme={theme} onClick={onSwap} />;
+    return <IconButton icon={FaExchangeAlt} theme={theme} />;
   };
 
   return (
     <>
-      <SelectOptions
-        label={label}
-        options={defaultLocationList}
-        name={'selected-address'}
-        onSelect={onSelect}
-        defaultValue={select}
-      />
+      <SelectOptions label={label} options={defaultLocationList} name={name} />
 
       <ChangeButton />
     </>

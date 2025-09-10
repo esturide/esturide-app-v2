@@ -6,20 +6,17 @@ import UserInputIcon from '@components/input/UserInputIcon.tsx';
 type Props = {
   theme: ColorTheme;
   label?: string;
-  value?: string;
-  onChange?: (value: string) => void;
+  name?: string;
 };
 
-const SearchAddress = ({ theme, label, value, onChange }: Props) => {
+const SearchAddress = ({ theme, label, name = 'search-address' }: Props) => {
   return (
     <UserInputIcon
-      name={'search-address'}
+      name={name}
       placeholder={'Direccion'}
       icon={FaSearch}
       label={label}
       theme={theme}
-      value={value}
-      onChange={onChange}
     />
   );
 };

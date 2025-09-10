@@ -58,7 +58,6 @@ const SelectOptions: React.FC<Props> = ({
   disabled = false,
 }) => {
   const id = useId();
-  const inputRef = useRef<HTMLInputElement>(null);
   const [selected, setSelected] = useState<Option>(options[defaultValue]);
 
   const allThemesText = {
