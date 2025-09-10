@@ -66,8 +66,7 @@ function ScheduleForm({ theme, onSchedule, onCancel }: Props) {
   };
 
   const SelectAddress = () => {
-    const [selectOptionIndex, setSelectOptionIndex] =
-      useAtom(locationOptionAtom);
+    const [, setSelectOptionIndex] = useAtom(locationOptionAtom);
 
     useEffect(() => {
       const item = searchCurrentItem(currentIndex);
