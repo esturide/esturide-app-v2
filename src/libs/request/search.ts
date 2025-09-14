@@ -1,13 +1,16 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
 import { ResponseData } from '$libs/request/response';
-import LocationsResponse from '$libs/request/response/location.ts';
-import ReverseLocationsResponse from '$libs/request/response/reverse.ts';
+import LocationAddress from '$libs/types/LocationAddress.ts';
+
+interface ReverseLocationsResponse {
+  address: string;
+}
 
 export const searchLocationFromAddress = async (
   root: AxiosInstance,
   address: string,
-  setResult: (locations: LocationsResponse[]) => void,
+  setResult: (locations: LocationAddress[]) => void,
 ) => {
   try {
     const response: AxiosResponse = await root.post(
@@ -17,7 +20,7 @@ export const searchLocationFromAddress = async (
     );
 
     const status = [200, 201].includes(response.status);
-    const dataResponse: ResponseData<LocationsResponse[]> = response.data;
+    const dataResponse: ResponseData<LocationAddress[]> = response.data;
 
     if (status) {
       setResult(dataResponse.data);
@@ -35,7 +38,7 @@ export const searchLocationFromAddress = async (
 
 export const researchLocationFromAddress = async (
   root: AxiosInstance,
-  location: LocationsResponse,
+  location: LocationAddress,
   setResult: (locations: ReverseLocationsResponse) => void,
 ) => {
   try {
@@ -46,7 +49,7 @@ export const researchLocationFromAddress = async (
     );
 
     const status = [200, 201].includes(response.status);
-    const dataResponse: ResponseData<LocationsResponse> = response.data;
+    const dataResponse: ResponseData<LocationAddress> = response.data;
 
     if (status) {
       setResult(dataResponse.data);

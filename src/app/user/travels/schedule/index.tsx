@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { LatLng } from '$libs/types/LatLng.ts';
@@ -8,7 +8,7 @@ import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
 import StreetRouteResponsive from '@components/map/StreetRouteResponsive.tsx';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import CenterElementsLayouts from '@layouts/container/CenterElementsLayouts.tsx';
-import LocationsResponse from '$libs/request/response/location.ts';
+import LocationAddress from '$libs/types/LocationAddress.ts';
 import { searchLocationFromAddress } from '$libs/request/search.ts';
 import { getRequestRoot } from '$libs/request/api.ts';
 import error from '$libs/toast/error.ts';
@@ -17,11 +17,14 @@ import ScheduleForm from '@components/forms/ScheduleForm.tsx';
 import defaultLocationList, {
   LocationOption,
 } from '$libs/const/defaultLocations.ts';
+import { useScheduleTravel } from '@/context/ScheduleTravelContext.tsx';
 
 const defaultTravelFrom: LatLng = defaultLocationList[0].location;
 const defaultTravelTo: LatLng = defaultLocationList[1].location;
 
 function ScheduleTravel() {
+  const { currentSchedule, searchAddress } = useScheduleTravel();
+
   const navigate = useNavigate();
   const { role } = useUserManager();
   const { theme } = useUserTheme();
@@ -29,9 +32,27 @@ function ScheduleTravel() {
   const [loadingAddress, setLoadingAddress] = useState(false);
   const [fromLocation, setFromLocation] = useState<LatLng>(defaultTravelTo);
   const [toLocation, setToLocation] = useState<LatLng>(defaultTravelFrom);
-  const [resultLocations, setResultLocations] = useState<LocationsResponse[]>(
-    [],
-  );
+  const [resultLocations, setResultLocations] = useState<LocationAddress[]>([]);
+
+  useEffect(() => {
+    if (currentSchedule.state) {
+      console.log(currentSchedule.value);
+    }
+  }, [currentSchedule]);
+
+  useEffect(() => {
+    const request = async () => {
+      const status = await searchAddress('Av zoquipan 1109', results => {
+        console.log(results);
+      });
+
+      if (!status) {
+        console.log('Failure...');
+      }
+    };
+
+    request();
+  }, []);
 
   const onSchedule = async (
     current: LocationOption,

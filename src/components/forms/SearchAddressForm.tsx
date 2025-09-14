@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
-import LocationsResponse from '$libs/request/response/location.ts';
+import LocationAddress from '$libs/types/LocationAddress.ts';
 import { searchLocationFromAddress } from '$libs/request/search.ts';
 import { getRequestRoot } from '$libs/request/api.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
@@ -16,7 +16,7 @@ type Props = {
 };
 
 function SearchAddressForm({ theme }: Props) {
-  const [addressResults, setAddressResults] = useState<LocationsResponse[]>([]);
+  const [addressResults, setAddressResults] = useState<LocationAddress[]>([]);
   const [currentAddress, setCurrentAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
