@@ -1,9 +1,7 @@
 import { toast } from 'react-toastify';
 
-async function error(message: string): Promise<void> {
+export function failureMessage(message: string) {
   toast.error(message, {
     position: 'bottom-right',
   });
 }
-
-export default error;

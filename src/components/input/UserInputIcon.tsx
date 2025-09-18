@@ -7,7 +7,7 @@ type Props = {
   label?: string;
   value?: string;
   placeholder?: string;
-  onChange?: (value: string) => void;
+  onChange?: (value: string) => Promise<void>;
   icon?: IconType;
   readOnly?: boolean;
   theme?: ColorTheme;
@@ -54,9 +54,9 @@ const UserInputIcon: React.FC<Props> = ({
     );
   };
 
-  const onClickSearch = async () => {
+  const onCaptureValue = async () => {
     if (onChange !== undefined) {
-      onChange(inputRef.current !== null ? inputRef.current.value : '');
+      await onChange(inputRef.current !== null ? inputRef.current.value : '');
     }
   };
 
@@ -71,12 +71,13 @@ const UserInputIcon: React.FC<Props> = ({
         className={allThemes[theme]}
         aria-label={label || 'User input'}
         readOnly={readOnly}
+        onBlur={onCaptureValue}
         ref={inputRef}
       />
       <button
         type="button"
         className="absolute inset-y-0 right-0 pr-3 flex items-center"
-        onClick={onClickSearch}
+        onClick={onCaptureValue}
       >
         <Icon className="h-5 w-5 text-gray-400" />
       </button>

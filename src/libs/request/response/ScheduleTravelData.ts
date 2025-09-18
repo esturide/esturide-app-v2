@@ -1,10 +1,10 @@
-import UserResponse from '$libs/request/response/UserResponse.ts';
+import UserState from '$libs/request/response/UserState.ts';
 import Seat from '$libs/types/Seats.ts';
 import Location from '$libs/types/Location.ts';
 
-interface ScheduleResponse {
+interface ScheduleTravelData {
   readonly uuid: string;
-  readonly driver: UserResponse;
+  readonly driver: UserState;
   readonly price: number;
   readonly terminate: boolean;
   readonly cancel: boolean;
@@ -14,7 +14,7 @@ interface ScheduleResponse {
   readonly seats: Seat[];
   readonly origin: Location;
   readonly destination: Location;
-  readonly rides: UserResponse[];
+  readonly rides: UserState[];
 }
 
-export default ScheduleResponse;
+export default ScheduleTravelData;

@@ -15,30 +15,23 @@ import {
   requestScheduleTravel,
 } from '$libs/request/schedule.ts';
 import ScheduleState from '$libs/request/response/ScheduleState.ts';
-import Location from '$libs/types/Location.ts';
 import LocationAddress from '$libs/types/LocationAddress.ts';
 import loaderEffect from '$libs/loaderEffect.ts';
-import ScheduleResponse from '$libs/request/response/ScheduleResponse.ts';
-import ValueState from '$libs/types/ValueState.ts';
-
-interface AddressResult {
-  readonly address: string;
-  readonly results: LocationAddress[];
-}
+import ScheduleTravelData from '$libs/request/response/ScheduleTravelData.ts';
+import { atom, useAtom } from 'jotai';
 
 interface ScheduleTravelProps {
   scheduleTravel: (state: ScheduleState) => Promise<boolean>;
   searchAddress: (
     address: string,
-    setResults: (results: AddressResult) => void,
+    setResults: (results: LocationAddress[]) => void,
   ) => Promise<boolean>;
-  currentSchedule: ValueState<ScheduleResponse>;
+  currentSchedule?: ScheduleTravelData;
 }
 
+const currentScheduleDataAtom = atom<ScheduleTravelData | undefined>(undefined);
+
 const ScheduleTravel = createContext<ScheduleTravelProps>({
-  currentSchedule: {
-    state: false,
-  },
   scheduleTravel: async () => {
     return false;
   },
@@ -50,69 +43,40 @@ const ScheduleTravel = createContext<ScheduleTravelProps>({
 export const ScheduleTravelProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [currentSchedule, setCurrentSchedule] = useState<
-    ValueState<ScheduleResponse>
-  >({
-    state: false,
-  });
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const restoreCurrentTravel = async () => {
-    let status = false;
-
-    await loaderEffect(async () => {
-      status = await requestCurrentScheduleTravel(
-        getRequestRoot(),
-        (schedule: ScheduleResponse) => {
-          setCurrentSchedule({
-            state: true,
-            value: schedule,
-          });
-        },
-      );
-    }, setIsLoading);
-
-    return status;
-  };
+  const [currentSchedule, setCurrentSchedule] = useAtom(
+    currentScheduleDataAtom,
+  );
 
   useEffect(() => {
     restoreCurrentTravel();
   }, []);
 
+  const restoreCurrentTravel = async () => {
+    let status = false;
+
+    status = await requestCurrentScheduleTravel(
+      getRequestRoot(),
+      setCurrentSchedule,
+    );
+
+    return status;
+  };
+
   const scheduleTravel = async (schedule: ScheduleState) => {
-    const swapTravel: boolean = schedule.returnHome;
-
-    const currentAddress = swapTravel
-      ? schedule.from.address
-      : schedule.to.address;
-    const currentLocation: Location = swapTravel
-      ? {
-          longitude: schedule.to.longitude,
-          latitude: schedule.to.latitude,
-        }
-      : {
-          longitude: schedule.from.longitude,
-          latitude: schedule.from.latitude,
-        };
-
     let status = false;
 
     await loaderEffect(async () => {
-      status = await requestScheduleTravel(getRequestRoot(), {
-        maxPassengers: schedule.maxPassengers,
-        seats: schedule.seats,
-        a: currentAddress,
-        b: currentLocation,
-        returnHome: swapTravel,
-      });
-    }, setIsLoading);
+      status = await requestScheduleTravel(getRequestRoot(), schedule);
+    }, setLoading);
 
     return status;
   };
 
   const searchAddress = async (
     address: string,
-    setAddressResult: (results: AddressResult) => void,
+    setAddressResult: (results: LocationAddress[]) => void,
   ) => {
     let status = false;
 
@@ -120,14 +84,9 @@ export const ScheduleTravelProvider: React.FC<PropsWithChildren> = ({
       status = await searchLocationFromAddress(
         getRequestRoot(),
         address,
-        (locations: LocationAddress[]) => {
-          setAddressResult({
-            address: address,
-            results: locations,
-          });
-        },
+        setAddressResult,
       );
-    }, setIsLoading);
+    }, setLoading);
 
     return status;
   };
@@ -141,7 +100,7 @@ export const ScheduleTravelProvider: React.FC<PropsWithChildren> = ({
       }}
     >
       {children}
-      {isLoading && (
+      {loading && (
         <FullScreenContainer>
           <CenterElementsLayouts>
             <SpinnerLoader />

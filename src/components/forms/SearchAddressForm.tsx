@@ -3,11 +3,11 @@ import ColorTheme from '$libs/types/Theme.ts';
 import LocationAddress from '$libs/types/LocationAddress.ts';
 import { searchLocationFromAddress } from '$libs/request/search.ts';
 import { getRequestRoot } from '$libs/request/api.ts';
+import { failureMessage } from '$libs/toast/failure.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import { FaSearch } from 'react-icons/fa';
 import loaderEffect from '$libs/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
-import error from '$libs/toast/error.ts';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import ScrollLayout from '@layouts/scroll/ScrollLayout.tsx';
 
@@ -31,7 +31,7 @@ function SearchAddressForm({ theme }: Props) {
       );
 
       if (!status) {
-        await error('Direccion no encontrada');
+        failureMessage('Direccion no encontrada');
       }
     }, setIsLoading);
   };
@@ -68,7 +68,7 @@ function SearchAddressForm({ theme }: Props) {
           icon={FaSearch}
           value={currentAddress}
           name={'address'}
-          onClick={onClick}
+          onChange={onClick}
           theme={theme}
         />
       </div>

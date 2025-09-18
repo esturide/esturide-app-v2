@@ -1,21 +1,12 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
-import Location from '$libs/types/Location.ts';
-import ScheduleResponse from '$libs/request/response/ScheduleResponse.ts';
-import Seat from '$libs/types/Seats.ts';
+import ScheduleTravelData from '$libs/request/response/ScheduleTravelData.ts';
 import { ResponseData } from '$libs/request/response';
-
-interface ScheduleRequest {
-  readonly maxPassengers: number;
-  readonly seats: Seat[];
-  readonly a: string;
-  readonly b: Location;
-  readonly returnHome: boolean;
-}
+import ScheduleState from '$libs/request/response/ScheduleState.ts';
 
 export const requestScheduleTravel = async (
   root: AxiosInstance,
-  request: ScheduleRequest,
+  request: ScheduleState,
 ) => {
   try {
     const response: AxiosResponse = await root.post(
@@ -36,7 +27,7 @@ export const requestScheduleTravel = async (
 
 export const requestCurrentScheduleTravel = async (
   root: AxiosInstance,
-  setCurrentSchedule: (current: ScheduleResponse) => void,
+  setCurrentSchedule: (current: ScheduleTravelData) => void,
 ) => {
   try {
     const response: AxiosResponse = await root.get(
@@ -45,7 +36,7 @@ export const requestCurrentScheduleTravel = async (
     );
 
     const status = [200, 201].includes(response.status);
-    const data: ResponseData<ScheduleResponse> = response.data;
+    const data: ResponseData<ScheduleTravelData> = response.data;
     const statusData = status && data.status == 'success';
 
     if (!status) {

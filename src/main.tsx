@@ -13,6 +13,7 @@ import UserNotify from '~/user/notify.tsx';
 import UserProfile from '~/user/profile';
 import UserSettings from '~/user/profile/settings.tsx';
 import ScheduleTravel from '~/user/travels/schedule';
+import PreviewScheduleTravel from '~/user/travels/schedule/preview.tsx';
 import RideTravel from '~/user/travels/ride';
 
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
@@ -29,6 +30,7 @@ import { Notifications } from 'react-push-notification';
 import { Bounce, ToastContainer } from 'react-toastify';
 
 import '@/index.css';
+import ScheduleLayout from '@layouts/route/ScheduleLayout.tsx';
 
 const router = createBrowserRouter([
   {
@@ -58,10 +60,15 @@ const router = createBrowserRouter([
           },
           {
             path: 'schedule',
+            element: <ScheduleLayout />,
             children: [
               {
                 index: true,
                 element: <ScheduleTravel />,
+              },
+              {
+                path: 'preview',
+                element: <PreviewScheduleTravel />,
               },
             ],
           },

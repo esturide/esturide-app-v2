@@ -6,13 +6,13 @@ import ColorTheme from '$libs/types/Theme.ts';
 import loaderEffect from '$libs/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import UserRole from '$libs/types/UserRole.ts';
-import error from '$libs/toast/error.ts';
 import {
   roleOptions,
   searchRoleFromList,
   selectThemeFromRole,
 } from '$libs/select/color.ts';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
+import { failureMessage } from '$libs/toast/failure.ts';
 
 function UserProfile() {
   const { logout, refreshRole, role } = useUserManager();
@@ -36,7 +36,7 @@ function UserProfile() {
           setCurrentRole(selectRoleOption);
           setCurrentOption(index);
         } else {
-          await error('Permisos invalidos.');
+          failureMessage('Permisos invalidos.');
         }
       }
     }, setLoading);

@@ -6,42 +6,53 @@ import IconButton from '@components/buttons/IconButton.tsx';
 import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 import ColorTheme from '$libs/types/Theme.ts';
 import defaultLocationList, {
-  LocationOption,
   searchCurrentItem,
 } from '$libs/const/defaultLocations.ts';
-import { useAtom, useAtomValue } from 'jotai';
-import {
-  addressAtom,
-  locationOptionAtom,
-  swapTravelAtom,
-} from '$libs/atoms/scheduleAtom.ts';
 
 type Props = {
   theme: ColorTheme;
-  onSchedule?: (
-    current: LocationOption,
-    address: string,
-    swap: boolean,
-  ) => Promise<void>;
+  onSwap?: (state: boolean) => void;
+  onSearch?: (address: string) => Promise<void>;
+  onSchedule?: (addressFrom: string, addressTo: string) => Promise<void>;
   onCancel?: () => void;
 };
 
-function ScheduleForm({ theme, onSchedule, onCancel }: Props) {
+function ScheduleForm({
+  theme,
+  onSwap,
+  onSearch,
+  onSchedule,
+  onCancel,
+}: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [address, setAddress] = useState('');
+  const [addressOption, setAddressOption] = useState('');
 
-  const swapTravelStatus = useAtomValue(swapTravelAtom);
-  const currentAddress = useAtomValue(addressAtom);
-  const currentLocation = useAtomValue(locationOptionAtom);
+  const [swapTravelStatus, setSwapTravelStatus] = useState(false);
+
+  useEffect(() => {
+    if (onSwap) {
+      onSwap(swapTravelStatus);
+    }
+  }, [swapTravelStatus]);
+
+  useEffect(() => {
+    const request = async () => {
+      if (onSearch) {
+        await onSearch(address);
+      }
+    };
+
+    request();
+  }, [address]);
 
   const ChangeButton = () => {
-    const [swapStatus, setSwapStatus] = useAtom(swapTravelAtom);
-
     return (
       <IconButton
         icon={FaExchangeAlt}
         theme={theme}
         onClick={() => {
-          setSwapStatus(!swapStatus);
+          setSwapTravelStatus(!swapTravelStatus);
         }}
       />
     );
@@ -52,27 +63,23 @@ function ScheduleForm({ theme, onSchedule, onCancel }: Props) {
   };
 
   const SearchAddress = () => {
-    const [currentAddress, setCurrentAddress] = useAtom(addressAtom);
-
     return (
       <UserInputIcon
         placeholder={'Direccion'}
         icon={FaSearch}
         theme={theme}
-        value={currentAddress}
-        onChange={setCurrentAddress}
+        value={address}
+        onChange={setAddress}
       />
     );
   };
 
   const SelectAddress = () => {
-    const [, setSelectOptionIndex] = useAtom(locationOptionAtom);
-
     useEffect(() => {
       const item = searchCurrentItem(currentIndex);
 
       if (item !== undefined) {
-        setSelectOptionIndex(item);
+        setAddressOption(item.description);
       }
     }, [currentIndex]);
 
@@ -88,7 +95,11 @@ function ScheduleForm({ theme, onSchedule, onCancel }: Props) {
 
   const onScheduleClick = async () => {
     if (onSchedule) {
-      await onSchedule(currentLocation, currentAddress, swapTravelStatus);
+      if (swapTravelStatus) {
+        await onSchedule(address, addressOption);
+      } else {
+        await onSchedule(addressOption, address);
+      }
     }
   };
 
@@ -119,7 +130,7 @@ function ScheduleForm({ theme, onSchedule, onCancel }: Props) {
   };
 
   return (
-    <form className={'grow p-4 lg:h-screen flex flex-col justify-start gap-4'}>
+    <form className={'grow flex flex-col justify-start gap-4'}>
       <TravelOptions />
       <div className={'flex flex-row gap-2 items-center justify-center'}>
         <CancelButton />

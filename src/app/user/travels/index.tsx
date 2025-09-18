@@ -21,7 +21,7 @@ function UserTravels() {
 
   if (role === 'driver') {
     return (
-      <div className={'flex flex-col'}>
+      <div className={'flex flex-col gap-8'}>
         <TravelMessage
           title={'Aún no tienes viajes planificados.'}
           message={'Toca el botón para agendar un viaje.'}
@@ -38,7 +38,7 @@ function UserTravels() {
     );
   } else if (role === 'passenger') {
     return (
-      <div className={'flex flex-col'}>
+      <div className={'flex flex-col gap-8'}>
         <TravelMessage
           title={'Aún no tienes viajes en tu lista.'}
           message={'Toca el botón para buscar un viaje.'}

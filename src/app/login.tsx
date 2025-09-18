@@ -9,11 +9,11 @@ import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import Scroll from '@layouts/scroll/Scroll.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
-import error from '$libs/toast/error.ts';
+import { failureMessage } from '$libs/toast/failure.ts';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const { login, isAuthenticated } = useUserManager();
+  const { login } = useUserManager();
   const { size } = useDeviceManagement();
   const [userCode, setUserCode] = useState<number>(0);
   const [password, setPassword] = useState<string>('');
@@ -52,12 +52,12 @@ const LoginPage: React.FC = () => {
         if (status) {
           navigate('/home', { replace: true });
         } else {
-          await error('Datos de usuario invalidos.');
+          failureMessage('Datos de usuario invalidos.');
         }
 
         setIsValidLogin(status);
       } else {
-        await error('Rellene los datos.');
+        failureMessage('Rellene los datos.');
       }
     }, setLoading);
   };
