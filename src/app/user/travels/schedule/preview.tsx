@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
+import MapView from '@components/map/google/view/MapView.tsx';
+import GoogleMapView from '@components/map/google/view/MapView.tsx';
 
 interface LocationState {
   readonly addressFrom: string;
@@ -62,17 +64,18 @@ function PreviewScheduleTravel() {
   return (
     <>
       <div className={'flex'}>
-        <APIProvider apiKey={googleMapsApiKey}>
-          <Map
-            style={{ height: '100vh' }}
-            defaultCenter={{ lat: 22.54992, lng: 0 }}
-            defaultZoom={3}
-            gestureHandling="greedy"
-            disableDefaultUI
-          >
-            <DirectionsComponent />
-          </Map>
-        </APIProvider>
+        <GoogleMapView
+          apiKey={googleMapsApiKey}
+          center={{
+            lat: 20.566646720860327,
+            lng: -103.22860101349919,
+          }}
+          style={{
+            height: '100vh',
+          }}
+        >
+          <DirectionsComponent />
+        </GoogleMapView>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import StreetRoute from '@components/map/StreetRoute.tsx';
+import StreetRoute from '@components/map/leaflet/StreetRoute.tsx';
 
 const StreetRouteDemo: React.FC = () => {
   return (
