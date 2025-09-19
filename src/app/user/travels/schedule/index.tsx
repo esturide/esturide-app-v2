@@ -7,6 +7,7 @@ import CenterElementsLayouts from '@layouts/container/CenterElementsLayouts.tsx'
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import ScheduleForm from '@components/forms/ScheduleForm.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
+import MainLayout from '@layouts/view/MainLayout.tsx';
 
 function ScheduleTravel() {
   const navigate = useNavigate();
@@ -36,18 +37,20 @@ function ScheduleTravel() {
   }
 
   return (
-    <div className={'flex flex-col gap-4'}>
-      <TravelMessage
-        title={'Inicia un viaje aqui.'}
-        message={'Programa la ruta.'}
-      />
+    <MainLayout>
+      <div className={'flex flex-col gap-4'}>
+        <TravelMessage
+          title={'Inicia un viaje aqui.'}
+          message={'Programa la ruta.'}
+        />
 
-      <ScheduleForm
-        theme={theme}
-        onSchedule={onSchedule}
-        onCancel={() => navigate(-1)}
-      />
-    </div>
+        <ScheduleForm
+          theme={theme}
+          onSchedule={onSchedule}
+          onCancel={() => navigate(-1)}
+        />
+      </div>
+    </MainLayout>
   );
 }
 
