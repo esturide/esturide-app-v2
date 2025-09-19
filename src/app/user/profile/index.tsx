@@ -13,6 +13,7 @@ import {
 } from '$libs/select/color.ts';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
+import MainLayout from '@layouts/view/MainLayout.tsx';
 
 function UserProfile() {
   const { logout, refreshRole, role } = useUserManager();
@@ -56,47 +57,49 @@ function UserProfile() {
   }
 
   return (
-    <>
-      <div
-        className={'flex flex-col items-center justify-center  w-full gap-2'}
-      >
-        <UserButton
-          label={'Cerrar sesion'}
+    <MainLayout>
+      <div className={'flex flex-col items-center gap-2'}>
+        <div
+          className={'flex flex-col items-center justify-center w-full gap-2'}
+        >
+          <UserButton
+            label={'Cerrar sesion'}
+            theme={currentTheme}
+            onClick={async () => {
+              await logout();
+            }}
+          />
+        </div>
+
+        <SelectOptions
           theme={currentTheme}
-          onClick={async () => {
-            await logout();
-          }}
+          defaultValue={currentOption}
+          onSelect={onSelectRole}
+          options={[
+            {
+              id: 0,
+              description: 'No verificado',
+            },
+            {
+              id: 1,
+              description: 'Pasajero',
+            },
+            {
+              id: 2,
+              description: 'Conductor',
+            },
+            {
+              id: 3,
+              description: 'Staff',
+            },
+            {
+              id: 4,
+              description: 'Administrador',
+            },
+          ]}
         />
       </div>
-
-      <SelectOptions
-        theme={currentTheme}
-        defaultValue={currentOption}
-        onSelect={onSelectRole}
-        options={[
-          {
-            id: 0,
-            description: 'No verificado',
-          },
-          {
-            id: 1,
-            description: 'Pasajero',
-          },
-          {
-            id: 2,
-            description: 'Conductor',
-          },
-          {
-            id: 3,
-            description: 'Staff',
-          },
-          {
-            id: 4,
-            description: 'Administrador',
-          },
-        ]}
-      />
-    </>
+    </MainLayout>
   );
 }
 
