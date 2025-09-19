@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router';
-import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
-import MapView from '@components/map/google/view/MapView.tsx';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
+import GoogleRouting from '@components/map/google/GoogleRouting.tsx';
+import { all } from '$libs/functional.ts';
+import { useNavigate } from 'react-router-dom';
+import { failureMessage } from '$libs/toast/failure.ts';
 
 interface LocationState {
   readonly addressFrom: string;
@@ -12,60 +14,32 @@ interface LocationState {
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 function PreviewScheduleTravel() {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const { addressTo, addressFrom } = state as LocationState;
 
-  const origin = addressTo;
-  const destination = addressFrom;
-
-  const DirectionsComponent = () => {
-    const map = useMap();
-    const [directions, setDirections] =
-      useState<null | google.maps.DirectionsResult>(null);
-
-    useEffect(() => {
-      if (!map || !origin || !destination) {
-        return;
-      }
-
-      const directionsService = new google.maps.DirectionsService();
-
-      directionsService.route(
-        {
-          origin: addressTo,
-          destination: addressFrom,
-          travelMode: google.maps.TravelMode.DRIVING,
-        },
-        (result, status) => {
-          if (status === google.maps.DirectionsStatus.OK && status !== null) {
-            setDirections(result);
-          } else {
-            console.error(`Error fetching directions: ${status}`);
-          }
-        },
-      );
-    }, [map, origin, destination]);
-
-    useEffect(() => {
-      if (!map || !directions) return;
-
-      const directionsRenderer = new google.maps.DirectionsRenderer({
-        map: map,
-      });
-
-      directionsRenderer.setDirections(directions);
-
-      return () => directionsRenderer.setMap(null);
-    }, [map, directions]);
-
-    return null;
+  const validDirections = (a: string, b: string) => {
+    return all([a, b], d => d.length > 0);
   };
+
+  const catchNotFoundRoute = () => {
+    failureMessage('Could not find a route.');
+    navigate('/home/travels/schedule/');
+  };
+
+  useEffect(() => {
+    if (!validDirections(addressTo, addressFrom)) {
+      failureMessage('Both addresses are invalid.');
+      navigate('/home/travels/schedule/');
+    }
+  }, [state]);
 
   return (
     <>
       <div className={'flex'}>
         <GoogleMapView
           apiKey={googleMapsApiKey}
+          zoom={3}
           center={{
             lat: 20.566646720860327,
             lng: -103.22860101349919,
@@ -74,7 +48,11 @@ function PreviewScheduleTravel() {
             height: '100vh',
           }}
         >
-          <DirectionsComponent />
+          <GoogleRouting
+            origin={addressTo}
+            destination={addressFrom}
+            catchNotFoundRoute={catchNotFoundRoute}
+          />
         </GoogleMapView>
       </div>
     </>

@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { useMap } from '@vis.gl/react-google-maps';
 import StreetRouteProps from '@components/map/StreetRouteProps.ts';
 
-const DirectionsComponent = ({ origin, destination }: StreetRouteProps) => {
+const GoogleRouting = ({
+  origin,
+  destination,
+  catchNotFoundRoute,
+}: StreetRouteProps) => {
   const map = useMap();
   const [directions, setDirections] =
     useState<null | google.maps.DirectionsResult>(null);
@@ -25,6 +29,9 @@ const DirectionsComponent = ({ origin, destination }: StreetRouteProps) => {
           setDirections(result);
         } else {
           console.error(`Error fetching directions: ${status}`);
+          if (catchNotFoundRoute) {
+            catchNotFoundRoute();
+          }
         }
       },
     );
@@ -45,4 +52,4 @@ const DirectionsComponent = ({ origin, destination }: StreetRouteProps) => {
   return null;
 };
 
-export default DirectionsComponent;
+export default GoogleRouting;
