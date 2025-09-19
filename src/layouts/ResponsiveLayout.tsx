@@ -34,7 +34,7 @@ function ResponsiveLayout({ children, items }: React.PropsWithChildren<Props>) {
   };
 
   return (
-    <div className={'overflow-auto scrollbar-hide'}>
+    <div className={'overflow-visible'}>
       <ResponseLayout />
     </div>
   );
