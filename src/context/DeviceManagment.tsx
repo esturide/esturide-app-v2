@@ -5,11 +5,13 @@ type ScreenSize = 'sm' | 'md' | 'lg' | 'xl' | 'unknown';
 interface WindowSize {
   size: ScreenSize;
   isMobile: boolean;
+  isTablet: boolean;
 }
 
 const DeviceManagementContext = createContext<WindowSize>({
   size: 'unknown',
   isMobile: false,
+  isTablet: false,
 });
 
 export function DeviceManagementProvider({
@@ -17,6 +19,7 @@ export function DeviceManagementProvider({
 }: React.PropsWithChildren) {
   const [size, setSize] = useState<ScreenSize>('unknown');
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -39,9 +42,15 @@ export function DeviceManagementProvider({
 
   useEffect(() => {
     if (['sm'].includes(size)) {
+      setIsTablet(false);
       setIsMobile(true);
-    } else {
+    } else if (['md'].includes(size)) {
+      setIsTablet(true);
       setIsMobile(false);
+    } else {
+      for (const setState of [setIsTablet, setIsMobile]) {
+        setState(false);
+      }
     }
   }, [size]);
 
@@ -50,6 +59,7 @@ export function DeviceManagementProvider({
       value={{
         size: size,
         isMobile: isMobile,
+        isTablet: isTablet,
       }}
     >
       {children}

@@ -1,41 +1,19 @@
 import { useUserManager } from '@/context/UserManager.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
 import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
 import React, { useEffect, useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
 import loaderEffect from '$libs/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
-import FullscreenContainer from '@components/resources/FullscreenContainer.tsx';
 import UserRole from '$libs/types/UserRole.ts';
-
-const roleOptions: UserRole[] = [
-  'not-verified',
-  'passenger',
-  'driver',
-  'staff',
-  'admin',
-];
-
-const searchRoleFromList = (role: UserRole): number => {
-  for (let i = 0; i < roleOptions.length; i++) {
-    if (roleOptions[i] == role) {
-      return i;
-    }
-  }
-
-  return 0;
-};
-
-const selectThemeFromRole = (role: UserRole): ColorTheme => {
-  if (role === 'driver') {
-    return 'teal';
-  } else if (role === 'passenger') {
-    return 'indigo';
-  }
-
-  return 'gray';
-};
+import {
+  roleOptions,
+  searchRoleFromList,
+  selectThemeFromRole,
+} from '$libs/select/color.ts';
+import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
+import { failureMessage } from '$libs/toast/failure.ts';
+import MainLayout from '@layouts/view/MainLayout.tsx';
 
 function UserProfile() {
   const { logout, refreshRole, role } = useUserManager();
@@ -57,8 +35,9 @@ function UserProfile() {
 
         if (status) {
           setCurrentRole(selectRoleOption);
-          setCurrentTheme(selectThemeFromRole(selectRoleOption));
           setCurrentOption(index);
+        } else {
+          failureMessage('Permisos invalidos.');
         }
       }
     }, setLoading);
@@ -71,55 +50,55 @@ function UserProfile() {
 
   if (loading) {
     return (
-      <FullscreenContainer>
+      <PartialScreenContainer>
         <SpinnerLoader />
-      </FullscreenContainer>
+      </PartialScreenContainer>
     );
   }
 
   return (
     <MainLayout>
-      <div
-        className={
-          'flex flex-col items-center justify-center h-full w-full gap-2'
-        }
-      >
-        <UserButton
-          label={'Cerrar sesion'}
+      <div className={'flex flex-col items-center gap-2'}>
+        <div
+          className={'flex flex-col items-center justify-center w-full gap-2'}
+        >
+          <UserButton
+            label={'Cerrar sesion'}
+            theme={currentTheme}
+            onClick={async () => {
+              await logout();
+            }}
+          />
+        </div>
+
+        <SelectOptions
           theme={currentTheme}
-          onClick={async () => {
-            await logout();
-          }}
+          defaultValue={currentOption}
+          onSelect={onSelectRole}
+          options={[
+            {
+              id: 0,
+              description: 'No verificado',
+            },
+            {
+              id: 1,
+              description: 'Pasajero',
+            },
+            {
+              id: 2,
+              description: 'Conductor',
+            },
+            {
+              id: 3,
+              description: 'Staff',
+            },
+            {
+              id: 4,
+              description: 'Administrador',
+            },
+          ]}
         />
       </div>
-
-      <SelectOptions
-        theme={currentTheme}
-        defaultValue={currentOption}
-        onSelect={onSelectRole}
-        options={[
-          {
-            id: 0,
-            description: 'No verificado',
-          },
-          {
-            id: 1,
-            description: 'Pasajero',
-          },
-          {
-            id: 2,
-            description: 'Conductor',
-          },
-          {
-            id: 3,
-            description: 'Staff',
-          },
-          {
-            id: 4,
-            description: 'Administrador',
-          },
-        ]}
-      />
     </MainLayout>
   );
 }

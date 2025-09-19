@@ -25,6 +25,7 @@ export const getUserRole = async (
     return status;
   } catch (e) {
     if (axios.isAxiosError(e)) {
+      console.log(e.response);
       return false;
     }
 

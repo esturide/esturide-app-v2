@@ -45,21 +45,11 @@ function UserIndex() {
     );
   };
 
-  const Background = ({ children }: React.PropsWithChildren) => {
-    return (
-      <MainLayoutWithBackground filename={BackgroundAnimationResource}>
-        {children}
-      </MainLayoutWithBackground>
-    );
-  };
-
   return (
-    <Background>
-      <MainLayout>
-        <Welcome />
-        <UserOptions />
-      </MainLayout>
-    </Background>
+    <MainLayout>
+      <Welcome dark />
+      <UserOptions />
+    </MainLayout>
   );
 }
 

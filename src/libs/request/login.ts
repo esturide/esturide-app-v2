@@ -9,7 +9,7 @@ export interface UserDataLogin {
 export const loginUser = async (
   root: AxiosInstance,
   user: UserDataLogin,
-  setAuthToken: (token: string) => void,
+  setAuthToken: (token: string) => Promise<void>,
 ) => {
   try {
     const response: AxiosResponse = await root.post(
@@ -24,7 +24,7 @@ export const loginUser = async (
     const status = [200, 201].includes(response.status);
 
     if (status) {
-      setAuthToken(response.data.token);
+      await setAuthToken(response.data.token);
     }
 
     return status;

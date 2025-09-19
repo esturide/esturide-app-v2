@@ -1,100 +1,69 @@
-import { useState } from 'react';
-import ResponsiveLayout from '@layouts/view/ResponsiveLayout.tsx';
-import IconButton from '@components/buttons/IconButton.tsx';
-import ScheduleTravelMessage from '@components/resources/message/ScheduleTravelMessage.tsx';
-
-import { FaAngleDown, FaExchangeAlt, FaFilter, FaSearch } from 'react-icons/fa';
-
-import { LatLng } from '$libs/types/LatLng.ts';
-import UserInputIcon from '@components/input/UserInputIcon.tsx';
+import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import OptionButton from '@components/buttons/OptionButton.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-import StreetRouteResponsive from '@components/map/StreetRouteResponsive.tsx';
+import { useNavigate } from 'react-router-dom';
+import { useUserManager } from '@/context/UserManager.tsx';
+import SorryMessage from '@components/resources/SorryMessage.tsx';
+import MainLayout from '@layouts/view/MainLayout.tsx';
 
-type StateView = 'view' | 'schedule' | 'driving' | 'unknown';
-const defaultDestination = 'CUTONALA';
-
-const ScheduleTravelView = () => {
+function UserTravels() {
+  const navigate = useNavigate();
+  const { role } = useUserManager();
   const { theme } = useUserTheme();
 
-  const from: LatLng = {
-    lat: 20.566131156580823,
-    lng: -103.29118486392122,
-  };
-
-  const to: LatLng = {
-    lat: 20.566963187357228,
-    lng: -103.22847750386998,
-  };
-
-  const ScheduleConfigure = () => {
+  const InvalidRole = () => {
     return (
-      <>
-        <div className={'flex flex-row justify-between gap-2'}>
-          <div className={'grow flex flex-col gap-2'}>
-            <UserInputIcon icon={FaSearch} />
-            <UserInputIcon
-              icon={FaAngleDown}
-              value={defaultDestination}
-              readOnly
-            />
-          </div>
-
-          <div className={'flex flex-col gap-2 justify-center items-center'}>
-            <IconButton icon={FaExchangeAlt} theme={theme} />
-            <IconButton icon={FaFilter} theme={theme} />
-          </div>
-        </div>
-        <div className={'flex flex-col gap-4 mt-4 mb-2 justify-between'}>
-          <OptionButton label={'Agendar'} theme={theme} />
-        </div>
-      </>
+      <SorryMessage
+        message={'Esta seccion no esta disponible para tu rol actual.'}
+        title={'Próximamente'}
+      />
     );
   };
 
-  return (
-    <>
-      <div className={'flex flex-col sm:flex-row'}>
-        <div className={'p-4 justify-between items-center'}>
-          <ScheduleConfigure />
+  const ViewRole = () => {
+    if (role === 'driver') {
+      return (
+        <div className={'flex flex-col gap-8'}>
+          <TravelMessage
+            title={'Aún no tienes viajes planificados.'}
+            message={'Toca el botón para agendar un viaje.'}
+          />
+
+          <OptionButton
+            label={'Agendar'}
+            theme={theme}
+            onClick={async () => {
+              navigate('schedule/');
+            }}
+          />
         </div>
+      );
+    } else if (role === 'passenger') {
+      return (
+        <div className={'flex flex-col gap-8'}>
+          <TravelMessage
+            title={'Aún no tienes viajes en tu lista.'}
+            message={'Toca el botón para buscar un viaje.'}
+          />
 
-        <div className={'flex-1'}>
-          <StreetRouteResponsive from={from} to={to} colorRoute={'#14b8a6'} />
+          <OptionButton
+            label={'Buscar'}
+            theme={theme}
+            onClick={async () => {
+              navigate('schedule/');
+            }}
+          />
         </div>
-      </div>
-    </>
-  );
-};
-
-const DrivingTravelView = () => {
-  return <></>;
-};
-
-function UserTravels() {
-  const { theme } = useUserTheme();
-  const [currentState, setCurrentState] = useState<StateView>('view');
-
-  if (currentState == 'schedule') {
-    return <ScheduleTravelView />;
-  } else if (currentState === 'driving') {
-    return <DrivingTravelView />;
-  }
+      );
+    } else {
+      return <InvalidRole />;
+    }
+  };
 
   return (
-    <ResponsiveLayout>
-      <div className={'flex flex-col'}>
-        <ScheduleTravelMessage />
-
-        <OptionButton
-          label={'Agendar'}
-          theme={theme}
-          onClick={async () => {
-            setCurrentState('schedule');
-          }}
-        />
-      </div>
-    </ResponsiveLayout>
+    <MainLayout>
+      <ViewRole />
+    </MainLayout>
   );
 }
 

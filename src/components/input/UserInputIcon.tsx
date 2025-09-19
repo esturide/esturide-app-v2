@@ -1,22 +1,17 @@
-import React, {
-  ChangeEvent,
-  FocusEvent,
-  PropsWithChildren,
-  useState,
-} from 'react';
+import React, { PropsWithChildren, useRef, useId } from 'react';
 import { IconType } from 'react-icons';
 import { FaCircleCheck } from 'react-icons/fa6';
+import ColorTheme from '$libs/types/Theme.ts';
 
 type Props = {
   label?: string;
   value?: string;
   placeholder?: string;
   onChange?: (value: string) => Promise<void>;
-  onBlur?: (value: string) => Promise<void>;
-  onFocus?: (value: string) => Promise<void>;
-  onClick?: () => Promise<void>;
   icon?: IconType;
   readOnly?: boolean;
+  theme?: ColorTheme;
+  name?: string;
 };
 
 const UserInputIcon: React.FC<Props> = ({
@@ -24,45 +19,33 @@ const UserInputIcon: React.FC<Props> = ({
   value = '',
   placeholder = '',
   onChange,
-  onBlur,
-  onFocus,
-  onClick,
   icon = FaCircleCheck,
   readOnly = false,
+  theme = 'teal',
+  name = undefined,
 }) => {
+  const id = useId();
   const Icon = icon;
-  const [inputValue, setInputValue] = useState(value);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleBlur = async (event: FocusEvent<HTMLInputElement>) => {
-    if (onBlur) {
-      await onBlur(event.target.value);
-    }
+  const allThemes = {
+    gray: 'px-3 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
+    teal: 'px-3 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
+    indigo:
+      'px-3 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]',
   };
 
-  const handleFocus = async (event: FocusEvent<HTMLInputElement>) => {
-    if (onFocus) {
-      await onFocus(event.target.value);
-    }
-  };
-
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    const targetValue = event.target.value;
-
-    if (onChange) {
-      await onChange(targetValue);
-    }
-
-    setInputValue(targetValue);
+  const allThemesText = {
+    gray: 'my-2 mx-2 text-left text-sm font-medium text-gray-900',
+    teal: 'my-2 mx-2 text-left text-sm font-medium text-teal-900',
+    indigo: 'my-2 mx-2 text-left text-sm font-medium text-indigo-900',
   };
 
   const InputContainer: React.FC<PropsWithChildren> = ({ children }) => {
     return (
       <div className="flex flex-col w-full">
         {label && (
-          <label
-            htmlFor="userInput"
-            className="my-2 mx-2 text-left text-sm font-medium text-teal-900"
-          >
+          <label id={id} className={allThemesText[theme]}>
             {label}
           </label>
         )}
@@ -71,30 +54,30 @@ const UserInputIcon: React.FC<Props> = ({
     );
   };
 
-  const onClickIcon = async () => {
-    if (onClick !== undefined) {
-      await onClick();
+  const onCaptureValue = async () => {
+    if (onChange) {
+      await onChange(inputRef.current !== null ? inputRef.current.value : '');
     }
   };
 
   return (
     <InputContainer>
       <input
+        id={id}
         type="text"
-        id="userInput"
-        value={inputValue}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
+        name={name}
+        defaultValue={value}
         placeholder={placeholder}
-        className="px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border border-solid border-stone-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px]"
+        className={allThemes[theme]}
         aria-label={label || 'User input'}
         readOnly={readOnly}
+        onBlur={onCaptureValue}
+        ref={inputRef}
       />
       <button
         type="button"
-        onClick={onClickIcon}
         className="absolute inset-y-0 right-0 pr-3 flex items-center"
+        onClick={onCaptureValue}
       >
         <Icon className="h-5 w-5 text-gray-400" />
       </button>

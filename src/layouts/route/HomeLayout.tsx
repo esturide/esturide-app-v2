@@ -5,16 +5,25 @@ import { FaMessage } from 'react-icons/fa6';
 import { ItemType } from '@components/navbar/types.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
 import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
+import { useUserTheme } from '@/context/UserTheme.tsx';
+import { selectThemeFromRole } from '$libs/select/color.ts';
 
 const HomeLayout = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useUserManager();
+  const { isAuthenticated, role } = useUserManager();
+  const { setTheme } = useUserTheme();
+
+  useEffect(() => {
+    setTheme(selectThemeFromRole(role));
+  }, [role]);
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login', { replace: true });
     }
   }, [isAuthenticated]);
+
+  useEffect(() => {}, []);
 
   const items: ItemType[] = [
     {
@@ -25,7 +34,7 @@ const HomeLayout = () => {
     },
     {
       label: 'Viajes',
-      href: '/home/travels/schedule',
+      href: '/home/travels',
       current: false,
       icon: FaPlus,
     },

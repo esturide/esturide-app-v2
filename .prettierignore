@@ -1,4 +1,4 @@
-next-env.d.ts
+next-vite-env.d.ts
 .next
 .vercel
 pnpm-lock.yaml

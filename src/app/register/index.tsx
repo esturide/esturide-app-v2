@@ -7,6 +7,7 @@ import SelectColor from '@components/input/selector/SelectColor.tsx';
 import DateInput from '@components/input/DateInput.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
+import Scroll from '@layouts/scroll/Scroll.tsx';
 
 const UserRegister: React.FC = () => {
   const [currentForm, setCurrentForm] = useState(0);
@@ -91,11 +92,9 @@ const UserRegister: React.FC = () => {
 
   return (
     <div className={'flex flex-col justify-stretch w-full'}>
-      <div className="flex-grow h-50 md:h-auto px-2 max-md:overflow-y-scroll">
-        {registerForm[currentForm]}
-      </div>
+      <Scroll>{registerForm[currentForm]}</Scroll>
 
-      <div className={' h-fit'}>
+      <div className={'h-fit'}>
         <div className="flex flex-col gap-2 my-3">
           <UserButton label={'Siguente'} onClick={next} />
           {currentForm > 0 && (

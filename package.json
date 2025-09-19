@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode dev",
     "host": "vite --host",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -26,6 +26,7 @@
     "@types/node": "^22.13.13",
     "@types/react-color": "^3.0.13",
     "@types/react-router-dom": "^5.3.3",
+    "@vis.gl/react-google-maps": "^1.5.5",
     "@vitejs/plugin-legacy": "^6.0.2",
     "axios": "^1.8.4",
     "color-string": "^2.0.1",
@@ -52,6 +53,7 @@
     "react-router": "^7.4.1",
     "react-router-dom": "^7.4.1",
     "react-toastify": "^11.0.5",
+    "styled-components": "^6.1.19",
     "vite-plugin-compression": "^0.5.1"
   },
   "devDependencies": {

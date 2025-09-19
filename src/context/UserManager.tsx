@@ -12,6 +12,10 @@ import { atomWithStorage } from 'jotai/utils';
 import createCookieStorage from '$libs/storage/cookies.ts';
 import UserRole from '$libs/types/UserRole.ts';
 import { getUserRole, setUserRole } from '$libs/request/role.ts';
+import loaderEffect from '$libs/loaderEffect.ts';
+import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
+import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
+import CenterElementsLayouts from '@layouts/container/CenterElementsLayouts.tsx';
 
 interface UserManagerProps {
   isAuthenticated: boolean;
@@ -28,7 +32,9 @@ const storage = createCookieStorage<string>({
   sameSite: 'lax',
 });
 
-const authTokenStorage = atomWithStorage<string>('authToken', '', storage);
+const authTokenStorage = atomWithStorage<string>('authToken', '', storage, {
+  getOnInit: true,
+});
 
 const UserManagerContext = createContext<UserManagerProps>({
   isAuthenticated: false,
@@ -53,27 +59,34 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [authToken, setAuthToken] = useAtom(authTokenStorage);
+  const [headAuthTokenLoad, setHeadAuthTokenLoad] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(
     authToken?.length != 0,
   );
   const [currentRole, setCurrentRole] = useState<UserRole>('not-verified');
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (authToken.length != 0) {
-      configHeaderAuthToken(authToken);
-      setIsAuthenticated(authToken.length != 0);
+  const requestRole = async () => {
+    if (isAuthenticated && headAuthTokenLoad) {
+      await getUserRole(getRequestRoot(), setCurrentRole);
     }
+  };
+
+  useEffect(() => {
+    setIsAuthenticated(authToken.length != 0);
   }, [authToken]);
 
   useEffect(() => {
-    const request = async () => {
-      if (authToken.length != 0) {
-        await getUserRole(getRequestRoot(), setCurrentRole);
-      }
-    };
+    if (isAuthenticated) {
+      configHeaderAuthToken(authToken);
+    }
 
-    request();
-  }, [authToken]);
+    setHeadAuthTokenLoad(isAuthenticated);
+  }, [isAuthenticated, authToken]);
+
+  useEffect(() => {
+    loaderEffect(requestRole, setIsLoading);
+  }, [headAuthTokenLoad]);
 
   const removeAuthToken = async () => {
     await setAuthToken('');
@@ -81,7 +94,7 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   };
 
   const login = async (code: number, password: string) => {
-    const statusLogin = await loginUser(
+    return await loginUser(
       getRequestRoot(),
       {
         code: code,
@@ -89,10 +102,6 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
       },
       setAuthToken,
     );
-
-    const statusRole = await getUserRole(getRequestRoot(), setCurrentRole);
-
-    return statusLogin && statusRole;
   };
 
   const logout = async () => {
@@ -128,6 +137,13 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   return (
     <UserManagerContext.Provider value={props}>
       {children}
+      {isLoading && (
+        <FullScreenContainer>
+          <CenterElementsLayouts>
+            <SpinnerLoader />
+          </CenterElementsLayouts>
+        </FullScreenContainer>
+      )}
     </UserManagerContext.Provider>
   );
 };
