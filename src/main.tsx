@@ -5,26 +5,32 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { DeviceManagementProvider } from '@/context/DeviceManagment.tsx';
 
 import UserIndex from '~/index.tsx';
+import UserHome from '~/user';
 import LoginPage from '~/login.tsx';
 import UserRegister from '~/register';
-import UserHome from '~/user';
 import UserTravels from '~/user/travels';
 import UserNotify from '~/user/notify.tsx';
 import UserProfile from '~/user/profile';
 import UserSettings from '~/user/profile/settings.tsx';
+import ScheduleTravel from '~/user/travels/schedule';
+import PreviewScheduleTravel from '~/user/travels/schedule/preview.tsx';
+import RideTravel from '~/user/travels/ride';
 
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
 import IndexLayout from '@layouts/route/IndexLayout.tsx';
 import EmptyLayout from '@layouts/route/EmptyLayout.tsx';
+import TravelLayout from '@layouts/route/TravelLayout.tsx';
 
 import { UserManagerProvider } from '@/context/UserManager.tsx';
 
 import { UserThemeProvider } from '@/context/UserTheme.tsx';
 import { CookiesProvider } from 'react-cookie';
 
-import '@/index.css';
 import { Notifications } from 'react-push-notification';
 import { Bounce, ToastContainer } from 'react-toastify';
+
+import '@/index.css';
+import ScheduleLayout from '@layouts/route/ScheduleLayout.tsx';
 
 const router = createBrowserRouter([
   {
@@ -37,23 +43,32 @@ const router = createBrowserRouter([
       },
       {
         path: 'travels',
-        element: <UserHome />,
+        element: <TravelLayout />,
         children: [
+          {
+            index: true,
+            element: <UserTravels />,
+          },
           {
             path: 'ride',
             children: [
               {
                 index: true,
-                element: <UserTravels />,
+                element: <RideTravel />,
               },
             ],
           },
           {
             path: 'schedule',
+            element: <ScheduleLayout />,
             children: [
               {
                 index: true,
-                element: <UserTravels />,
+                element: <ScheduleTravel />,
+              },
+              {
+                path: 'preview',
+                element: <PreviewScheduleTravel />,
               },
             ],
           },

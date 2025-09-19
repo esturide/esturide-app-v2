@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { LatLng } from '$libs/types/LatLng.ts';
-import MapView from '@components/map/view/MapView.tsx';
+import MapView from '@components/map/leaflet/view/MapView.tsx';
 
 import 'leaflet-routing-machine';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
