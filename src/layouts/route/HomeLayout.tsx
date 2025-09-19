@@ -5,7 +5,6 @@ import { FaMessage } from 'react-icons/fa6';
 import { ItemType } from '@components/navbar/types.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
 import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { selectThemeFromRole } from '$libs/select/color.ts';
 
@@ -55,9 +54,7 @@ const HomeLayout = () => {
 
   return (
     <ResponsiveLayout items={items}>
-      <MainLayout>
-        <Outlet />
-      </MainLayout>
+      <Outlet />
     </ResponsiveLayout>
   );
 };

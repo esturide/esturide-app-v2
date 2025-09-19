@@ -11,7 +11,7 @@ const meta = {
     layout: 'fullscreen',
   },
   args: {
-    onClick: async () => {
+    onChange: async () => {
       fn();
     },
   },
@@ -36,8 +36,5 @@ export const Search: Story = {
     label: 'Search',
     placeholder: 'Location',
     icon: FaSearch,
-    onClick: async () => {
-      fn();
-    },
   },
 };

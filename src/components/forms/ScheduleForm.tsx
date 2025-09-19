@@ -69,7 +69,9 @@ function ScheduleForm({
         icon={FaSearch}
         theme={theme}
         value={address}
-        onChange={setAddress}
+        onChange={async (address: string) => {
+          setAddress(address);
+        }}
       />
     );
   };

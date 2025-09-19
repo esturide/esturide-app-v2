@@ -55,7 +55,7 @@ const UserInputIcon: React.FC<Props> = ({
   };
 
   const onCaptureValue = async () => {
-    if (onChange !== undefined) {
+    if (onChange) {
       await onChange(inputRef.current !== null ? inputRef.current.value : '');
     }
   };

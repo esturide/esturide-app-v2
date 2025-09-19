@@ -1,20 +1,24 @@
 import React from 'react';
-import BackgroundAnimated from '@components/resources/BackgroundAnimated.tsx';
+import ImageBackground from '@components/resources/MainBackgroundAnimated.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
 
 type Props = {
-  filename: string;
+  filename?: string;
 };
 
 function MainLayoutWithBackground({
   children,
   filename,
 }: React.PropsWithChildren<Props>) {
-  return (
-    <BackgroundAnimated filename={filename}>
-      <MainLayout>{children}</MainLayout>
-    </BackgroundAnimated>
-  );
+  if (filename) {
+    return (
+      <ImageBackground>
+        <MainLayout>{children}</MainLayout>
+      </ImageBackground>
+    );
+  } else {
+    return <MainLayout>{children}</MainLayout>;
+  }
 }
 
 export default MainLayoutWithBackground;
