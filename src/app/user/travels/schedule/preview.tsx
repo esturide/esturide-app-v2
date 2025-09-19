@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import { useLocation, useParams } from 'react-router';
-import { useNavigate } from 'react-router-dom';
-import { AdvancedMarker, APIProvider, Map } from '@vis.gl/react-google-maps';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
+import { APIProvider, Map, useMap } from '@vis.gl/react-google-maps';
 
 interface LocationState {
   readonly addressFrom: string;
@@ -15,16 +13,55 @@ function PreviewScheduleTravel() {
   const { state } = useLocation();
   const { addressTo, addressFrom } = state as LocationState;
 
-  const navigate = useNavigate();
+  const origin = addressTo;
+  const destination = addressFrom;
 
-  const position = { lat: 53.54992, lng: 10.00678 };
+  const DirectionsComponent = () => {
+    const map = useMap();
+    const [directions, setDirections] =
+      useState<null | google.maps.DirectionsResult>(null);
+
+    useEffect(() => {
+      if (!map || !origin || !destination) {
+        return;
+      }
+
+      const directionsService = new google.maps.DirectionsService();
+
+      directionsService.route(
+        {
+          origin: addressTo,
+          destination: addressFrom,
+          travelMode: google.maps.TravelMode.DRIVING,
+        },
+        (result, status) => {
+          if (status === google.maps.DirectionsStatus.OK && status !== null) {
+            setDirections(result);
+          } else {
+            console.error(`Error fetching directions: ${status}`);
+          }
+        },
+      );
+    }, [map, origin, destination]);
+
+    useEffect(() => {
+      if (!map || !directions) return;
+
+      const directionsRenderer = new google.maps.DirectionsRenderer({
+        map: map,
+      });
+
+      directionsRenderer.setDirections(directions);
+
+      return () => directionsRenderer.setMap(null);
+    }, [map, directions]);
+
+    return null;
+  };
 
   return (
     <>
-      <div className={'bg-red-500'}>
-        <div>
-          <p>Hello world</p>
-        </div>
+      <div className={'flex'}>
         <APIProvider apiKey={googleMapsApiKey}>
           <Map
             style={{ height: '100vh' }}
@@ -32,7 +69,9 @@ function PreviewScheduleTravel() {
             defaultZoom={3}
             gestureHandling="greedy"
             disableDefaultUI
-          />
+          >
+            <DirectionsComponent />
+          </Map>
         </APIProvider>
       </div>
     </>
