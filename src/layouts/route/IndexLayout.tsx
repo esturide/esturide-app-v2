@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useId } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { FaFacebookMessenger, FaHome, FaInfoCircle } from 'react-icons/fa';
 import { ItemType } from '@components/navbar/types.ts';
@@ -6,8 +6,10 @@ import { useUserManager } from '@/context/UserManager.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import DesktopView from '@layouts/view/DesktopView.tsx';
 import GradientAnimatedBackground from '@layouts/view/animated/GradientAnimatedBackground.tsx';
+import FooterPresentation from '@components/resources/FooterPresentation.tsx';
 
 const IndexLayout = () => {
+  const id = useId();
   const navigate = useNavigate();
   const { isMobile } = useDeviceManagement();
   const { isAuthenticated } = useUserManager();
@@ -41,18 +43,30 @@ const IndexLayout = () => {
 
   const ResponsiveLayout = ({ children }: React.PropsWithChildren) => {
     if (isMobile) {
-      return <>{children}</>;
+      return (
+        <div id={id} className={'flex flex-col h-screen'}>
+          {children}
+          <FooterPresentation />
+        </div>
+      );
     } else {
-      return <DesktopView items={items}>{children}</DesktopView>;
+      return (
+        <DesktopView items={items}>
+          <div id={id} className={'flex flex-col h-screen'}>
+            {children}
+            <FooterPresentation />
+          </div>
+        </DesktopView>
+      );
     }
   };
 
   return (
-    <ResponsiveLayout>
-      <GradientAnimatedBackground dark>
+    <GradientAnimatedBackground dark>
+      <ResponsiveLayout>
         <Outlet />
-      </GradientAnimatedBackground>
-    </ResponsiveLayout>
+      </ResponsiveLayout>
+    </GradientAnimatedBackground>
   );
 };
 

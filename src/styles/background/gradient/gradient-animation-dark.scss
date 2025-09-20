@@ -1,9 +1,10 @@
-.gradient-animated-background-dark {
+.bg-gradient-animated-dark {
   background: radial-gradient(100% 100% at var(--22-x-position) var(--22-y-position), #1e9c92 -65%, transparent), radial-gradient(100% 100% at var(--23-x-position) var(--23-y-position), #157fc3 -58%, transparent), radial-gradient(100% 100% at var(--24-x-position) var(--24-y-position), #312e35 -47%, transparent), radial-gradient(100% 100% at var(--25-x-position) var(--25-y-position), #ffffff 13%, transparent), #1b253b;
   animation-name: main;
   animation-iteration-count: infinite;
   animation-duration: 12s;
   transition-timing-function: ease-in-out;
+  height: 100vh;
 }
 
 @property --22-x-position {

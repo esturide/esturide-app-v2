@@ -46,7 +46,7 @@ function UserIndex() {
   const FirstElement = () => {
     return (
       <div className={'flex flex-col gap-8'}>
-        <Welcome />
+        <Welcome dark />
         <UserOptions />
       </div>
     );

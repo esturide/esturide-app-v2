@@ -15,14 +15,14 @@ function GradientAnimatedBackground({
 
   if (dark) {
     return (
-      <div className={'gradient-animated-background-dark'} id={id}>
+      <div className={'bg-gradient-animated-dark'} id={id}>
         {children}
       </div>
     );
   }
 
   return (
-    <div className={'gradient-animated-background-clear'} id={id}>
+    <div className={'bg-gradient-animated-clear'} id={id}>
       {children}
     </div>
   );

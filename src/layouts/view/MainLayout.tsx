@@ -8,7 +8,7 @@ function MainLayout({ children }: React.PropsWithChildren) {
     return (
       <div
         className={
-          'mx-auto max-w-7xl px-6 py-4 flex flex-col h-screen overflow-auto scroll-auto'
+          'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full overflow-auto scroll-auto'
         }
       >
         {children}
@@ -18,7 +18,7 @@ function MainLayout({ children }: React.PropsWithChildren) {
     return (
       <div
         className={
-          'mx-auto max-w-2xl py-8 px-6 flex flex-col h-screen overflow-auto scroll-auto'
+          'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full overflow-auto scroll-auto'
         }
       >
         {children}
@@ -28,7 +28,7 @@ function MainLayout({ children }: React.PropsWithChildren) {
     return (
       <div
         className={
-          'mx-auto max-w-7xl px-6 py-8 lg:px-18 flex flex-col h-screen items-center justify-center overflow-auto scroll-auto'
+          'mx-auto max-w-7xl px-6 py-8 lg:px-18 flex flex-col h-full items-center justify-center overflow-auto scroll-auto'
         }
       >
         {children}
