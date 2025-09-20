@@ -44,7 +44,7 @@ const IndexLayout = () => {
   const ResponsiveLayout = ({ children }: React.PropsWithChildren) => {
     if (isMobile) {
       return (
-        <div id={id} className={'flex flex-col h-screen'}>
+        <div id={id} className={'flex flex-col'}>
           {children}
           <FooterPresentation />
         </div>
@@ -52,10 +52,10 @@ const IndexLayout = () => {
     } else {
       return (
         <DesktopView items={items}>
-          <div id={id} className={'flex flex-col h-screen'}>
+          <div id={id} className={'flex flex-col '}>
             {children}
-            <FooterPresentation />
           </div>
+          <FooterPresentation />
         </DesktopView>
       );
     }
