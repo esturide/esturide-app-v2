@@ -16,6 +16,11 @@ const UserRegister: React.FC = () => {
   const [currentForm, setCurrentForm] = useState(0);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    failureMessage("You can't log in at the moment.");
+    navigate('/resource-not-available');
+  }, [navigate]);
+
   const clickRegister = async () => {
     navigate('/login');
   };
@@ -92,11 +97,6 @@ const UserRegister: React.FC = () => {
   const previous = async () => {
     setCurrentForm((currentForm - 1) % registerForm.length);
   };
-
-  useEffect(() => {
-    failureMessage("You can't log in at the moment.");
-    navigate('/resource-not-available');
-  }, [navigate]);
 
   return (
     <PresentationLayout title={'Registrarse'} header={<Logo />}>
