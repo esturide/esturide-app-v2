@@ -18,7 +18,7 @@ const IndexLayout = () => {
     if (isAuthenticated) {
       navigate('/home', { replace: true });
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
 
   const items: ItemType[] = [
     {
@@ -62,11 +62,11 @@ const IndexLayout = () => {
   };
 
   return (
-    <GradientAnimatedBackground dark>
-      <ResponsiveLayout>
+    <ResponsiveLayout>
+      <GradientAnimatedBackground dark>
         <Outlet />
-      </ResponsiveLayout>
-    </GradientAnimatedBackground>
+      </GradientAnimatedBackground>
+    </ResponsiveLayout>
   );
 };
 
