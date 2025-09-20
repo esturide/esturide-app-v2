@@ -1,5 +1,7 @@
 import { FaFacebook, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
 import IconLink from '@components/text/IconLink.tsx';
+import TextLink from '@components/text/TextLink.tsx';
+import HeaderText from '@components/text/HeaderText.tsx';
 
 const DefaultLinks = {
   youtube: 'https://www.youtube.com/@esturide',
@@ -16,56 +18,54 @@ function FooterPresentation() {
     >
       <div className={'flex flex-col gap-12 overflow-auto overflow-x-hidden'}>
         <div>
-          <h1 className={'text-2xl font-semibold'}>Esturide</h1>
-          <p className={'text-lg font-light'}>Visita centro de ayuda</p>
+          <HeaderText title={'Esturide'} weight={1} />
+          <TextLink label={'Visita centro de ayuda'} to={'/help'} />
         </div>
 
         <div className={'flex flex-row gap-8'}>
           <div className={'flex flex-col gap-2'}>
-            <h2 className={'text-lg'}>Compañia</h2>
-            <p className={'font-light'}>Quiénes somos</p>
-            <p className={'font-light'}>Lo que ofrecemos</p>
-            <p className={'font-light'}>Blog</p>
-          </div>
+            <HeaderText title={'Compañia'} weight={2} />
 
-          <div className={'flex flex-col gap-2'}>
-            <h2 className={'text-lg'}>Compañia</h2>
-            <p className={'font-light'}>Quiénes somos</p>
-            <p className={'font-light'}>Lo que ofrecemos</p>
-            <p className={'font-light'}>Blog</p>
+            <TextLink label={'Quiénes somos'} to={'/qa'} />
+            <TextLink label={'Lo que ofrecemos'} to={'/about'} />
+            <TextLink label={'Blog'} to={'/blog'} />
           </div>
         </div>
 
-        <div>
-          <div className={'flex flex-row justify-between items-center gap-1'}>
-            <IconLink
-              icon={FaYoutube}
-              label={'Youtube'}
-              to={DefaultLinks.youtube}
-              external
-            />
-            <IconLink
-              icon={FaFacebook}
-              label={'Facebook'}
-              to={DefaultLinks.facebook}
-              external
-            />
-            <IconLink
-              icon={FaLinkedinIn}
-              label={'Linkedin'}
-              to={DefaultLinks.linkedin}
-              external
-            />
-          </div>
+        <div className={'flex flex-row justify-between items-center gap-1'}>
+          <IconLink
+            icon={FaYoutube}
+            label={'Youtube'}
+            to={DefaultLinks.youtube}
+            external
+          />
+
+          <IconLink
+            icon={FaFacebook}
+            label={'Facebook'}
+            to={DefaultLinks.facebook}
+            external
+          />
+
+          <IconLink
+            icon={FaLinkedinIn}
+            label={'Linkedin'}
+            to={DefaultLinks.linkedin}
+            external
+          />
         </div>
 
         <div className={'flex flex-row justify-between'}>
-          <p className={'text-sm font-light'}>© 2025 Esturide</p>
+          <TextLink label={'© 2025 Esturide'} to={'/'} weight={'light'} />
 
           <div className={'flex flex-row gap-2'}>
-            <p className={'text-sm font-light'}>Privacidad</p>
-            <p className={'text-sm font-light'}>Accesibilidad</p>
-            <p className={'text-sm font-light'}>Términos</p>
+            <TextLink
+              label={'Accesibilidad'}
+              to={'/accessibility'}
+              weight={'light'}
+            />
+            <TextLink label={'Privacidad'} to={'/privacy'} weight={'light'} />
+            <TextLink label={'Términos'} to={'/terms'} weight={'light'} />
           </div>
         </div>
       </div>
