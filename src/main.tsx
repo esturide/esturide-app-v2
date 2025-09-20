@@ -8,7 +8,8 @@ import { Bounce, ToastContainer } from 'react-toastify';
 
 import { DeviceManagementProvider } from '@/context/DeviceManagment.tsx';
 
-import ErrorPage from '~/boundary/ErrorPage.tsx';
+import ErrorPage from '~/boundary/error';
+import ResourcesNotAvailable from '~/boundary/resources-not-available.tsx';
 import UserIndex from '~/index.tsx';
 import UserHome from '~/user';
 import LoginPage from '~/login.tsx';
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <UserIndex />,
+      },
+      {
+        path: '/resource-not-available',
+        element: <ResourcesNotAvailable />,
       },
     ],
   },

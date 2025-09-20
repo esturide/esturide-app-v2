@@ -12,7 +12,6 @@ import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
 import Logo from '@components/resources/Logo.tsx';
 import PresentationLayout from '@layouts/PresentationLayout.tsx';
-import TextLink from '@components/text/TextLink.tsx';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();

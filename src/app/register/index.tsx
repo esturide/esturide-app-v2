@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaCar, FaUser } from 'react-icons/fa';
 import UserInput from '@components/input/UserInput.tsx';
@@ -10,6 +10,7 @@ import AlternativeHyperLink from '@components/input/AlternativeHyperLink.tsx';
 import Scroll from '@layouts/scroll/Scroll.tsx';
 import PresentationLayout from '@layouts/PresentationLayout.tsx';
 import Logo from '@components/resources/Logo.tsx';
+import { failureMessage } from '$libs/toast/failure.ts';
 
 const UserRegister: React.FC = () => {
   const [currentForm, setCurrentForm] = useState(0);
@@ -91,6 +92,11 @@ const UserRegister: React.FC = () => {
   const previous = async () => {
     setCurrentForm((currentForm - 1) % registerForm.length);
   };
+
+  useEffect(() => {
+    failureMessage("You can't log in at the moment.");
+    navigate('/resource-not-available');
+  }, [navigate]);
 
   return (
     <PresentationLayout title={'Registrarse'} header={<Logo />}>

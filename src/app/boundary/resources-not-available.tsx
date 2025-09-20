@@ -1,17 +1,16 @@
 import SorryMessage from '@components/resources/SorryMessage.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
 
-function UserNotify() {
+function ResourcesNotAvailable() {
   return (
     <MainLayout>
       <SorryMessage
-        message={
-          'Estamos trabajando en esta funcionalidad para ofrecerte una mejor experiencia.'
-        }
+        message={'Este apartado no se encuentra disponible.'}
         title={'Próximamente'}
+        shadow
+        dark
       />
     </MainLayout>
   );
 }
-
-export default UserNotify;
+export default ResourcesNotAvailable;
