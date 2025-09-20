@@ -4,12 +4,14 @@ import { useUserManager } from '@/context/UserManager.tsx';
 import loaderEffect from '$libs/loaderEffect.ts';
 import UserInput from '@components/input/UserInput.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
-import HyperLink from '@components/input/HyperLink.tsx';
+import AlternativeHyperLink from '@components/input/AlternativeHyperLink.tsx';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import Scroll from '@layouts/scroll/Scroll.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
+import Logo from '@components/resources/Logo.tsx';
+import PresentationLayout from '@layouts/PresentationLayout.tsx';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -71,43 +73,45 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <>
-      <Scroll>
-        <div className="flex flex-col items-center mb-4 mx-2 gap-6">
-          <UserInput
-            label={'Usuario'}
-            onInput={onInputCode}
-            valid={isValidCode && isValidLogin}
-            invalidMessage={isValidCode ? '' : 'Numero de usuario invalido'}
-          />
-          <UserInput
-            label={'Contraseña'}
-            type="password"
-            onInput={setPassword}
-            valid={isValidLogin}
-            invalidMessage={'Contraseña o numero de usuario incorrecto'}
-          />
+    <PresentationLayout title={'Iniciar sesion'} header={<Logo />}>
+      <div className={'flex flex-col md:gap-12 gap-2'}>
+        <Scroll>
+          <div className="flex flex-col items-center gap-2 p-2">
+            <UserInput
+              label={'Usuario'}
+              onInput={onInputCode}
+              valid={isValidCode && isValidLogin}
+              invalidMessage={isValidCode ? '' : 'Numero de usuario invalido'}
+            />
+            <UserInput
+              label={'Contraseña'}
+              type="password"
+              onInput={setPassword}
+              valid={isValidLogin}
+              invalidMessage={'Contraseña o numero de usuario incorrecto'}
+            />
+          </div>
+        </Scroll>
+
+        <div className={'flex flex-col gap-3'}>
+          <div className="flex flex-col items-center gap-3">
+            <UserButton label={'Iniciar sesion'} onClick={onLogin} />
+            <UserButton
+              label={'Regresar'}
+              onClick={returnToHome}
+              theme={'gray'}
+            />
+          </div>
+
+          <div className="flex flex-col items-center">
+            <AlternativeHyperLink
+              label={'¿No tienes cuenta? Regístrate'}
+              onClick={clickRegister}
+            />
+          </div>
         </div>
-      </Scroll>
-
-      <div className="mx-3 my-6 flex flex-col items-center gap-3">
-        <UserButton label={'Iniciar sesion'} onClick={onLogin} />
-        {['lg', 'lx'].includes(size) && (
-          <UserButton
-            label={'Regresar'}
-            onClick={returnToHome}
-            theme={'gray'}
-          />
-        )}
       </div>
-
-      <div className="flex flex-col items-center gap-2">
-        <HyperLink
-          label={'¿No tienes cuenta? Regístrate'}
-          onClick={clickRegister}
-        />
-      </div>
-    </>
+    </PresentationLayout>
   );
 };
 

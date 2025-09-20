@@ -20,7 +20,7 @@ const Scroll: React.FC<PropsWithChildren<Props>> = ({
     }
   }, [maxHeight, minHeight]);
 
-  return <div className={`h-50 px-2 max-md:overflow-y-scroll`}>{children}</div>;
+  return <div className={`h-auto overflow-y-auto`}>{children}</div>;
 };
 
 export default Scroll;
