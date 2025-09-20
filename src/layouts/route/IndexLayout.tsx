@@ -5,6 +5,7 @@ import { ItemType } from '@components/navbar/types.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import DesktopView from '@layouts/view/DesktopView.tsx';
+import GradientAnimatedBackground from '@layouts/view/animated/GradientAnimatedBackground.tsx';
 
 const IndexLayout = () => {
   const navigate = useNavigate();
@@ -48,7 +49,9 @@ const IndexLayout = () => {
 
   return (
     <ResponsiveLayout>
-      <Outlet />
+      <GradientAnimatedBackground dark>
+        <Outlet />
+      </GradientAnimatedBackground>
     </ResponsiveLayout>
   );
 };
