@@ -30,6 +30,7 @@ import { Notifications } from 'react-push-notification';
 import { Bounce, ToastContainer } from 'react-toastify';
 
 import '@/index.css';
+
 import ScheduleLayout from '@layouts/route/ScheduleLayout.tsx';
 
 const router = createBrowserRouter([
