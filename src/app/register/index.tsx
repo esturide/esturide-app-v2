@@ -12,13 +12,17 @@ import PresentationLayout from '@layouts/PresentationLayout.tsx';
 import Logo from '@components/resources/Logo.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
 
+const enableUserRegister = false; // Current development
+
 const UserRegister: React.FC = () => {
   const [currentForm, setCurrentForm] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    failureMessage("You can't log in at the moment.");
-    navigate('/resource-not-available');
+    if (!enableUserRegister) {
+      failureMessage("You can't log in at the moment.");
+      navigate('/resource-not-available');
+    }
   }, [navigate]);
 
   const clickRegister = async () => {
