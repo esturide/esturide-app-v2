@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import Logo from '@components/resources/Logo.tsx';
-import PresentationLayout from '@layouts/PresentationLayout.tsx';
 import { useUserManager } from '@/context/UserManager.tsx';
 
 function EmptyLayout() {
@@ -14,11 +12,7 @@ function EmptyLayout() {
     }
   }, [isAuthenticated]);
 
-  return (
-    <PresentationLayout title={'Iniciar sesion'} header={<Logo />}>
-      <Outlet />
-    </PresentationLayout>
-  );
+  return <Outlet />;
 }
 
 export default EmptyLayout;

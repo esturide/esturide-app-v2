@@ -10,6 +10,8 @@ import PartialScreenContainer from '@layouts/container/PartialScreenContainer.ts
 import Scroll from '@layouts/scroll/Scroll.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
+import Logo from '@components/resources/Logo.tsx';
+import PresentationLayout from '@layouts/PresentationLayout.tsx';
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -71,7 +73,7 @@ const LoginPage: React.FC = () => {
   }
 
   return (
-    <>
+    <PresentationLayout title={'Iniciar sesion'} header={<Logo />}>
       <Scroll>
         <div className="flex flex-col items-center mb-4 mx-2 gap-6">
           <UserInput
@@ -107,7 +109,7 @@ const LoginPage: React.FC = () => {
           onClick={clickRegister}
         />
       </div>
-    </>
+    </PresentationLayout>
   );
 };
 

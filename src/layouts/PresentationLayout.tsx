@@ -11,7 +11,7 @@ const PresentationLayout: React.FC<PropsWithChildren<Props>> = ({
   header,
 }) => {
   return (
-    <div className="w-full h-screen overflow-auto scrollbar-hide flex-grow flex flex-col items-center justify-center bg-gray-900">
+    <div className="w-full h-screen flex-grow flex flex-col items-center justify-center bg-gray-900">
       <div className="flex m-8">{header}</div>
 
       <div className="w-full max-w-md overflow-hidden bg-white rounded-t-[60px] pt-6 shadow-lg flex-grow flex flex-col items-center justify-center">
@@ -21,7 +21,7 @@ const PresentationLayout: React.FC<PropsWithChildren<Props>> = ({
               {title}
             </h1>
           )}
-          <div className="pb-5">{children}</div>
+          <div className="pb-5 overflow-y-auto h-screen">{children}</div>
         </div>
       </div>
     </div>

@@ -8,6 +8,8 @@ import DateInput from '@components/input/DateInput.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
 import HyperLink from '@components/input/HyperLink.tsx';
 import Scroll from '@layouts/scroll/Scroll.tsx';
+import PresentationLayout from '@layouts/PresentationLayout.tsx';
+import Logo from '@components/resources/Logo.tsx';
 
 const UserRegister: React.FC = () => {
   const [currentForm, setCurrentForm] = useState(0);
@@ -83,7 +85,7 @@ const UserRegister: React.FC = () => {
   ];
 
   const next = async () => {
-    setCurrentForm((currentForm + 1) % registerForm.length); // {registerForm[currentForm]}
+    setCurrentForm((currentForm + 1) % registerForm.length);
   };
 
   const previous = async () => {
@@ -91,22 +93,28 @@ const UserRegister: React.FC = () => {
   };
 
   return (
-    <div className={'flex flex-col justify-stretch w-full'}>
-      <Scroll>{registerForm[currentForm]}</Scroll>
+    <PresentationLayout title={'Registrarse'} header={<Logo />}>
+      <div className={'flex flex-col justify-stretch'}>
+        <Scroll>{registerForm[currentForm]}</Scroll>
 
-      <div className={'h-fit'}>
-        <div className="flex flex-col gap-2 my-3">
-          <UserButton label={'Siguente'} onClick={next} />
-          {currentForm > 0 && (
-            <UserButton label={'Regresar'} onClick={previous} theme={'gray'} />
-          )}
-        </div>
+        <div className={'h-fit'}>
+          <div className="flex flex-col gap-2 my-3">
+            <UserButton label={'Siguente'} onClick={next} />
+            {currentForm > 0 && (
+              <UserButton
+                label={'Regresar'}
+                onClick={previous}
+                theme={'gray'}
+              />
+            )}
+          </div>
 
-        <div className="flex flex-col items-center">
-          <HyperLink label={'¿Ya tienes cuenta?'} onClick={clickRegister} />
+          <div className="flex flex-col items-center">
+            <HyperLink label={'¿Ya tienes cuenta?'} onClick={clickRegister} />
+          </div>
         </div>
       </div>
-    </div>
+    </PresentationLayout>
   );
 };
 
