@@ -43,10 +43,18 @@ function UserIndex() {
     );
   };
 
+  const FirstElement = () => {
+    return (
+      <div className={'flex flex-col gap-8'}>
+        <Welcome />
+        <UserOptions />
+      </div>
+    );
+  };
+
   return (
     <MainLayout>
-      <Welcome dark />
-      <UserOptions />
+      <FirstElement />
     </MainLayout>
   );
 }
