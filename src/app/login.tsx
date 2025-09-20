@@ -75,7 +75,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <PresentationLayout title={'Iniciar sesion'} header={<Logo />}>
-      <div className={'flex flex-col gap-8'}>
+      <div className={'flex flex-col md:gap-12 gap-2'}>
         <Scroll>
           <div className="flex flex-col items-center gap-2 p-2">
             <UserInput
