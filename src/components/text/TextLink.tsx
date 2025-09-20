@@ -22,6 +22,7 @@ function TextLink({
       return <p className={'text-sm font-light'}>{label}</p>;
     }
   };
+
   return (
     <Link
       className={'flex hover:text-gray-300'}
