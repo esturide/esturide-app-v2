@@ -6,7 +6,7 @@ import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import SelectColor from '@components/input/selector/SelectColor.tsx';
 import DateInput from '@components/input/DateInput.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';
-import HyperLink from '@components/input/HyperLink.tsx';
+import AlternativeHyperLink from '@components/input/AlternativeHyperLink.tsx';
 import Scroll from '@layouts/scroll/Scroll.tsx';
 import PresentationLayout from '@layouts/PresentationLayout.tsx';
 import Logo from '@components/resources/Logo.tsx';
@@ -95,7 +95,9 @@ const UserRegister: React.FC = () => {
   return (
     <PresentationLayout title={'Registrarse'} header={<Logo />}>
       <div className={'flex flex-col justify-stretch'}>
-        <Scroll>{registerForm[currentForm]}</Scroll>
+        <Scroll>
+          <div className={'p-2'}>{registerForm[currentForm]}</div>
+        </Scroll>
 
         <div className={'h-fit'}>
           <div className="flex flex-col gap-2 my-3">
@@ -110,7 +112,10 @@ const UserRegister: React.FC = () => {
           </div>
 
           <div className="flex flex-col items-center">
-            <HyperLink label={'¿Ya tienes cuenta?'} onClick={clickRegister} />
+            <AlternativeHyperLink
+              label={'¿Ya tienes cuenta?'}
+              onClick={clickRegister}
+            />
           </div>
         </div>
       </div>
