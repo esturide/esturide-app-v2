@@ -29,13 +29,13 @@ const IndexLayout = () => {
     },
     {
       label: 'Sobre',
-      href: '/',
+      href: '/about',
       current: false,
       icon: FaInfoCircle,
     },
     {
       label: 'Contacto',
-      href: '/',
+      href: '/contact',
       current: false,
       icon: FaFacebookMessenger,
     },
