@@ -2,8 +2,6 @@ import { useNavigate } from 'react-router-dom';
 
 import Welcome from '@components/resources/Welcome.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
-import MainLayoutWithBackground from '@layouts/view/MainLayoutWithBackground.tsx';
-import BackgroundAnimationResource from '@assets/images/car-animated.gif';
 import { GrLogin, GrUserNew } from 'react-icons/gr';
 import { useUserManager } from '@/context/UserManager.tsx';
 import { useEffect } from 'react';
@@ -45,10 +43,18 @@ function UserIndex() {
     );
   };
 
+  const FirstElement = () => {
+    return (
+      <div className={'flex flex-col gap-8'}>
+        <Welcome dark />
+        <UserOptions />
+      </div>
+    );
+  };
+
   return (
     <MainLayout>
-      <Welcome dark />
-      <UserOptions />
+      <FirstElement />
     </MainLayout>
   );
 }

@@ -18,7 +18,7 @@ function MainLayout({ children }: React.PropsWithChildren) {
     return (
       <div
         className={
-          'mx-auto max-w-2xl py-8 px-6 flex flex-col h-screen overflow-auto scroll-auto'
+          'mx-auto max-w-2xl py-8 px-6 flex flex-col h-screen w-screen overflow-auto scroll-auto'
         }
       >
         {children}

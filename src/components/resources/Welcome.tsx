@@ -3,7 +3,7 @@ type Props = {
 };
 
 const Welcome = ({ dark = false }: Props) => {
-  const textStyle = dark ? 'text-black' : 'text-white';
+  const textStyle = !dark ? 'text-black' : 'text-white';
 
   return (
     <>
