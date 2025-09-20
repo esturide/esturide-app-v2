@@ -61,10 +61,6 @@ const IndexLayout = () => {
     }
   };
 
-  useEffect(() => {
-    throw Error('Test error');
-  }, []);
-
   return (
     <ResponsiveLayout>
       <GradientAnimatedBackground dark>
