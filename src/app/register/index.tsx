@@ -21,7 +21,7 @@ const UserRegister: React.FC = () => {
   useEffect(() => {
     if (!enableUserRegister) {
       failureMessage("You can't log in at the moment.");
-      navigate('/resource-not-available');
+      navigate('/resource-not-available', { replace: true });
     }
   }, [navigate]);
 
