@@ -2,6 +2,8 @@ import React, { HTMLProps, useState } from 'react';
 import { IconType } from 'react-icons';
 import { FaReact } from 'react-icons/fa';
 
+import '@styles/background/gradient/gradient-animation-card.scss';
+
 type Props = {
   icon?: IconType | string;
   title: string;
@@ -38,7 +40,7 @@ const ButtonCard: React.FC<Props> = ({
     >
       <div
         className={`
-        flex gap-3 px-5 py-4 rounded-[32px]
+        bg-gradient-animated-card flex gap-3 px-5 py-4 rounded-[32px]
         hover:shadow-md transition-shadow duration-300 border border-gray-100 shadow
         ${isPressed ? `bg-opacity-50 bg-blur-md ${color}` : 'bg-white'}
       `}

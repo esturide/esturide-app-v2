@@ -8,7 +8,7 @@ const Welcome = ({ dark = false }: Props) => {
   return (
     <>
       <div>
-        <div className={'flex flex-col mx-auto max-w-2xl lg:mx-0'}>
+        <div className={'flex flex-col mx-auto max-w-2xl lg:mx-0 items-start'}>
           <h2
             className={`text-2xl font-semibold tracking-tight ${textStyle} sm:text-5xl`}
           >
