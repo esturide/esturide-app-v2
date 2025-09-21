@@ -43,9 +43,9 @@ function UserIndex() {
     );
   };
 
-  const FirstElement = () => {
+  const WelcomeMessage = () => {
     return (
-      <div className={'flex flex-col items-start gap-8'}>
+      <div className={'flex flex-col items-start h-screen gap-4'}>
         <Welcome dark />
         <UserOptions />
       </div>
@@ -54,7 +54,7 @@ function UserIndex() {
 
   return (
     <MainLayout>
-      <FirstElement />
+      <WelcomeMessage />
     </MainLayout>
   );
 }
