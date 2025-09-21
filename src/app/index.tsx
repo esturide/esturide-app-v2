@@ -27,7 +27,7 @@ function UserIndex() {
         <ButtonCard
           icon={GrUserNew}
           title={'Registrarse'}
-          content={'Comienza a solicitar o planificar rides.'}
+          content={'Unete a la comunidad.'}
           color={'bg-blue-300'}
           onClick={registerUser}
         />
@@ -45,7 +45,7 @@ function UserIndex() {
 
   const FirstElement = () => {
     return (
-      <div className={'flex flex-col gap-8'}>
+      <div className={'flex flex-col items-start gap-8'}>
         <Welcome dark />
         <UserOptions />
       </div>
