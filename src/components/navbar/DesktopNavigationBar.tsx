@@ -68,7 +68,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
         >
           <MenuItem>
             <Link
-              to="/home/profile"
+              to={'/home/profile'}
               className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
             >
               Your Profile
@@ -76,7 +76,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
           </MenuItem>
           <MenuItem>
             <Link
-              to="/home/settings"
+              to={'/home/settings'}
               className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
             >
               Settings
@@ -84,7 +84,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
           </MenuItem>
           <MenuItem>
             <Link
-              to="/"
+              to={'/'}
               className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
               onClick={logout}
             >
@@ -97,7 +97,10 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
   };
 
   return (
-    <Disclosure as="nav" className="fixed top-0 w-full z-50 bg-teal-800">
+    <Disclosure
+      as="nav"
+      className="fixed top-0 w-full z-50 bg-teal-700 inset-shadow-sm inset-shadow-teal-800 shadow-lg"
+    >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -120,8 +123,8 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
                     aria-current={item.current ? 'page' : undefined}
                     className={classNames(
                       item.current
-                        ? 'bg-gray-900 text-white'
-                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                        ? 'bg-gray-900 text-white font-bold'
+                        : 'text-white hover:bg-gray-700 hover:text-white',
                       'rounded-md px-3 py-2 text-sm font-medium',
                     )}
                     onClick={async () => {
@@ -157,7 +160,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
               aria-current={item.current ? 'page' : undefined}
               className={classNames(
                 item.current
-                  ? 'bg-gray-900 text-white'
+                  ? 'bg-gray-900 text-white font-bold'
                   : 'text-white hover:bg-gray-700 hover:text-white',
                 'block rounded-md px-3 py-2 text-base font-medium',
               )}

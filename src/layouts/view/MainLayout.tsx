@@ -6,20 +6,14 @@ function MainLayout({ children }: React.PropsWithChildren) {
 
   if (['sm', 'md'].includes(size)) {
     return (
-      <div
-        className={
-          'mx-auto max-w-7xl px-6 py-4 flex flex-col h-screen overflow-auto scroll-auto'
-        }
-      >
+      <div className={'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full'}>
         {children}
       </div>
     );
   } else if (['lg', 'xl'].includes(size)) {
     return (
       <div
-        className={
-          'mx-auto max-w-2xl py-8 px-6 flex flex-col h-screen w-screen overflow-auto scroll-auto'
-        }
+        className={'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen'}
       >
         {children}
       </div>
@@ -28,7 +22,7 @@ function MainLayout({ children }: React.PropsWithChildren) {
     return (
       <div
         className={
-          'mx-auto max-w-7xl px-6 py-8 lg:px-18 flex flex-col h-screen items-center justify-center overflow-auto scroll-auto'
+          'mx-auto max-w-7xl px-6 py-8 lg:px-18 flex flex-col h-full items-center justify-center'
         }
       >
         {children}
