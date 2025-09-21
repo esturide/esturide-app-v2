@@ -22,7 +22,7 @@ function FooterPresentation() {
           <TextLink label={'Visita centro de ayuda'} to={'/help'} />
         </div>
 
-        <div className={'flex flex-row gap-8'}>
+        <div className={'flex flex-col md:flex-row gap-8'}>
           <div className={'flex flex-col gap-2'}>
             <HeaderText title={'Compañia'} weight={2} />
 
@@ -32,7 +32,11 @@ function FooterPresentation() {
           </div>
         </div>
 
-        <div className={'flex flex-row justify-between items-center gap-1'}>
+        <div
+          className={
+            'flex flex-col sm:flex-row justify-between sm:items-center gap-1'
+          }
+        >
           <IconLink
             icon={FaYoutube}
             label={'Youtube'}
@@ -55,10 +59,12 @@ function FooterPresentation() {
           />
         </div>
 
-        <div className={'flex flex-row justify-between'}>
-          <TextLink label={'© 2025 Esturide'} to={'/'} weight={'light'} />
+        <div
+          className={'flex flex-col sm:flex-row justify-between gap-2 sm:gap-4'}
+        >
+          <TextLink label={'©2025 Esturide'} to={'/'} weight={'light'} />
 
-          <div className={'flex flex-row gap-2'}>
+          <div className={'flex flex-col md:flex-row gap-2'}>
             <TextLink
               label={'Accesibilidad'}
               to={'/accessibility'}
