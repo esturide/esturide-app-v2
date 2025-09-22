@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
 import IconButton from '@components/buttons/IconButton.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
@@ -10,12 +10,20 @@ import ToggleInputList, {
 import PriceInput from '@components/input/PriceInput.tsx';
 import SeatSelectorInput from '@components/input/selector/SeatSelectorInput.tsx';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
-import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
+import {
+  CiAlarmOn,
+  CiCircleCheck,
+  CiCircleRemove,
+  CiTimer,
+} from 'react-icons/ci';
 import { TbCancel } from 'react-icons/tb';
 import SmallButton from '@components/buttons/SmallButton.tsx';
 import { LocationState } from '@/context/ScheduleTravelContext.tsx';
 import userInput from '@components/input/UserInput.tsx';
 import DateTimePickerInput from '@components/input/DateTimePickerInput.tsx';
+import MediumButton from '@components/buttons/MediumButton.tsx';
+import { MdOutlineAlarmOn } from 'react-icons/md';
+import { failureMessage } from '$libs/toast/failure.ts';
 
 export interface CurrentSchedule {
   addressFrom: string;
@@ -35,14 +43,17 @@ function ScheduleTravelForm({
   onCancel,
   theme = 'teal',
 }: Props) {
-  const [scheduleTime, setScheduleTime] = useState('');
-  const [scheduleDate, setScheduleDate] = useState('');
+  const [isValidScheduleDateTime, setIsValidScheduleDateTime] = useState(true);
+  const [scheduleDateTime, setScheduleDateTime] = useState<Date | null>(null);
+
+  useEffect(() => {
+    console.log(scheduleDateTime);
+  }, [scheduleDateTime]);
 
   const onScheduleSubmit = async () => {
     console.log('Schedule Submitted');
 
-    console.log(scheduleTime);
-    console.log(scheduleDate);
+    console.log(scheduleDateTime);
   };
 
   const options: FilterOption[] = [
@@ -57,25 +68,54 @@ function ScheduleTravelForm({
   ];
 
   const ConfigureScheduleDateTime = () => {
+    const defaultToleranceMinutes = 3;
+
+    useEffect(() => {
+      const now = new Date();
+
+      if (scheduleDateTime) {
+        setIsValidScheduleDateTime(scheduleDateTime.getTime() >= now.getTime());
+      } else {
+        setIsValidScheduleDateTime(true);
+      }
+    }, [scheduleDateTime]);
+
+    useEffect(() => {
+      if (!isValidScheduleDateTime) {
+        failureMessage('Horario de planificacion incorrecto.');
+      }
+    }, [isValidScheduleDateTime]);
+
     return (
-      <div className={'flex flex-col gap-4 w-full'}>
+      <div className={'flex flex-col items-stretch gap-4 h-full w-full'}>
         <div className={'flex flex-col gap-2 w-full'}>
-          <HeaderText title={'Horario'} weight={2} />
+          <HeaderText title={'Planificar'} weight={2} />
 
-          <TimePickerInput
-            label={'Hora de salida'}
-            onInput={setScheduleTime}
-            value={scheduleTime}
-          />
+          <div className={'flex flex-col justify-start'}>
+            <div className={'flex flex-row items-end gap-2 w-full'}>
+              <DateTimePickerInput
+                label={'Horario de salida'}
+                value={scheduleDateTime}
+                onInput={setScheduleDateTime}
+              />
 
-          <UserInput
-            type={'date'}
-            label={'Fecha'}
-            onInput={setScheduleDate}
-            value={scheduleDate}
-          />
+              <IconButton
+                icon={MdOutlineAlarmOn}
+                onClick={() => {
+                  const now = new Date();
+                  now.setMinutes(now.getMinutes() + defaultToleranceMinutes);
 
-          <DateTimePickerInput />
+                  setScheduleDateTime(now);
+                }}
+              />
+            </div>
+
+            {!isValidScheduleDateTime && (
+              <p className={'px-3 pt-1 text-xs text-red-500 text-left'}>
+                No se puede programar el viaje a esta hora.
+              </p>
+            )}
+          </div>
         </div>
 
         <div className={'flex flex-col gap-2 w-full'}>
