@@ -49,6 +49,7 @@ function TimePickerInput({
       {label && <label className={allTextThemeColors[theme]}>{label}</label>}
 
       <TimePicker
+        openClockOnFocus={false}
         onChange={newTime => {
           if (newTime) {
             setTime(newTime);

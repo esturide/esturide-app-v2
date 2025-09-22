@@ -75,7 +75,6 @@
   font: inherit;
   -webkit-appearance: menulist;
   -moz-appearance: menulist;
-  appearance: menulist;
 }
 
 .react-time-picker__button {
@@ -89,7 +88,6 @@
 
 .react-time-picker__button:enabled:hover .react-time-picker__button__icon,
 .react-time-picker__button:enabled:focus .react-time-picker__button__icon {
-  stroke: #0078d7;
 }
 
 .react-time-picker__button:disabled .react-time-picker__button__icon {

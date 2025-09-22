@@ -65,23 +65,9 @@ function ScheduleConfig() {
           >
             <div className={'flex flex-col gap-4 w-full'}>
               <div className={'flex flex-col gap-2 w-full'}>
-                <HeaderText title={'Verifica ruta'} weight={2} />
-
-                <UserInputIcon
-                  label={'Inicio'}
-                  value={addressFrom}
-                  icon={CiCircleCheck}
-                  readOnly
-                  disabled
-                />
-
-                <UserInputIcon
-                  label={'Fin'}
-                  value={addressTo}
-                  icon={CiCircleRemove}
-                  readOnly
-                  disabled
-                />
+                <HeaderText title={'Horario'} weight={2} />
+                <TimePickerInput label={'Hora de salida'} />
+                <UserInput type={'date'} label={'Fecha'} />
               </div>
 
               <div className={'flex flex-col gap-2 w-full'}>
@@ -111,13 +97,27 @@ function ScheduleConfig() {
                   console.log('Selected seats:', seats);
                 }}
               />
-
-              <TimePickerInput label={'Hora de salida'} />
             </div>
           </div>
 
           <div>
-            <UserInput type={'date'} label={'Fecha'} />
+            <HeaderText title={'Verifica ruta'} weight={2} />
+
+            <UserInputIcon
+              label={'Inicio'}
+              value={addressFrom}
+              icon={CiCircleCheck}
+              readOnly
+              disabled
+            />
+
+            <UserInputIcon
+              label={'Fin'}
+              value={addressTo}
+              icon={CiCircleRemove}
+              readOnly
+              disabled
+            />
           </div>
 
           <div className={'flex flex-row justify-between gap-2'}>
