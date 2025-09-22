@@ -10,7 +10,7 @@ type Props = {
 function SorryMessage({ title, message, shadow = false, dark = false }: Props) {
   return (
     <div
-      className={`overflow-hidden pt-4 mx-auto w-full text-center max-w-[480px] rounded-xl ${shadow ? '' : ''}`}
+      className={`overflow-hidden mx-auto w-full text-center max-w-[480px] rounded-xl ${shadow ? '' : ''}`}
     >
       <section className="flex flex-col px-6 w-full">
         <img

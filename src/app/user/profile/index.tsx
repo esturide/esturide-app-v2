@@ -58,10 +58,38 @@ function UserProfile() {
 
   return (
     <MainResponsiveLayout>
-      <div className={'flex flex-col items-center gap-2'}>
-        <div
-          className={'flex flex-col items-center justify-center w-full gap-2'}
-        >
+      <div className={'flex flex-col h-screen gap-4 md:gap-6'}>
+        <div className={'flex flex-col'}>
+          <SelectOptions
+            theme={currentTheme}
+            defaultValue={currentOption}
+            onSelect={onSelectRole}
+            options={[
+              {
+                id: 0,
+                description: 'No verificado',
+              },
+              {
+                id: 1,
+                description: 'Pasajero',
+              },
+              {
+                id: 2,
+                description: 'Conductor',
+              },
+              {
+                id: 3,
+                description: 'Staff',
+              },
+              {
+                id: 4,
+                description: 'Administrador',
+              },
+            ]}
+          />
+        </div>
+
+        <div className={'flex flex-col items-center gap-2'}>
           <SquareButton
             label={'Cerrar sesion'}
             theme={currentTheme}
@@ -70,34 +98,6 @@ function UserProfile() {
             }}
           />
         </div>
-
-        <SelectOptions
-          theme={currentTheme}
-          defaultValue={currentOption}
-          onSelect={onSelectRole}
-          options={[
-            {
-              id: 0,
-              description: 'No verificado',
-            },
-            {
-              id: 1,
-              description: 'Pasajero',
-            },
-            {
-              id: 2,
-              description: 'Conductor',
-            },
-            {
-              id: 3,
-              description: 'Staff',
-            },
-            {
-              id: 4,
-              description: 'Administrador',
-            },
-          ]}
-        />
       </div>
     </MainResponsiveLayout>
   );

@@ -51,7 +51,7 @@ function MainResponsiveLayout({
         {children}
       </div>
     );
-  } else if (['md', 'lg', 'xl'].includes(size)) {
+  } else if (['lg', 'xl'].includes(size)) {
     return (
       <div
         className={'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen'}
