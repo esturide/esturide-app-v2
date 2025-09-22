@@ -15,6 +15,7 @@ import { TbCancel } from 'react-icons/tb';
 import SmallButton from '@components/buttons/SmallButton.tsx';
 import { LocationState } from '@/context/ScheduleTravelContext.tsx';
 import userInput from '@components/input/UserInput.tsx';
+import DateTimePickerInput from '@components/input/DateTimePickerInput.tsx';
 
 export interface CurrentSchedule {
   addressFrom: string;
@@ -73,6 +74,8 @@ function ScheduleTravelForm({
             onInput={setScheduleDate}
             value={scheduleDate}
           />
+
+          <DateTimePickerInput />
         </div>
 
         <div className={'flex flex-col gap-2 w-full'}>

@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import TimePicker from 'react-time-picker';
+import React, { useState } from 'react';
+import DateTimePicker from 'react-datetime-picker';
+
+import '@styles/input/time/DateTimePicker.scss';
+import 'react-calendar/dist/Calendar.css';
+import 'react-clock/dist/Clock.css';
+
 import ColorTheme from '$libs/types/Theme.ts';
 
-import '@styles/input/time/TimePicker.scss';
-import '@styles/input/time/ClockInput.scss';
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 type Props = {
   label?: string;
-  value?: string;
+  value?: Value;
   onInput?: (value: string) => void;
   valid?: boolean;
   invalidMessage?: string;
@@ -15,22 +21,16 @@ type Props = {
   theme?: ColorTheme;
 };
 
-function TimePickerInput({
+function DateTimePickerInput({
   label,
-  value = '12:00',
+  value = '',
   onInput,
   valid = true,
   invalidMessage,
   readOnly,
   theme = 'teal',
 }: Props) {
-  const [time, setTime] = useState(value);
-
-  useEffect(() => {
-    if (onInput) {
-      onInput(time);
-    }
-  }, [time]);
+  const [dateTime, onChangeDateTime] = useState<Value>(value);
 
   const allTextThemeColors = {
     gray: 'my-2 mx-2 text-left text-sm font-medium text-gray-900',
@@ -45,22 +45,15 @@ function TimePickerInput({
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div>
       {label && <label className={allTextThemeColors[theme]}>{label}</label>}
-
-      <TimePicker
-        openClockOnFocus={false}
-        onChange={newTime => {
-          if (newTime) {
-            setTime(newTime);
-          }
-        }}
-        value={time}
+      <DateTimePicker
+        onChange={onChangeDateTime}
+        value={dateTime}
         className={allInputThemeColors[theme]}
-        clearIcon={null}
       />
     </div>
   );
 }
 
-export default TimePickerInput;
+export default DateTimePickerInput;

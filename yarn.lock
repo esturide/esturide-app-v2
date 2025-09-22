@@ -6888,6 +6888,16 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
+react-calendar@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-calendar/-/react-calendar-6.0.0.tgz#3b13a9e80832fe51fdebc6afdcd2285ac851926f"
+  integrity sha512-6wqaki3Us0DNDjZDr0DYIzhSFprNoy4FdPT9Pjy5aD2hJJVjtJwmdMT9VmrTUo949nlk35BOxehThxX62RkuRQ==
+  dependencies:
+    "@wojtekmaj/date-utils" "^2.0.2"
+    clsx "^2.0.0"
+    get-user-locale "^3.0.0"
+    warning "^4.0.0"
+
 react-clock@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/react-clock/-/react-clock-6.0.0.tgz#3ea6b61bac0edcaaac3cd5f3095f68cabc313c60"
@@ -6926,6 +6936,19 @@ react-cookie@^8.0.1:
     hoist-non-react-statics "^3.3.2"
     universal-cookie "^8.0.0"
 
+react-date-picker@^12.0.1:
+  version "12.0.1"
+  resolved "https://registry.yarnpkg.com/react-date-picker/-/react-date-picker-12.0.1.tgz#7e42ba074cb1837b77570c136eab49b3edd447fe"
+  integrity sha512-VHXOIBt5/Bxa+ICMENjfWjGvllvXxd+lzGB2iH9fOc7+BfcetI/aI8MZuiIKofmNWq2oAdD+fg4MsZkKmOBjig==
+  dependencies:
+    "@wojtekmaj/date-utils" "^2.0.2"
+    clsx "^2.0.0"
+    get-user-locale "^3.0.0"
+    make-event-props "^2.0.0"
+    react-calendar "^6.0.0"
+    react-fit "^3.0.0"
+    update-input-width "^1.4.0"
+
 react-datepicker@^8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-8.2.1.tgz#f710453f62689db9f7fdbbbcc30ec95ab28750f8"
@@ -6934,6 +6957,21 @@ react-datepicker@^8.2.1:
     "@floating-ui/react" "^0.27.3"
     clsx "^2.1.1"
     date-fns "^4.1.0"
+
+react-datetime-picker@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/react-datetime-picker/-/react-datetime-picker-7.0.1.tgz#9fbba73ff11db38b0094030cdecaf00e9a1ab877"
+  integrity sha512-GhpNuAm4bm6/fOI196Ttr/YbUMqeR5feSHQNkyeEIoVp9qb5DqXsoE+TgJfkPZ/+VcNIHlr9o/qZc75Nx/7wDA==
+  dependencies:
+    "@wojtekmaj/date-utils" "^2.0.2"
+    clsx "^2.0.0"
+    get-user-locale "^3.0.0"
+    make-event-props "^2.0.0"
+    react-calendar "^6.0.0"
+    react-clock "^6.0.0"
+    react-date-picker "^12.0.1"
+    react-fit "^3.0.0"
+    react-time-picker "^8.0.2"
 
 react-device-detect@^2.2.3:
   version "2.2.3"
