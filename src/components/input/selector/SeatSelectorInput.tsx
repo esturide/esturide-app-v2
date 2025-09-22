@@ -107,10 +107,16 @@ const SeatSelector: React.FC<SeatSelectorProps> = ({
 type Props = {
   label?: string;
   onSelect: (seats: Seat[]) => void;
+  labelButton?: string;
   theme?: ColorTheme;
 };
 
-function SeatSelectorInput({ label, onSelect, theme = 'teal' }: Props) {
+function SeatSelectorInput({
+  label,
+  onSelect,
+  labelButton,
+  theme = 'teal',
+}: Props) {
   const defaultAllSeats: Seat[] = ['A', 'B', 'C'] as const;
   const [selectedSeats, setSelectedSeats] = React.useState<Seat[]>([]);
 
@@ -134,7 +140,9 @@ function SeatSelectorInput({ label, onSelect, theme = 'teal' }: Props) {
         disabled={disabled}
         aria-label="Choose route for selected seats"
       >
-        <span className="self-stretch my-auto">Seleccionar</span>
+        <span className="self-stretch my-auto">
+          {labelButton ? labelButton : 'Seleccionar'}
+        </span>
       </button>
     );
   };
