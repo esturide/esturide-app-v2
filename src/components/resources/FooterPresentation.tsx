@@ -1,6 +1,6 @@
 import { FaFacebook, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
-import IconLink from '@components/text/IconLink.tsx';
-import TextLink from '@components/text/TextLink.tsx';
+import IconLink from '@components/text/hyperlinks/IconLink.tsx';
+import TextLink from '@components/text/hyperlinks/TextLink.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
 
 const DefaultLinks = {

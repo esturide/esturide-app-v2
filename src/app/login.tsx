@@ -4,7 +4,7 @@ import { useUserManager } from '@/context/UserManager.tsx';
 import loaderEffect from '$libs/loaderEffect.ts';
 import UserInput from '@components/input/UserInput.tsx';
 import SquareButton from '@components/buttons/SquareButton.tsx';
-import AlternativeHyperLink from '@components/input/AlternativeHyperLink.tsx';
+import AlternativeHyperLink from '@components/text/hyperlinks/AlternativeHyperLink.tsx';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import Scroll from '@layouts/scroll/Scroll.tsx';

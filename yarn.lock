@@ -3591,6 +3591,11 @@
     loupe "^3.1.2"
     tinyrainbow "^1.2.0"
 
+"@wojtekmaj/date-utils@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@wojtekmaj/date-utils/-/date-utils-2.0.2.tgz#fec06771ad2ac5cb8d03769e97d2d35a3019df06"
+  integrity sha512-Do66mSlSNifFFuo3l9gNKfRMSFi26CRuQMsDJuuKO/ekrDWuTTtE4ZQxoFCUOG+NgxnpSeBq/k5TY8ZseEzLpA==
+
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.npmjs.org/acorn-jsx/-/acorn-jsx-5.3.2.tgz"
@@ -4354,6 +4359,11 @@ dequal@^2.0.2, dequal@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/dequal/-/dequal-2.0.3.tgz"
   integrity sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==
+
+detect-element-overflow@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/detect-element-overflow/-/detect-element-overflow-2.0.0.tgz#fc73ede4d81444b6c8d9287dffd136473bb75e46"
+  integrity sha512-DETEHRGdIdQowMR1Fb5hG4WXUJhlLId/IRQgAi5GVqCnHwnb0SKf9V/teyEVDX0+iClPeOPiNvlE6fSiECz65w==
 
 detect-libc@^1.0.3:
   version "1.0.3"
@@ -5125,6 +5135,13 @@ get-symbol-description@^1.1.0:
     call-bound "^1.0.3"
     es-errors "^1.3.0"
     get-intrinsic "^1.2.6"
+
+get-user-locale@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/get-user-locale/-/get-user-locale-3.0.0.tgz#3ed8fa51bb8c2225b362168c8db19bc0f6cfc25d"
+  integrity sha512-iJfHSmdYV39UUBw7Jq6GJzeJxUr4U+S03qdhVuDsR9gCEnfbqLy9gYDJFBJQL1riqolFUKQvx36mEkp2iGgJ3g==
+  dependencies:
+    memoize "^10.0.0"
 
 glob-parent@^5.1.2, glob-parent@~5.1.2:
   version "5.1.2"
@@ -6115,6 +6132,11 @@ make-dir@^4.0.0:
   dependencies:
     semver "^7.5.3"
 
+make-event-props@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/make-event-props/-/make-event-props-2.0.0.tgz#41f7a6e96841296d6835aebe94be86c25602f923"
+  integrity sha512-G/hncXrl4Qt7mauJEXSg3AcdYzmpkIITTNl5I+rH9sog5Yw0kK6vseJjCaPfOXqOqQuPUP89Rkhfz5kPS8ijtw==
+
 map-or-similar@^1.5.0:
   version "1.5.0"
   resolved "https://registry.npmjs.org/map-or-similar/-/map-or-similar-1.5.0.tgz"
@@ -6129,6 +6151,13 @@ math-intrinsics@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz"
   integrity sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==
+
+memoize@^10.0.0:
+  version "10.1.0"
+  resolved "https://registry.yarnpkg.com/memoize/-/memoize-10.1.0.tgz#32a9d09da985a1ab518dfe9fd52d14d1d130446f"
+  integrity sha512-MMbFhJzh4Jlg/poq1si90XRlTZRDHVqdlz2mPyGJ6kqMpyHUyVpDd5gpFAvVehW64+RA1eKE9Yt8aSLY7w2Kgg==
+  dependencies:
+    mimic-function "^5.0.1"
 
 memoizerific@^1.11.3:
   version "1.11.3"
@@ -6177,7 +6206,7 @@ mimic-fn@^4.0.0:
   resolved "https://registry.npmjs.org/mimic-fn/-/mimic-fn-4.0.0.tgz"
   integrity sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==
 
-mimic-function@^5.0.0:
+mimic-function@^5.0.0, mimic-function@^5.0.1:
   version "5.0.1"
   resolved "https://registry.npmjs.org/mimic-function/-/mimic-function-5.0.1.tgz"
   integrity sha512-VP79XUPxV2CigYP3jWwAUFSku2aKqBH7uTAapFWCBqutsbmDo96KY5o8uh6U+/YSIn5OxJnXp73beVkpqMIGhA==
@@ -6859,6 +6888,15 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
+react-clock@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/react-clock/-/react-clock-6.0.0.tgz#3ea6b61bac0edcaaac3cd5f3095f68cabc313c60"
+  integrity sha512-qYYrCT9HwDmj5Y2jFGPLc0ktQAZnm+1h2e429/8KBic69PuP1Cp2u0U8k5m3G8A09cOmikQFQitnX6STeGmTpA==
+  dependencies:
+    "@wojtekmaj/date-utils" "^2.0.2"
+    clsx "^2.0.0"
+    get-user-locale "^3.0.0"
+
 react-color@^2.19.3:
   version "2.19.3"
   resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.19.3.tgz#ec6c6b4568312a3c6a18420ab0472e146aa5683d"
@@ -6940,6 +6978,14 @@ react-docgen@^7.0.0:
   integrity sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==
   dependencies:
     scheduler "^0.25.0"
+
+react-fit@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-fit/-/react-fit-3.0.0.tgz#e381f791519117d551f5eb4abcea6be09be2aed3"
+  integrity sha512-3jrm0k4TZS7n6fZXgCu5k8ARx5w+YbrzpcFMop/iScOjnA22xQVjrVOOJD8YyqRM1j0focbRBrBEJXyydzF/Iw==
+  dependencies:
+    detect-element-overflow "^2.0.0"
+    warning "^4.0.0"
 
 react-icons@^5.5.0:
   version "5.5.0"
@@ -7035,6 +7081,19 @@ react-style-singleton@^2.2.1, react-style-singleton@^2.2.2:
   dependencies:
     get-nonce "^1.0.0"
     tslib "^2.0.0"
+
+react-time-picker@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/react-time-picker/-/react-time-picker-8.0.2.tgz#a026e4866bfce3e1961740c01ae24a3e5e3e57b7"
+  integrity sha512-qT0MDiPy9rFM60QrNNfZ5F9nwDBW1E9DrBtslpM46UPP/RReaWDJrGlvHVH6CjtWHUeJi5sLk1vB+dzLS8ZvnA==
+  dependencies:
+    "@wojtekmaj/date-utils" "^2.0.2"
+    clsx "^2.0.0"
+    get-user-locale "^3.0.0"
+    make-event-props "^2.0.0"
+    react-clock "^6.0.0"
+    react-fit "^3.0.0"
+    update-input-width "^1.4.0"
 
 react-toastify@^11.0.5:
   version "11.0.5"
@@ -8195,6 +8254,11 @@ update-browserslist-db@^1.1.1:
     escalade "^3.2.0"
     picocolors "^1.1.1"
 
+update-input-width@^1.4.0:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/update-input-width/-/update-input-width-1.4.2.tgz#49d327a39395185b0fd440b9c3b1d6f81173655c"
+  integrity sha512-/p0XLhrQQQ4bMWD7bL9duYObwYCO1qGr8R19xcMmoMSmXuQ7/1//veUnCObQ7/iW6E2pGS6rFkS4TfH4ur7e/g==
+
 uri-js@^4.2.2:
   version "4.4.1"
   resolved "https://registry.npmjs.org/uri-js/-/uri-js-4.4.1.tgz"
@@ -8345,6 +8409,13 @@ vitest@^3.0.9:
     vite "^5.0.0 || ^6.0.0"
     vite-node "3.0.9"
     why-is-node-running "^2.3.0"
+
+warning@^4.0.0:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3"
+  integrity sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==
+  dependencies:
+    loose-envify "^1.0.0"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

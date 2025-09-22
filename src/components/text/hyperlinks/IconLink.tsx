@@ -1,6 +1,6 @@
 import { IconType } from 'react-icons';
 import { Link } from 'react-router';
-import LinkProps from '@components/text/LinkProps.ts';
+import LinkProps from '@components/text/hyperlinks/LinkProps.ts';
 
 interface IconLinkProps extends LinkProps {
   icon: IconType;

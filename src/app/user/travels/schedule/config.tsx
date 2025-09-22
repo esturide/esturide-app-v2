@@ -16,6 +16,7 @@ import PriceInput from '@components/input/PriceInput.tsx';
 import ToggleInputList, {
   FilterOption,
 } from '@components/input/list/ToggleInputList.tsx';
+import TimePickerInput from '@components/input/TimePickerInput.tsx';
 
 function ScheduleConfig() {
   const navigate = useNavigate();
@@ -110,7 +111,13 @@ function ScheduleConfig() {
                   console.log('Selected seats:', seats);
                 }}
               />
+
+              <TimePickerInput label={'Hora de salida'} />
             </div>
+          </div>
+
+          <div>
+            <UserInput type={'date'} label={'Fecha'} />
           </div>
 
           <div className={'flex flex-row justify-between gap-2'}>

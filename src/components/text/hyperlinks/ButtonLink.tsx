@@ -1,4 +1,4 @@
-import LinkProps from '@components/text/LinkProps.ts';
+import LinkProps from '@components/text/hyperlinks/LinkProps.ts';
 import { Link } from 'react-router';
 import ColorTheme from '$libs/types/Theme.ts';
 

@@ -4,7 +4,7 @@ import GradientAnimatedBackground from '@layouts/view/animated/GradientAnimatedB
 import FooterPresentation from '@components/resources/FooterPresentation.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
-import ButtonLink from '@components/text/ButtonLink.tsx';
+import ButtonLink from '@components/text/hyperlinks/ButtonLink.tsx';
 import Tooltip from '@components/resources/Tooltip.tsx';
 
 function ErrorPage() {
