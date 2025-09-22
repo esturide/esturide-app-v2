@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
 import IconButton from '@components/buttons/IconButton.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
@@ -13,6 +13,8 @@ import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 import { TbCancel } from 'react-icons/tb';
 import SmallButton from '@components/buttons/SmallButton.tsx';
+import { LocationState } from '@/context/ScheduleTravelContext.tsx';
+import userInput from '@components/input/UserInput.tsx';
 
 export interface CurrentSchedule {
   addressFrom: string;
@@ -20,7 +22,7 @@ export interface CurrentSchedule {
 }
 
 type Props = {
-  currentSchedule: CurrentSchedule;
+  currentSchedule: LocationState;
   onCancel?: () => void;
   onSchedule?: (current: CurrentSchedule) => Promise<void>;
   theme?: ColorTheme;
@@ -32,12 +34,14 @@ function ScheduleTravelForm({
   onCancel,
   theme = 'teal',
 }: Props) {
-  const CancelTravel = () => {
-    return <IconButton icon={TbCancel} theme={'gray'} onClick={onCancel} />;
-  };
+  const [scheduleTime, setScheduleTime] = useState('');
+  const [scheduleDate, setScheduleDate] = useState('');
 
-  const AcceptPreviewTravel = () => {
-    return <SmallButton label={'Planificar'} onClick={async () => {}} />;
+  const onScheduleSubmit = async () => {
+    console.log('Schedule Submitted');
+
+    console.log(scheduleTime);
+    console.log(scheduleDate);
   };
 
   const options: FilterOption[] = [
@@ -51,53 +55,64 @@ function ScheduleTravelForm({
     },
   ];
 
-  return (
-    <form className={'flex flex-col gap-6 px-2'}>
-      <HeaderText title={'Ultimos detalles'} weight={1} />
+  const ConfigureScheduleDateTime = () => {
+    return (
+      <div className={'flex flex-col gap-4 w-full'}>
+        <div className={'flex flex-col gap-2 w-full'}>
+          <HeaderText title={'Horario'} weight={2} />
 
-      <div
-        className={
-          'flex flex-col md:flex-row gap-8 justify-between items-stretch'
-        }
-      >
-        <div className={'flex flex-col gap-4 w-full'}>
-          <div className={'flex flex-col gap-2 w-full'}>
-            <HeaderText title={'Horario'} weight={2} />
-            <TimePickerInput label={'Hora de salida'} />
-            <UserInput type={'date'} label={'Fecha'} />
-          </div>
+          <TimePickerInput
+            label={'Hora de salida'}
+            onInput={setScheduleTime}
+            value={scheduleTime}
+          />
 
-          <div className={'flex flex-col gap-2 w-full'}>
-            <HeaderText title={'Filtros'} weight={2} />
-
-            <ToggleInputList
-              options={options}
-              title={'Selecciona'}
-              onSelectionChange={selections => {
-                console.log(selections);
-              }}
-            />
-          </div>
+          <UserInput
+            type={'date'}
+            label={'Fecha'}
+            onInput={setScheduleDate}
+            value={scheduleDate}
+          />
         </div>
 
         <div className={'flex flex-col gap-2 w-full'}>
-          <HeaderText title={'Configuracion'} weight={2} />
+          <HeaderText title={'Filtros'} weight={2} />
 
-          <PriceInput
-            label={'Precio por asiento'}
-            placeholder={'Precio por asiento'}
-          />
-
-          <SeatSelectorInput
-            labelButton={'Asignar'}
-            onSelect={seats => {
-              console.log('Selected seats:', seats);
+          <ToggleInputList
+            options={options}
+            title={'Selecciona'}
+            onSelectionChange={selections => {
+              console.log(selections);
             }}
           />
         </div>
       </div>
+    );
+  };
 
-      <div>
+  const ConfigureRulesSchedule = () => {
+    return (
+      <div className={'flex flex-col gap-2 w-full'}>
+        <HeaderText title={'Configuracion'} weight={2} />
+
+        <PriceInput
+          label={'Precio por asiento'}
+          placeholder={'Precio por asiento'}
+        />
+
+        <SeatSelectorInput
+          labelButton={'Asignar'}
+          onSelect={seats => {
+            console.log('Selected seats:', seats);
+          }}
+        />
+      </div>
+    );
+  };
+
+  const CheckSchedule = () => {
+    return (
+      <div className={'flex flex-col gap-2'}>
         <HeaderText title={'Verifica ruta'} weight={2} />
 
         <UserInputIcon
@@ -116,11 +131,43 @@ function ScheduleTravelForm({
           disabled
         />
       </div>
+    );
+  };
 
+  const ScheduleConfirm = () => {
+    const CancelTravel = () => {
+      return <IconButton icon={TbCancel} theme={'gray'} onClick={onCancel} />;
+    };
+
+    const AcceptPreviewTravel = () => {
+      return <SmallButton label={'Planificar'} onClick={onScheduleSubmit} />;
+    };
+
+    return (
       <div className={'flex flex-row justify-between gap-2'}>
         <CancelTravel />
         <AcceptPreviewTravel />
       </div>
+    );
+  };
+
+  return (
+    <form className={'flex flex-col gap-4 px-2'}>
+      <HeaderText title={'Ultimos detalles'} weight={1} />
+
+      <div
+        className={
+          'flex flex-col md:flex-row gap-8 justify-between items-stretch'
+        }
+      >
+        <ConfigureScheduleDateTime />
+
+        <ConfigureRulesSchedule />
+      </div>
+
+      <CheckSchedule />
+
+      <ScheduleConfirm />
     </form>
   );
 }
