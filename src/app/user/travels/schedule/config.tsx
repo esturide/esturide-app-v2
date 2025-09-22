@@ -13,6 +13,9 @@ import SmallButton from '@components/buttons/SmallButton.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
 import UserInput from '@components/input/UserInput.tsx';
 import PriceInput from '@components/input/PriceInput.tsx';
+import ToggleInputList, {
+  FilterOption,
+} from '@components/input/list/ToggleInputList.tsx';
 
 function ScheduleConfig() {
   const navigate = useNavigate();
@@ -36,6 +39,17 @@ function ScheduleConfig() {
   const AcceptPreviewTravel = () => {
     return <SmallButton label={'Planificar'} onClick={async () => {}} />;
   };
+
+  const options: FilterOption[] = [
+    {
+      id: 'male',
+      label: 'Hombre',
+    },
+    {
+      id: 'female',
+      label: 'Mujer',
+    },
+  ];
 
   return (
     <>
@@ -71,7 +85,14 @@ function ScheduleConfig() {
 
               <div className={'flex flex-col gap-2 w-full'}>
                 <HeaderText title={'Filtros'} weight={2} />
-                <UserInput type={'number'} label={'Codigo'} />
+
+                <ToggleInputList
+                  options={options}
+                  title={'Selecciona'}
+                  onSelectionChange={selections => {
+                    console.log(selections);
+                  }}
+                />
               </div>
             </div>
 
