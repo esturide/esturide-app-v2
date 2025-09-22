@@ -1,12 +1,53 @@
 import React from 'react';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 
-function MainResponsiveLayout({ children }: React.PropsWithChildren) {
+type Props = {
+  reserveSpace?: boolean;
+};
+
+function MainResponsiveLayout({
+  children,
+  reserveSpace = true,
+}: React.PropsWithChildren<Props>) {
   const { size } = useDeviceManagement();
 
   if (['sm'].includes(size)) {
+    if (reserveSpace) {
+      return (
+        <div
+          className={
+            'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full w-screen pb-24'
+          }
+        >
+          {children}
+        </div>
+      );
+    }
+
     return (
-      <div className={'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full'}>
+      <div
+        className={'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full w-screen'}
+      >
+        {children}
+      </div>
+    );
+  } else if (['md'].includes(size)) {
+    if (reserveSpace) {
+      return (
+        <div
+          className={
+            'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen pb-26'
+          }
+        >
+          {children}
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className={'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen'}
+      >
         {children}
       </div>
     );

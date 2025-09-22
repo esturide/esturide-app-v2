@@ -15,7 +15,7 @@ function ScheduleConfig() {
 
   return (
     <>
-      <MainResponsiveLayout>
+      <MainResponsiveLayout reserveSpace>
         <ScheduleTravelForm
           currentSchedule={{ addressFrom: addressFrom, addressTo: addressTo }}
           onCancel={() => {
