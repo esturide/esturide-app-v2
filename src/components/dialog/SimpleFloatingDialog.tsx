@@ -20,9 +20,9 @@ const SimpleFloatingDialog = ({
 
   const styleThemes = {
     glass:
-      'flex flex-col gap-2 p-4 sm:px-6 sm:py-4 rounded-lg bg-white/70 backdrop-blur-md shadow-lg',
+      'flex flex-col gap-2 p-4 sm:px-6 sm:py-4 rounded-lg bg-white/70 backdrop-blur-md shadow-lg inset-shadow-sm/50',
     solid:
-      'flex flex-col gap-2 p-4 sm:px-6 sm:py-4 rounded-lg bg-white shadow-lg',
+      'flex flex-col gap-2 p-4 sm:px-6 sm:py-4 rounded-lg bg-white shadow-lg inset-shadow-sm',
   };
 
   return (

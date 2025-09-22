@@ -20,6 +20,11 @@ import loaderEffect from '$libs/loaderEffect.ts';
 import ScheduleTravelData from '$libs/request/response/ScheduleTravelData.ts';
 import { atom, useAtom } from 'jotai';
 
+export interface LocationState {
+  readonly addressFrom: string;
+  readonly addressTo: string;
+}
+
 interface ScheduleTravelProps {
   scheduleTravel: (state: ScheduleState) => Promise<boolean>;
   searchAddress: (

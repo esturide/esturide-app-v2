@@ -1,6 +1,9 @@
 import { Outlet } from 'react-router-dom';
 import { useUserManager } from '@/context/UserManager.tsx';
-import { ScheduleTravelProvider } from '@/context/ScheduleTravelContext.tsx';
+import {
+  ScheduleTravelProvider,
+  useScheduleTravel,
+} from '@/context/ScheduleTravelContext.tsx';
 import { Navigate } from 'react-router';
 import { failureMessage } from '$libs/toast/failure.ts';
 import { useEffect } from 'react';
