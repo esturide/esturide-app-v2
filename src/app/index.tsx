@@ -3,7 +3,7 @@ import { GrLogin, GrUserNew } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 import { randomIntFromInterval, shuffleArray } from '$libs/random.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import Welcome from '@components/resources/Welcome.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import SimpleCarPresentation from '@components/cards/SimpleCarPresentation.tsx';
@@ -150,13 +150,13 @@ function UserIndex() {
   };
 
   return (
-    <MainLayout>
+    <MainResponsiveLayout>
       <div className={'flex flex-col gap-8'}>
         <WelcomeMessage />
         <BenefitsCards />
         <ConclusionMessage />
       </div>
-    </MainLayout>
+    </MainResponsiveLayout>
   );
 }
 

@@ -1,16 +1,16 @@
 import React from 'react';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 
-function MainLayout({ children }: React.PropsWithChildren) {
+function MainResponsiveLayout({ children }: React.PropsWithChildren) {
   const { size } = useDeviceManagement();
 
-  if (['sm', 'md'].includes(size)) {
+  if (['sm'].includes(size)) {
     return (
       <div className={'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full'}>
         {children}
       </div>
     );
-  } else if (['lg', 'xl'].includes(size)) {
+  } else if (['md', 'lg', 'xl'].includes(size)) {
     return (
       <div
         className={'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen'}
@@ -31,4 +31,4 @@ function MainLayout({ children }: React.PropsWithChildren) {
   }
 }
 
-export default MainLayout;
+export default MainResponsiveLayout;

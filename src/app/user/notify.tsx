@@ -1,16 +1,16 @@
 import SorryMessage from '@components/resources/SorryMessage.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 
 function UserNotify() {
   return (
-    <MainLayout>
+    <MainResponsiveLayout>
       <SorryMessage
         message={
           'Estamos trabajando en esta funcionalidad para ofrecerte una mejor experiencia.'
         }
         title={'Próximamente'}
       />
-    </MainLayout>
+    </MainResponsiveLayout>
   );
 }
 

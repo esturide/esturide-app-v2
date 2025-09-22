@@ -3,7 +3,7 @@ import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { LocationState } from '@/context/ScheduleTravelContext.tsx';
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import ScheduleTravelForm from '@components/forms/ScheduleTravelForm.tsx';
 
 function ScheduleConfig() {
@@ -15,16 +15,14 @@ function ScheduleConfig() {
 
   return (
     <>
-      <MainLayout>
-        <div className="h-screen">
-          <ScheduleTravelForm
-            currentSchedule={{ addressFrom: addressFrom, addressTo: addressTo }}
-            onCancel={() => {
-              navigate('/home/travels/schedule/');
-            }}
-          />
-        </div>
-      </MainLayout>
+      <MainResponsiveLayout>
+        <ScheduleTravelForm
+          currentSchedule={{ addressFrom: addressFrom, addressTo: addressTo }}
+          onCancel={() => {
+            navigate('/home/travels/schedule/');
+          }}
+        />
+      </MainResponsiveLayout>
     </>
   );
 }

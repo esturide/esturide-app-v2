@@ -13,7 +13,7 @@ import {
 } from '$libs/select/color.ts';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 
 function UserProfile() {
   const { logout, refreshRole, role } = useUserManager();
@@ -57,7 +57,7 @@ function UserProfile() {
   }
 
   return (
-    <MainLayout>
+    <MainResponsiveLayout>
       <div className={'flex flex-col items-center gap-2'}>
         <div
           className={'flex flex-col items-center justify-center w-full gap-2'}
@@ -99,7 +99,7 @@ function UserProfile() {
           ]}
         />
       </div>
-    </MainLayout>
+    </MainResponsiveLayout>
   );
 }
 

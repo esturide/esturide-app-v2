@@ -4,7 +4,7 @@ import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useUserManager } from '@/context/UserManager.tsx';
 import SorryMessage from '@components/resources/SorryMessage.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 
 function UserTravels() {
   const navigate = useNavigate();
@@ -61,9 +61,9 @@ function UserTravels() {
   };
 
   return (
-    <MainLayout>
+    <MainResponsiveLayout>
       <ViewRole />
-    </MainLayout>
+    </MainResponsiveLayout>
   );
 }
 

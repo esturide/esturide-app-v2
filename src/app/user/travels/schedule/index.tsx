@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import ScheduleForm from '@components/forms/ScheduleForm.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import { noEmptyStrings } from '$libs/string.ts';
 import { failureMessage } from '$libs/toast/failure.ts';
 
@@ -22,7 +22,7 @@ function ScheduleTravel() {
   };
 
   return (
-    <MainLayout>
+    <MainResponsiveLayout>
       <div className={'flex flex-col gap-4'}>
         <TravelMessage
           title={'Inicia un viaje aqui.'}
@@ -35,7 +35,7 @@ function ScheduleTravel() {
           onCancel={() => navigate(-1)}
         />
       </div>
-    </MainLayout>
+    </MainResponsiveLayout>
   );
 }
 
