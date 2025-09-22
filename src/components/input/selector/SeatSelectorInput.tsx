@@ -105,7 +105,7 @@ const SeatSelector: React.FC<SeatSelectorProps> = ({
 };
 
 type Props = {
-  label: string;
+  label?: string;
   onSelect: (seats: Seat[]) => void;
   theme?: ColorTheme;
 };
@@ -155,9 +155,11 @@ function SeatSelectorInput({ label, onSelect, theme = 'teal' }: Props) {
 
   return (
     <div className="w-full" aria-label="Driver journey seat selection">
-      <header className="flex flex-col gap-4 justify-center items-center w-full">
-        <h1 className="text-lg font-bold text-teal-900">{label}</h1>
-      </header>
+      {label && (
+        <header className="flex flex-col gap-4 justify-center items-center w-full">
+          <h1 className="text-lg font-bold text-teal-900">{label}</h1>
+        </header>
+      )}
 
       <div className="flex flex-col gap-4 justify-center items-center w-full">
         <div className="flex flex-col gap-2 justify-center items-center w-full">
