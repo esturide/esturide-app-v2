@@ -1,11 +1,6 @@
-import { useEffect } from 'react';
-import { Navigate, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { failureMessage } from '$libs/toast/failure.ts';
-import {
-  LocationState,
-  useScheduleTravel,
-} from '@/context/ScheduleTravelContext.tsx';
+import { LocationState } from '@/context/ScheduleTravelContext.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
 import SeatSelectorInput from '@components/input/selector/SeatSelectorInput.tsx';
 

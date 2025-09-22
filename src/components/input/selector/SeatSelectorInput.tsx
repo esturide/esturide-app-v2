@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CarSelector from '@assets/images/car-selector.png';
 import Seat from '$libs/types/Seats.ts';
 import ColorTheme from '$libs/types/Theme.ts';
@@ -30,7 +30,7 @@ const CarLayoutResourceView: React.FC<CarLayoutProps> = ({ selectedSeats }) => {
   return (
     <div>
       <section
-        className="flex relative flex-col self-center px-9 py-2.5 mt-5 max-w-full text-base font-bold text-white whitespace-nowrap aspect-[2] w-[220px]"
+        className="flex relative flex-col self-center max-w-full text-base font-bold text-white whitespace-nowrap aspect-[2] w-[220px]"
         aria-label="Car seat layout visualization"
       >
         <img
@@ -58,10 +58,11 @@ const CarLayoutResourceView: React.FC<CarLayoutProps> = ({ selectedSeats }) => {
 };
 
 type SeatSelectorProps = {
-  seatId: string;
+  seatId: Seat;
   label: string;
   isSelected: boolean;
-  onToggle: (seatId: string) => void;
+  onToggle: (seatId: Seat) => void;
+  theme?: ColorTheme;
 };
 
 const SeatSelector: React.FC<SeatSelectorProps> = ({
@@ -69,15 +70,32 @@ const SeatSelector: React.FC<SeatSelectorProps> = ({
   label,
   isSelected,
   onToggle,
+  theme = 'teal',
 }) => {
+  useEffect(() => {
+    if (isSelected) {
+      console.log(`Seat ${seatId} is selected`);
+    }
+  }, [isSelected]);
+
+  const allStyles = {
+    teal: 'flex flex-row items-center justify-center w-14 h-14 bg-white border border-solid border-stone-300 min-h-14 rounded-[32px] focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2',
+    indigo:
+      "'flex flex-row items-center justify-center w-14 h-14 bg-white border border-solid border-stone-300 min-h-14 rounded-[32px] focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2",
+    gray: "'flex flex-row items-center justify-center w-14 h-14 bg-white border border-solid border-stone-300 min-h-14 rounded-[32px] focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2",
+  };
+
+  const allStyleFocus = {
+    teal: 'flex flex-row items-center justify-center w-14 h-14 bg-white border border-solid border-stone-300 min-h-14 rounded-[32px] ring-2 ring-teal-600 ring-offset',
+    indigo:
+      'flex flex-row items-center justify-center w-14 h-14 bg-white border border-solid border-stone-300 min-h-14 rounded-[32px] ring-2 ring-indigo-600 ring-offset',
+    gray: 'flex flex-row items-center justify-center w-14 h-14 bg-white border border-solid border-stone-300 min-h-14 rounded-[32px] ring-2 ring-gray-600 ring-offset',
+  };
+
   return (
     <button
-      className={
-        'flex flex-row items-center justify-center w-14 h-14 bg-white border border-solid border-stone-300 min-h-14 rounded-[32px] focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2'
-      }
+      className={isSelected ? allStyleFocus[theme] : allStyles[theme]}
       onClick={() => onToggle(seatId)}
-      aria-label={`Seat ${label}, ${isSelected ? 'selected' : 'available'}`}
-      aria-pressed={isSelected}
       role="checkbox"
       tabIndex={0}
     >
@@ -93,7 +111,8 @@ type Props = {
 };
 
 function SeatSelectorInput({ label, onSelect, theme = 'teal' }: Props) {
-  const [selectedSeats, setSelectedSeats] = React.useState<string[]>(['B']);
+  const defaultAllSeats: Seat[] = ['A', 'B', 'C'] as const;
+  const [selectedSeats, setSelectedSeats] = React.useState<Seat[]>([]);
 
   type RouteButtonProps = {
     onClick: () => void;
@@ -106,7 +125,7 @@ function SeatSelectorInput({ label, onSelect, theme = 'teal' }: Props) {
   }) => {
     return (
       <button
-        className={`flex overflow-hidden gap-2.5 justify-center items-center self-center px-11 py-4 mt-11 w-full text-base font-bold text-white rounded-xl max-w-[302px] min-h-[51px] transition-colors focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 ${
+        className={`flex overflow-hidden gap-2.5 justify-center items-center self-center w-full text-base font-bold text-white rounded-xl max-w-[302px] min-h-[51px] transition-colors focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 ${
           disabled
             ? 'bg-gray-400 cursor-not-allowed'
             : 'bg-teal-700 hover:bg-teal-800 active:bg-teal-900'
@@ -115,12 +134,12 @@ function SeatSelectorInput({ label, onSelect, theme = 'teal' }: Props) {
         disabled={disabled}
         aria-label="Choose route for selected seats"
       >
-        <span className="self-stretch my-auto">Elegir Ruta</span>
+        <span className="self-stretch my-auto">Seleccionar</span>
       </button>
     );
   };
 
-  const handleSeatToggle = (seatId: string) => {
+  const handleSeatToggle = (seatId: Seat) => {
     setSelectedSeats(prev =>
       prev.includes(seatId)
         ? prev.filter(id => id !== seatId)
@@ -136,47 +155,26 @@ function SeatSelectorInput({ label, onSelect, theme = 'teal' }: Props) {
 
   return (
     <div className="w-full" aria-label="Driver journey seat selection">
-      <header className="overflow-hidden w-full bg-gray-900">
-        <div className="w-full text-lg font-semibold tracking-tight leading-none text-center text-white whitespace-nowrap" />
-        <div className="w-full">
-          <div className="overflow-hidden px-4 w-full" />
-        </div>
+      <header className="flex flex-col gap-4 justify-center items-center w-full">
+        <h1 className="text-lg font-bold text-teal-900">{label}</h1>
       </header>
 
-      <div className="flex flex-col justify-center items-center px-6 mt-5 w-full">
-        <h1
-          id="available-seats-heading"
-          className="text-base font-bold text-teal-900"
-        >
-          {label}
-        </h1>
+      <div className="flex flex-col gap-4 justify-center items-center w-full">
+        <div className="flex flex-col gap-2 justify-center items-center w-full">
+          <CarLayoutResourceView selectedSeats={selectedSeats} />
 
-        <div className="flex flex-row gap-8 self-center mt-4 max-w-full text-base font-bold text-teal-900 whitespace-nowrap w-[230px]">
-          <SeatSelector
-            seatId="A"
-            label="A"
-            isSelected={selectedSeats.includes('A')}
-            onToggle={handleSeatToggle}
-          />
-
-          <SeatSelector
-            seatId="B"
-            label="B"
-            isSelected={selectedSeats.includes('B')}
-            onToggle={handleSeatToggle}
-          />
-          <SeatSelector
-            seatId="C"
-            label="C"
-            isSelected={selectedSeats.includes('C')}
-            onToggle={handleSeatToggle}
-          />
+          <div className="flex flex-row gap-8 self-center max-w-full text-base font-bold text-teal-900 whitespace-nowrap w-[230px]">
+            {defaultAllSeats.map(seat => (
+              <SeatSelector
+                seatId={seat}
+                label={seat}
+                isSelected={selectedSeats.includes(seat)}
+                onToggle={handleSeatToggle}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Car layout visualization */}
-        <CarLayoutResourceView selectedSeats={selectedSeats} />
-
-        {/* Route selection button */}
         <SelectRoute
           onClick={handleRouteSelection}
           disabled={selectedSeats.length === 0}
