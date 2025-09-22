@@ -1,110 +1,125 @@
-import React, { useState } from 'react';
-import { TiCancel } from 'react-icons/ti';
+import React from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
-import MediumButton from '@components/buttons/MediumButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
-import ConfigAddress from '@components/forms/inputs/ConfigAddress.tsx';
-import SearchAddress from '@components/forms/inputs/SearchAddress.tsx';
-import { LatLng } from '$libs/types/LatLng.ts';
-import defaultLocationList, {
-  searchCurrentItem,
-} from '$libs/const/defaultLocations.ts';
+import HeaderText from '@components/text/HeaderText.tsx';
+import TimePickerInput from '@components/input/TimePickerInput.tsx';
+import UserInput from '@components/input/UserInput.tsx';
+import ToggleInputList, {
+  FilterOption,
+} from '@components/input/list/ToggleInputList.tsx';
+import PriceInput from '@components/input/PriceInput.tsx';
+import SeatSelectorInput from '@components/input/selector/SeatSelectorInput.tsx';
+import UserInputIcon from '@components/input/UserInputIcon.tsx';
+import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
+import { TbCancel } from 'react-icons/tb';
+import SmallButton from '@components/buttons/SmallButton.tsx';
 
-export interface CurrentOption {
-  name: string;
-  location: LatLng;
+export interface CurrentSchedule {
+  addressFrom: string;
+  addressTo: string;
 }
 
 type Props = {
-  theme: ColorTheme;
-  swap: boolean;
-  setSwap: (status: boolean) => void;
-  onSchedule?: (
-    current: CurrentOption,
-    address: string,
-    swap: boolean,
-  ) => Promise<void>;
-  onCancel?: () => Promise<void>;
+  currentSchedule: CurrentSchedule;
+  onCancel?: () => void;
+  onSchedule?: (current: CurrentSchedule) => Promise<void>;
+  theme?: ColorTheme;
 };
 
-function ScheduleTravelForm({ theme, swap, onSchedule, onCancel }: Props) {
-  const [address, setAddress] = useState('');
-  const [option] = useState(0);
-
-  const onClickSchedule = async () => {
-    const item = searchCurrentItem(option);
-
-    if (onSchedule && item !== undefined) {
-      await onSchedule(
-        { name: item.description, location: item.location },
-        address,
-        swap,
-      );
-    }
+function ScheduleTravelForm({
+  currentSchedule,
+  onSchedule,
+  onCancel,
+  theme = 'teal',
+}: Props) {
+  const CancelTravel = () => {
+    return <IconButton icon={TbCancel} theme={'gray'} onClick={onCancel} />;
   };
 
-  const CancelButton = () => {
-    return <IconButton icon={TiCancel} theme={'gray'} onClick={onCancel} />;
+  const AcceptPreviewTravel = () => {
+    return <SmallButton label={'Planificar'} onClick={async () => {}} />;
   };
 
-  const LayoutInputContainer = ({ children }: React.PropsWithChildren) => {
-    return (
-      <div className={'flex justify-end items-end gap-2 flex-row'}>
-        {children}
-      </div>
-    );
-  };
-
-  const AddressInputForms = () => {
-    if (swap) {
-      return (
-        <>
-          <LayoutInputContainer>
-            <SearchAddress label={'Inicio de viaje'} theme={theme} />
-          </LayoutInputContainer>
-
-          <LayoutInputContainer>
-            <ConfigAddress
-              label={'Fin del viaje'}
-              theme={theme}
-              defaultLocationList={defaultLocationList}
-            />
-          </LayoutInputContainer>
-        </>
-      );
-    } else {
-      return (
-        <>
-          <LayoutInputContainer>
-            <ConfigAddress
-              label={'Inicio de viaje'}
-              theme={theme}
-              defaultLocationList={defaultLocationList}
-            />
-          </LayoutInputContainer>
-
-          <LayoutInputContainer>
-            <SearchAddress label={'Fin del viaje'} theme={theme} />
-          </LayoutInputContainer>
-        </>
-      );
-    }
-  };
+  const options: FilterOption[] = [
+    {
+      id: 'male',
+      label: 'Hombre',
+    },
+    {
+      id: 'female',
+      label: 'Mujer',
+    },
+  ];
 
   return (
-    <form className={'grow p-4 lg:h-screen flex flex-col justify-start gap-4'}>
-      <div className={'grow flex flex-col'}>
-        <AddressInputForms />
+    <form className={'flex flex-col gap-6 px-2'}>
+      <HeaderText title={'Ultimos detalles'} weight={1} />
+
+      <div
+        className={
+          'flex flex-col md:flex-row gap-8 justify-between items-stretch'
+        }
+      >
+        <div className={'flex flex-col gap-4 w-full'}>
+          <div className={'flex flex-col gap-2 w-full'}>
+            <HeaderText title={'Horario'} weight={2} />
+            <TimePickerInput label={'Hora de salida'} />
+            <UserInput type={'date'} label={'Fecha'} />
+          </div>
+
+          <div className={'flex flex-col gap-2 w-full'}>
+            <HeaderText title={'Filtros'} weight={2} />
+
+            <ToggleInputList
+              options={options}
+              title={'Selecciona'}
+              onSelectionChange={selections => {
+                console.log(selections);
+              }}
+            />
+          </div>
+        </div>
+
+        <div className={'flex flex-col gap-2 w-full'}>
+          <HeaderText title={'Configuracion'} weight={2} />
+
+          <PriceInput
+            label={'Precio por asiento'}
+            placeholder={'Precio por asiento'}
+          />
+
+          <SeatSelectorInput
+            labelButton={'Asignar'}
+            onSelect={seats => {
+              console.log('Selected seats:', seats);
+            }}
+          />
+        </div>
       </div>
 
-      <div className={'flex flex-row gap-4 items-center'}>
-        <CancelButton />
+      <div>
+        <HeaderText title={'Verifica ruta'} weight={2} />
 
-        <MediumButton
-          label={'Agendar'}
-          theme={theme}
-          onClick={onClickSchedule}
+        <UserInputIcon
+          label={'Inicio'}
+          value={currentSchedule.addressFrom}
+          icon={CiCircleCheck}
+          readOnly
+          disabled
         />
+
+        <UserInputIcon
+          label={'Fin'}
+          value={currentSchedule.addressTo}
+          icon={CiCircleRemove}
+          readOnly
+          disabled
+        />
+      </div>
+
+      <div className={'flex flex-row justify-between gap-2'}>
+        <CancelTravel />
+        <AcceptPreviewTravel />
       </div>
     </form>
   );
