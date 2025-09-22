@@ -5,6 +5,10 @@ import GoogleRouting from '@components/map/google/GoogleRouting.tsx';
 import { all } from '$libs/functional.ts';
 import { useNavigate } from 'react-router-dom';
 import { failureMessage } from '$libs/toast/failure.ts';
+import SimpleFloatingDialog from '@components/dialog/SimpleFloatingDialog.tsx';
+import SmallButton from '@components/buttons/SmallButton.tsx';
+import IconButton from '@components/buttons/IconButton.tsx';
+import { FaBackspace } from 'react-icons/fa';
 
 interface LocationState {
   readonly addressFrom: string;
@@ -34,6 +38,10 @@ function PreviewScheduleTravel() {
     }
   }, [state]);
 
+  const CancelButton = () => {
+    return <IconButton icon={FaBackspace} theme={'gray'} />;
+  };
+
   return (
     <>
       <div className={'flex'}>
@@ -54,6 +62,13 @@ function PreviewScheduleTravel() {
             catchNotFoundRoute={catchNotFoundRoute}
           />
         </GoogleMapView>
+
+        <SimpleFloatingDialog title={'¿Es correcta la ruta?'} style={'glass'}>
+          <div className={'flex flex-row justify-between gap-2'}>
+            <CancelButton />
+            <SmallButton label={'Aceptar'} />
+          </div>
+        </SimpleFloatingDialog>
       </div>
     </>
   );

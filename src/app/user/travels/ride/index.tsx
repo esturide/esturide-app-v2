@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useUserManager } from '@/context/UserManager.tsx';
-import OptionButton from '@components/buttons/OptionButton.tsx';
+import MediumButton from '@components/buttons/MediumButton.tsx';
 
 function RideTravel() {
   const { role } = useUserManager();
@@ -13,7 +13,7 @@ function RideTravel() {
 
   return (
     <div className={'flex flex-col'}>
-      <OptionButton label={'Agendar'} theme={theme} />
+      <MediumButton label={'Agendar'} theme={theme} />
     </div>
   );
 }

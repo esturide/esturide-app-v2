@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import UserButton from '@components/buttons/UserButton.tsx';
+import SquareButton from '@components/buttons/SquareButton.tsx';
 
 const meta = {
   title: 'Input/Button',
-  component: UserButton,
+  component: SquareButton,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof UserButton>;
+} satisfies Meta<typeof SquareButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

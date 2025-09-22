@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TiCancel } from 'react-icons/ti';
 import ColorTheme from '$libs/types/Theme.ts';
-import OptionButton from '@components/buttons/OptionButton.tsx';
+import MediumButton from '@components/buttons/MediumButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
 import ConfigAddress from '@components/forms/inputs/ConfigAddress.tsx';
 import SearchAddress from '@components/forms/inputs/SearchAddress.tsx';
@@ -100,7 +100,7 @@ function ScheduleTravelForm({ theme, swap, onSchedule, onCancel }: Props) {
       <div className={'flex flex-row gap-4 items-center'}>
         <CancelButton />
 
-        <OptionButton
+        <MediumButton
           label={'Agendar'}
           theme={theme}
           onClick={onClickSchedule}

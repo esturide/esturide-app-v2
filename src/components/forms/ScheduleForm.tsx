@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import { FaBackspace, FaExchangeAlt, FaSearch } from 'react-icons/fa';
-import OptionButton from '@components/buttons/OptionButton.tsx';
+import MediumButton from '@components/buttons/MediumButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
 import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 import ColorTheme from '$libs/types/Theme.ts';
@@ -136,7 +136,7 @@ function ScheduleForm({
       <TravelOptions />
       <div className={'flex flex-row gap-2 items-center justify-center'}>
         <CancelButton />
-        <OptionButton
+        <MediumButton
           label={'Agendar'}
           theme={theme}
           onClick={onScheduleClick}

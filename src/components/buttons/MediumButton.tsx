@@ -11,7 +11,7 @@ type Props = {
   type?: 'button' | 'submit';
 };
 
-function OptionButton({
+function MediumButton({
   label,
   theme = 'teal',
   disabled = false,
@@ -52,4 +52,4 @@ function OptionButton({
   );
 }
 
-export default OptionButton;
+export default MediumButton;

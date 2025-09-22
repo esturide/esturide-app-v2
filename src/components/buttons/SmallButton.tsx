@@ -13,22 +13,12 @@ function SmallButton({
   theme = 'teal',
   onClick,
   disabled = false,
-  className = '',
 }: Props) {
-  const getThemeClasses = () => {
-    if (disabled) {
-      return 'bg-gray-500 hover:bg-gray-500 focus:ring-gray-400';
-    }
-
-    switch (theme) {
-      case 'indigo':
-        return 'bg-indigo-700 hover:bg-indigo-800 focus:ring-indigo-500';
-      case 'teal':
-        return 'bg-teal-700 hover:bg-teal-800 focus:ring-teal-500';
-      case 'gray':
-      default:
-        return 'bg-gray-700 hover:bg-gray-800 focus:ring-gray-500';
-    }
+  const allStyles = {
+    indigo:
+      'w-full bg-indigo-700 hover:bg-indigo-800 focus:ring-indigo-500 flex overflow-hidden gap-2.5 justify-center items-center py-2 pr-6 pl-6 text-xl font-bold text-white whitespace-nowrap rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200',
+    teal: 'w-full bg-teal-700 hover:bg-teal-800 focus:ring-teal-500 flex overflow-hidden gap-2.5 justify-center items-center py-2 pr-6 pl-6 text-xl font-bold text-white whitespace-nowrap rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200',
+    gray: 'w-full bg-gray-700 hover:bg-gray-800 focus:ring-gray-500 flex overflow-hidden gap-2.5 justify-center items-center py-2 pr-6 pl-6 text-xl font-bold text-white whitespace-nowrap rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200',
   };
 
   return (
@@ -36,10 +26,12 @@ function SmallButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`flex overflow-hidden gap-2.5 justify-center items-center py-2 pr-6 pl-6 text-xl font-bold text-white whitespace-nowrap rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 ${getThemeClasses()} ${className}`}
+      className={allStyles[theme]}
       aria-label={label}
     >
-      <span className="self-stretch my-auto text-white">{label}</span>
+      <span className="self-stretch my-auto text-sm font-bold text-white">
+        {label}
+      </span>
     </button>
   );
 }

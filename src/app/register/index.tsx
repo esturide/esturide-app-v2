@@ -5,7 +5,7 @@ import UserInput from '@components/input/UserInput.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import SelectColor from '@components/input/selector/SelectColor.tsx';
 import DateInput from '@components/input/DateInput.tsx';
-import UserButton from '@components/buttons/UserButton.tsx';
+import SquareButton from '@components/buttons/SquareButton.tsx';
 import AlternativeHyperLink from '@components/input/AlternativeHyperLink.tsx';
 import Scroll from '@layouts/scroll/Scroll.tsx';
 import PresentationLayout from '@layouts/PresentationLayout.tsx';
@@ -111,9 +111,9 @@ const UserRegister: React.FC = () => {
 
         <div className={'h-fit'}>
           <div className="flex flex-col gap-2 my-3">
-            <UserButton label={'Siguente'} onClick={next} />
+            <SquareButton label={'Siguente'} onClick={next} />
             {currentForm > 0 && (
-              <UserButton
+              <SquareButton
                 label={'Regresar'}
                 onClick={previous}
                 theme={'gray'}

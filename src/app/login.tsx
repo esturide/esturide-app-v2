@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserManager } from '@/context/UserManager.tsx';
 import loaderEffect from '$libs/loaderEffect.ts';
 import UserInput from '@components/input/UserInput.tsx';
-import UserButton from '@components/buttons/UserButton.tsx';
+import SquareButton from '@components/buttons/SquareButton.tsx';
 import AlternativeHyperLink from '@components/input/AlternativeHyperLink.tsx';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
@@ -95,8 +95,8 @@ const LoginPage: React.FC = () => {
 
         <div className={'flex flex-col gap-3'}>
           <div className="flex flex-col items-center gap-3">
-            <UserButton label={'Iniciar sesion'} onClick={onLogin} />
-            <UserButton
+            <SquareButton label={'Iniciar sesion'} onClick={onLogin} />
+            <SquareButton
               label={'Regresar'}
               onClick={returnToHome}
               theme={'gray'}

@@ -1,6 +1,6 @@
 import { useUserManager } from '@/context/UserManager.tsx';
 import SelectOptions from '@components/input/selector/SelectOptions.tsx';
-import UserButton from '@components/buttons/UserButton.tsx';
+import SquareButton from '@components/buttons/SquareButton.tsx';
 import React, { useEffect, useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
 import loaderEffect from '$libs/loaderEffect.ts';
@@ -62,7 +62,7 @@ function UserProfile() {
         <div
           className={'flex flex-col items-center justify-center w-full gap-2'}
         >
-          <UserButton
+          <SquareButton
             label={'Cerrar sesion'}
             theme={currentTheme}
             onClick={async () => {

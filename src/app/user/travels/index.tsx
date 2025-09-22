@@ -1,5 +1,5 @@
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
-import OptionButton from '@components/buttons/OptionButton.tsx';
+import MediumButton from '@components/buttons/MediumButton.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useUserManager } from '@/context/UserManager.tsx';
@@ -29,7 +29,7 @@ function UserTravels() {
             message={'Toca el botón para agendar un viaje.'}
           />
 
-          <OptionButton
+          <MediumButton
             label={'Agendar'}
             theme={theme}
             onClick={async () => {
@@ -46,7 +46,7 @@ function UserTravels() {
             message={'Toca el botón para buscar un viaje.'}
           />
 
-          <OptionButton
+          <MediumButton
             label={'Buscar'}
             theme={theme}
             onClick={async () => {

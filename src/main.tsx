@@ -33,6 +33,7 @@ import { UserManagerProvider } from '@/context/UserManager.tsx';
 import { UserThemeProvider } from '@/context/UserTheme.tsx';
 
 import '@/index.css';
+import ScheduleConfig from '~/user/travels/schedule/config.tsx';
 
 const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
               {
                 path: 'preview',
                 element: <PreviewScheduleTravel />,
+              },
+              {
+                path: 'config',
+                element: <ScheduleConfig />,
               },
             ],
           },
