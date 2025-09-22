@@ -99,7 +99,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
   return (
     <Disclosure
       as="nav"
-      className="fixed top-0 w-full z-50 bg-teal-700 inset-shadow-sm inset-shadow-teal-800 shadow-lg"
+      className="absolute top-0 w-full z-50 bg-teal-700 inset-shadow-sm inset-shadow-teal-800 shadow-lg"
     >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">

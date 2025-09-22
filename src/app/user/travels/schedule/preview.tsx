@@ -9,10 +9,20 @@ import {
 } from '@/context/ScheduleTravelContext.tsx';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
 import GoogleRouting from '@components/map/google/GoogleRouting.tsx';
-import SimpleFloatingDialog from '@components/dialog/SimpleFloatingDialog.tsx';
+import FloatingDialog from '@components/dialog/FloatingDialog.tsx';
 import SmallButton from '@components/buttons/SmallButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
 import { noEmptyStrings } from '$libs/string.ts';
+import UserInput from '@components/input/UserInput.tsx';
+import UserInputIcon from '@components/input/UserInputIcon.tsx';
+import {
+  MdCallReceived,
+  MdOutlineTransitEnterexit,
+  MdSend,
+} from 'react-icons/md';
+import { RiSendPlaneLine } from 'react-icons/ri';
+import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
+import { TbCancel } from 'react-icons/tb';
 
 const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -36,7 +46,7 @@ function PreviewScheduleTravel() {
   const CancelTravel = () => {
     return (
       <IconButton
-        icon={FaBackspace}
+        icon={TbCancel}
         theme={'gray'}
         onClick={() => {
           navigate('/home/travels/schedule/');
@@ -48,7 +58,7 @@ function PreviewScheduleTravel() {
   const AcceptPreviewTravel = () => {
     return (
       <SmallButton
-        label={'Aceptar'}
+        label={'Confirmar'}
         onClick={async () => {
           navigate('/home/travels/schedule/config', {
             state: { addressTo: addressTo, addressFrom: addressFrom },
@@ -60,10 +70,10 @@ function PreviewScheduleTravel() {
 
   return (
     <>
-      <div className={'flex'}>
+      <div className={'flex flex-col h-full'}>
         <GoogleMapView
           apiKey={googleMapsApiKey}
-          zoom={3}
+          zoom={1}
           center={{
             lat: 20.566646720860327,
             lng: -103.22860101349919,
@@ -79,12 +89,29 @@ function PreviewScheduleTravel() {
           />
         </GoogleMapView>
 
-        <SimpleFloatingDialog title={'¿Es correcta la ruta?'} style={'glass'}>
-          <div className={'flex flex-row justify-between gap-2'}>
-            <CancelTravel />
-            <AcceptPreviewTravel />
+        <FloatingDialog title={'Visualizacion de ruta'} style={'solid'}>
+          <div className={'flex flex-col gap-4'}>
+            <div className={'flex flex-col gap-2'}>
+              <UserInputIcon
+                value={addressFrom}
+                icon={CiCircleCheck}
+                readOnly
+                disabled
+              />
+              <UserInputIcon
+                value={addressTo}
+                icon={CiCircleRemove}
+                readOnly
+                disabled
+              />
+            </div>
+
+            <div className={'flex flex-row justify-between gap-2'}>
+              <CancelTravel />
+              <AcceptPreviewTravel />
+            </div>
           </div>
-        </SimpleFloatingDialog>
+        </FloatingDialog>
       </div>
     </>
   );
