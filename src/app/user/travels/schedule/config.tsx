@@ -1,13 +1,14 @@
+import React from 'react';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { TbCancel } from 'react-icons/tb';
+import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 import { LocationState } from '@/context/ScheduleTravelContext.tsx';
+import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
 import SeatSelectorInput from '@components/input/selector/SeatSelectorInput.tsx';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
-import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
-import React from 'react';
 import IconButton from '@components/buttons/IconButton.tsx';
-import { TbCancel } from 'react-icons/tb';
 import SmallButton from '@components/buttons/SmallButton.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
 
@@ -15,6 +16,8 @@ function ScheduleConfig() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { addressTo, addressFrom } = state as LocationState;
+
+  const { googleApiKey } = useServiceApiManager();
 
   const CancelTravel = () => {
     return (

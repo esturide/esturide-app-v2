@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from 'react';
+import React, { useId } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import StyleTheme from '$libs/types/Style.ts';
 
@@ -26,7 +26,11 @@ const FloatingDialog = ({
   };
 
   return (
-    <div id={id} className="absolute w-full">
+    <div
+      id={id}
+      className="absolute max-md:w-full w-sm sm:left-1/24 sm:top-1/8
+            transform"
+    >
       <div className={styleThemes[style]}>
         <div className="flex flex-row justify-between">
           {title && (

@@ -34,6 +34,7 @@ import { UserThemeProvider } from '@/context/UserTheme.tsx';
 
 import '@/index.css';
 import ScheduleConfig from '~/user/travels/schedule/config.tsx';
+import { ServiceApiKeyProvider } from '@/context/ServiceApiKeyManager.tsx';
 
 const router = createBrowserRouter([
   {
@@ -134,21 +135,23 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <DeviceManagementProvider>
           <UserManagerProvider>
             <UserThemeProvider>
-              <Notifications />
-              <RouterProvider router={router} />
-              <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick={false}
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="colored"
-                transition={Bounce}
-              />
+              <ServiceApiKeyProvider>
+                <Notifications />
+                <RouterProvider router={router} />
+                <ToastContainer
+                  position="top-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick={false}
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="colored"
+                  transition={Bounce}
+                />
+              </ServiceApiKeyProvider>
             </UserThemeProvider>
           </UserManagerProvider>
         </DeviceManagementProvider>
