@@ -90,7 +90,7 @@ export const ToggleInputList: React.FC<Props> = ({
                 </label>
 
                 <div
-                  className={`flex flex-col justify-center items-start p-1 rounded-lg shadow-sm transition-colors duration-200 cursor-pointer ${getBackgroundColor()}`}
+                  className={`flex flex-col justify-center items-start p-1.5 rounded-full shadow-sm transition-colors duration-200 cursor-pointer ${getBackgroundColor()}`}
                   onClick={() => handleToggleChange(option.id, !isChecked)}
                   onKeyDown={e => handleKeyDown(e, option.id)}
                   role="switch"
@@ -99,7 +99,7 @@ export const ToggleInputList: React.FC<Props> = ({
                   tabIndex={0}
                 >
                   <div
-                    className={`flex shrink-0 w-3.5 h-3.5 rounded-lg transition-colors duration-200 ${
+                    className={`flex shrink-0 w-3.5 h-3.5 rounded-full transition-colors duration-200 ${
                       isChecked ? 'bg-white' : 'bg-gray-400'
                     }`}
                   />
