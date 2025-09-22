@@ -62,7 +62,9 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
 
   return (
     <div
-      className={'fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full'}
+      className={
+        'fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full sm:w-2/3'
+      }
     >
       <nav className={styleThemes[style]} role="navigation">
         <IconContext.Provider
