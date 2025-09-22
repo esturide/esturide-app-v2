@@ -43,7 +43,6 @@ function ScheduleTravelForm({
   onCancel,
   theme = 'teal',
 }: Props) {
-  const [isValidScheduleDateTime, setIsValidScheduleDateTime] = useState(true);
   const [scheduleDateTime, setScheduleDateTime] = useState<Date | null>(null);
 
   useEffect(() => {
@@ -69,6 +68,8 @@ function ScheduleTravelForm({
 
   const ConfigureScheduleDateTime = () => {
     const defaultToleranceMinutes = 3;
+    const [isValidScheduleDateTime, setIsValidScheduleDateTime] =
+      useState(true);
 
     useEffect(() => {
       const now = new Date();
