@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
 import IconButton from '@components/buttons/IconButton.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
-import TimePickerInput from '@components/input/TimePickerInput.tsx';
-import UserInput from '@components/input/UserInput.tsx';
-import ToggleInputList, {
-  FilterOption,
-} from '@components/input/list/ToggleInputList.tsx';
+import ToggleInputList from '@components/input/list/ToggleInputList.tsx';
 import PriceInput from '@components/input/PriceInput.tsx';
 import SeatSelectorInput from '@components/input/selector/SeatSelectorInput.tsx';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
-import {
-  CiAlarmOn,
-  CiCircleCheck,
-  CiCircleRemove,
-  CiTimer,
-} from 'react-icons/ci';
+import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 import { TbCancel } from 'react-icons/tb';
 import SmallButton from '@components/buttons/SmallButton.tsx';
 import { LocationState } from '@/context/ScheduleTravelContext.tsx';
-import userInput from '@components/input/UserInput.tsx';
 import DateTimePickerInput from '@components/input/DateTimePickerInput.tsx';
-import MediumButton from '@components/buttons/MediumButton.tsx';
 import { MdOutlineAlarmOn } from 'react-icons/md';
 import { failureMessage } from '$libs/toast/failure.ts';
+import Seat from '$libs/types/Seats.ts';
+
+interface GenderOptionFilter {
+  female: boolean;
+  male: boolean;
+}
 
 export interface CurrentSchedule {
   addressFrom: string;
   addressTo: string;
+  dateTime: Date;
+  genderFilter: GenderOptionFilter;
+  price: number;
+  seats: Seat[];
 }
 
 type Props = {
@@ -37,37 +36,34 @@ type Props = {
   theme?: ColorTheme;
 };
 
-function ScheduleTravelForm({
-  currentSchedule,
-  onSchedule,
-  onCancel,
-  theme = 'teal',
-}: Props) {
+const defaultMinimumPrice = 1;
+
+function ScheduleTravelForm({ currentSchedule, onSchedule, onCancel }: Props) {
   const [scheduleDateTime, setScheduleDateTime] = useState<Date | null>(null);
 
-  useEffect(() => {
-    console.log(scheduleDateTime);
-  }, [scheduleDateTime]);
+  const scheduleTravelDataRef = useRef<CurrentSchedule>({
+    addressFrom: '',
+    addressTo: '',
+    dateTime: new Date(),
+    genderFilter: {
+      male: false,
+      female: false,
+    },
+    price: defaultMinimumPrice,
+    seats: [],
+  });
 
   const onScheduleSubmit = async () => {
-    console.log('Schedule Submitted');
+    console.log(scheduleTravelDataRef.current);
 
-    console.log(scheduleDateTime);
+    if (onSchedule) {
+      await onSchedule(scheduleTravelDataRef.current);
+    }
   };
 
-  const options: FilterOption[] = [
-    {
-      id: 'male',
-      label: 'Hombre',
-    },
-    {
-      id: 'female',
-      label: 'Mujer',
-    },
-  ];
-
-  const ConfigureScheduleDateTime = () => {
+  const ScheduleDateTime = () => {
     const defaultToleranceMinutes = 3;
+
     const [isValidScheduleDateTime, setIsValidScheduleDateTime] =
       useState(true);
 
@@ -76,10 +72,16 @@ function ScheduleTravelForm({
 
       if (scheduleDateTime) {
         setIsValidScheduleDateTime(scheduleDateTime.getTime() >= now.getTime());
+
+        if (isValidScheduleDateTime) {
+          scheduleTravelDataRef.current.dateTime = scheduleDateTime;
+        }
+
+        console.log(scheduleDateTime);
       } else {
         setIsValidScheduleDateTime(true);
       }
-    }, [scheduleDateTime]);
+    }, [isValidScheduleDateTime]);
 
     useEffect(() => {
       if (!isValidScheduleDateTime) {
@@ -88,48 +90,73 @@ function ScheduleTravelForm({
     }, [isValidScheduleDateTime]);
 
     return (
-      <div className={'flex flex-col items-stretch gap-4 h-full w-full'}>
-        <div className={'flex flex-col gap-2 w-full'}>
-          <HeaderText title={'Planificar'} weight={2} />
+      <div className={'flex flex-col gap-2 w-full'}>
+        <HeaderText title={'Planificar'} weight={2} />
 
-          <div className={'flex flex-col justify-start'}>
-            <div className={'flex flex-row items-end gap-2 w-full'}>
-              <DateTimePickerInput
-                label={'Horario de salida'}
-                value={scheduleDateTime}
-                onInput={setScheduleDateTime}
-              />
+        <div className={'flex flex-col justify-start'}>
+          <div className={'flex flex-row items-end gap-2 w-full'}>
+            <DateTimePickerInput
+              label={'Horario de salida'}
+              value={scheduleDateTime}
+              onInput={setScheduleDateTime}
+            />
 
-              <IconButton
-                icon={MdOutlineAlarmOn}
-                onClick={() => {
-                  const now = new Date();
-                  now.setMinutes(now.getMinutes() + defaultToleranceMinutes);
+            <IconButton
+              icon={MdOutlineAlarmOn}
+              onClick={() => {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() + defaultToleranceMinutes);
 
-                  setScheduleDateTime(now);
-                }}
-              />
-            </div>
-
-            {!isValidScheduleDateTime && (
-              <p className={'px-3 pt-1 text-xs text-red-500 text-left'}>
-                No se puede programar el viaje a esta hora.
-              </p>
-            )}
+                setScheduleDateTime(now);
+              }}
+            />
           </div>
-        </div>
 
-        <div className={'flex flex-col gap-2 w-full'}>
-          <HeaderText title={'Filtros'} weight={2} />
-
-          <ToggleInputList
-            options={options}
-            title={'Selecciona'}
-            onSelectionChange={selections => {
-              console.log(selections);
-            }}
-          />
+          {!isValidScheduleDateTime && (
+            <p className={'px-3 pt-1 text-xs text-red-500 text-left'}>
+              No se puede programar el viaje a esta hora.
+            </p>
+          )}
         </div>
+      </div>
+    );
+  };
+
+  const FilterGender = () => {
+    const filterOptionsSelected = [
+      {
+        id: 'male',
+        label: 'Hombre',
+      },
+      {
+        id: 'female',
+        label: 'Mujer',
+      },
+    ];
+
+    return (
+      <div className={'flex flex-col gap-2 w-full'}>
+        <HeaderText title={'Filtros'} weight={2} />
+
+        <ToggleInputList
+          options={filterOptionsSelected}
+          title={'Selecciona'}
+          onSelectionChange={options => {
+            scheduleTravelDataRef.current.genderFilter = {
+              male: options.male,
+              female: options.female,
+            };
+          }}
+        />
+      </div>
+    );
+  };
+
+  const ConfigureFilterSchedule = () => {
+    return (
+      <div className={'flex flex-col gap-2 w-full'}>
+        <ScheduleDateTime />
+        <FilterGender />
       </div>
     );
   };
@@ -137,17 +164,21 @@ function ScheduleTravelForm({
   const ConfigureRulesSchedule = () => {
     return (
       <div className={'flex flex-col gap-2 w-full'}>
-        <HeaderText title={'Configuracion'} weight={2} />
+        <HeaderText title={'Configuracion de asientos'} weight={2} />
 
         <PriceInput
           label={'Precio por asiento'}
           placeholder={'Precio por asiento'}
+          min={defaultMinimumPrice}
+          max={100}
+          onChange={value => {
+            scheduleTravelDataRef.current.price = value;
+          }}
         />
 
         <SeatSelectorInput
-          labelButton={'Asignar'}
-          onSelect={seats => {
-            console.log('Selected seats:', seats);
+          onChange={seats => {
+            scheduleTravelDataRef.current.seats = seats;
           }}
         />
       </div>
@@ -196,7 +227,7 @@ function ScheduleTravelForm({
   };
 
   return (
-    <form className={'flex flex-col gap-4 px-2'}>
+    <div className={'flex flex-col gap-4 px-2'}>
       <HeaderText title={'Ultimos detalles'} weight={1} />
 
       <div
@@ -204,7 +235,7 @@ function ScheduleTravelForm({
           'flex flex-col md:flex-row gap-8 justify-between items-stretch'
         }
       >
-        <ConfigureScheduleDateTime />
+        <ConfigureFilterSchedule />
 
         <ConfigureRulesSchedule />
       </div>
@@ -212,7 +243,7 @@ function ScheduleTravelForm({
       <CheckSchedule />
 
       <ScheduleConfirm />
-    </form>
+    </div>
   );
 }
 

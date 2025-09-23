@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import DateTimePicker from 'react-datetime-picker';
-import { CiCalendarDate, CiCircleRemove, CiTimer } from 'react-icons/ci';
+import { CiCircleRemove, CiTimer } from 'react-icons/ci';
 import ColorTheme from '$libs/types/Theme.ts';
 
 import '@styles/input/time/DateTimePicker.scss';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 
-type ValuePiece = Date | null;
+type ValueDateTime = Date | null;
 
 type Props = {
   label?: string;
-  value?: ValuePiece;
-  onInput?: (value: ValuePiece) => void;
+  value?: ValueDateTime;
+  onInput?: (value: ValueDateTime) => void;
   valid?: boolean;
   invalidMessage?: string;
   readOnly?: boolean;
@@ -28,7 +28,9 @@ function DateTimePickerInput({
   readOnly,
   theme = 'teal',
 }: Props) {
-  const [dateTime, onChangeDateTime] = useState<ValuePiece>(value);
+  const [dateTime, onChangeDateTime] = useState<ValueDateTime | undefined>(
+    value,
+  );
 
   const allTextThemeColors = {
     gray: 'my-2 mx-2 text-left text-sm font-medium text-gray-900',
@@ -43,7 +45,7 @@ function DateTimePickerInput({
   };
 
   useEffect(() => {
-    if (onInput && dateTime !== null) {
+    if (onInput && dateTime !== null && dateTime !== undefined) {
       onInput(dateTime);
     }
   }, [dateTime]);

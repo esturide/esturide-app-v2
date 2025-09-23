@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CarSelector from '@assets/images/car-selector.png';
 import Seat from '$libs/types/Seats.ts';
 import ColorTheme from '$libs/types/Theme.ts';
@@ -72,12 +72,6 @@ const SeatSelector: React.FC<SeatSelectorProps> = ({
   onToggle,
   theme = 'teal',
 }) => {
-  useEffect(() => {
-    if (isSelected) {
-      console.log(`Seat ${seatId} is selected`);
-    }
-  }, [isSelected]);
-
   const allStyles = {
     teal: 'flex flex-row items-center justify-center w-14 h-14 bg-white border border-solid border-stone-300 min-h-14 rounded-[32px] focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2',
     indigo:
@@ -106,9 +100,12 @@ const SeatSelector: React.FC<SeatSelectorProps> = ({
 
 type Props = {
   label?: string;
-  onSelect: (seats: Seat[]) => void;
+  onSelect?: (seats: Seat[]) => void;
   labelButton?: string;
   theme?: ColorTheme;
+  valid?: boolean;
+  showButton?: boolean;
+  onChange?: (seats: Seat[]) => void;
 };
 
 function SeatSelectorInput({
@@ -116,9 +113,30 @@ function SeatSelectorInput({
   onSelect,
   labelButton,
   theme = 'teal',
+  valid = true,
+  showButton = false,
+  onChange,
 }: Props) {
   const defaultAllSeats: Seat[] = ['A', 'B', 'C'] as const;
-  const [selectedSeats, setSelectedSeats] = React.useState<Seat[]>([]);
+  const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
+
+  const allTextThemeColors = {
+    gray: 'my-2 mx-2 text-left text-sm font-medium text-gray-900',
+    teal: 'my-2 mx-2 text-left text-sm font-medium text-teal-900',
+    indigo: 'my-2 mx-2 text-left text-sm font-medium text-indigo-900',
+  };
+
+  const allInputThemeColors = {
+    gray: `px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px] ${valid ? 'border-solid border-stone-300' : 'border-solid border-red-500 ring-2 ring-red-500'}`,
+    teal: `px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px] ${valid ? 'border-solid border-stone-300' : 'border-solid border-red-500 ring-2 ring-red-500'}`,
+    indigo: `px-4 py-2 w-full text-base font-medium tracking-normal text-left text-black bg-white border rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent rounded-t-[40px] rounded-b-[40px] ${valid ? 'border-solid border-stone-300' : 'border-solid border-red-500 ring-2 ring-red-500'}`,
+  };
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(selectedSeats);
+    }
+  }, [selectedSeats]);
 
   type RouteButtonProps = {
     onClick: () => void;
@@ -131,6 +149,7 @@ function SeatSelectorInput({
   }) => {
     return (
       <button
+        type="button"
         className={`flex overflow-hidden gap-2.5 justify-center items-center self-center w-full text-base font-bold text-white rounded-xl max-w-[302px] min-h-[51px] transition-colors focus:outline-none focus:ring-2 focus:ring-teal-600 focus:ring-offset-2 ${
           disabled
             ? 'bg-gray-400 cursor-not-allowed'
@@ -163,11 +182,7 @@ function SeatSelectorInput({
 
   return (
     <div className="w-full" aria-label="Driver journey seat selection">
-      {label && (
-        <header className="flex flex-col gap-4 justify-center items-center w-full">
-          <h1 className="text-lg font-bold text-teal-900">{label}</h1>
-        </header>
-      )}
+      {label && <label className={allTextThemeColors[theme]}>{label}</label>}
 
       <div className="flex flex-col gap-4 justify-center items-center w-full">
         <div className="flex flex-col gap-2 justify-center items-center w-full">
@@ -185,10 +200,12 @@ function SeatSelectorInput({
           </div>
         </div>
 
-        <SelectRoute
-          onClick={handleRouteSelection}
-          disabled={selectedSeats.length === 0}
-        />
+        {showButton && (
+          <SelectRoute
+            onClick={handleRouteSelection}
+            disabled={selectedSeats.length === 0}
+          />
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { PropsWithChildren, useId, useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
 
 interface Props {
@@ -10,6 +10,8 @@ interface Props {
   valid?: boolean;
   readOnly?: boolean;
   theme?: ColorTheme;
+  min?: number;
+  max?: number;
 }
 
 export const PriceInput: React.FC<Props> = ({
@@ -20,8 +22,11 @@ export const PriceInput: React.FC<Props> = ({
   disabled = false,
   valid = true,
   theme = 'teal',
+  min,
+  max,
 }) => {
-  const [internalValue, setInternalValue] = useState<number>(0);
+  const id = useId();
+  const [internalValue, setInternalValue] = useState<number>(min ? min : 0);
 
   const isControlled = value !== undefined;
   const inputValue = isControlled ? value : internalValue;
@@ -55,12 +60,24 @@ export const PriceInput: React.FC<Props> = ({
     }
   };
 
+  const InputContainer: React.FC<PropsWithChildren> = ({ children }) => {
+    return (
+      <div className="flex flex-col w-full">
+        {label && (
+          <label id={id} className={allTextThemeColors[theme]}>
+            {label}
+          </label>
+        )}
+        <div className="relative">{children}</div>
+      </div>
+    );
+  };
   return (
-    <div className="flex flex-col w-full">
-      {label && <label className={allTextThemeColors[theme]}>{label}</label>}
+    <InputContainer>
       <input
         type="number"
-        min="0"
+        min={min}
+        max={max}
         step="0.01"
         value={inputValue}
         onChange={handleChange}
@@ -69,7 +86,7 @@ export const PriceInput: React.FC<Props> = ({
         disabled={disabled}
         className={allInputThemeColors[theme]}
       />
-    </div>
+    </InputContainer>
   );
 };
 
