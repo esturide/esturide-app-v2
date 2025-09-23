@@ -1,33 +1,39 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useUserTheme } from '@/context/UserTheme.tsx';
+import { useUserManager } from '@/context/UserManager.tsx';
+import { useTravelManagementContext } from '@/context/TravelManagementContext.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import MediumButton from '@components/buttons/MediumButton.tsx';
-import { useUserTheme } from '@/context/UserTheme.tsx';
-import { useNavigate } from 'react-router-dom';
-import { useUserManager } from '@/context/UserManager.tsx';
 import SorryMessage from '@components/resources/SorryMessage.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
-import { useEffect } from 'react';
-import { useTravelManagementContext } from '@/context/TravelManagementContext.tsx';
+import { failureMessage } from '$libs/toast/failure.ts';
 
 function UserTravels() {
   const navigate = useNavigate();
-  const { role } = useUserManager();
+
+  const { role, refreshRole } = useUserManager();
   const { theme } = useUserTheme();
+  const { restoreCurrentTravel } = useTravelManagementContext();
+
+  useEffect(() => {
+    const requestCurrentTravel = async () => {
+      const status = await restoreCurrentTravel();
+
+      if (status) {
+        if (role !== 'driver') {
+          failureMessage('Tienes un viaje pendiente.');
+        }
+
+        await refreshRole('driver');
+        navigate('/home/travels/schedule/current');
+      }
+    };
+
+    requestCurrentTravel();
+  }, []);
 
   const ViewDriver = () => {
-    const { restoreCurrentTravel } = useTravelManagementContext();
-
-    useEffect(() => {
-      const requestCurrentTravel = async () => {
-        const status = await restoreCurrentTravel();
-
-        if (status) {
-          navigate('/home/travels/schedule/current');
-        }
-      };
-
-      requestCurrentTravel();
-    }, []);
-
     return (
       <div className={'flex flex-col gap-8'}>
         <TravelMessage

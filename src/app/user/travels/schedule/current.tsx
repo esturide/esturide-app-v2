@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router';
-import {
-  AdvancedMarker,
-  APIProvider,
-  Map,
-  Pin,
-} from '@vis.gl/react-google-maps';
+import { FaCar } from 'react-icons/fa';
+import { AdvancedMarker } from '@vis.gl/react-google-maps';
 import { useTravelManagementContext } from '@/context/TravelManagementContext.tsx';
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
-import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
-import { FaCar, FaMapMarkerAlt } from 'react-icons/fa';
+import GoogleMapRouting from '@components/map/google/GoogleMapRouting.tsx';
+import GoogleMapView from '@components/map/google/view/MapView.tsx';
 
 import '@styles/map/google-map-style.scss';
 
-function CurrentScheduleTravel() {
+function CurrentLocationMap() {
   const { currentSchedule } = useTravelManagementContext();
   const { googleApiKey, googleManagementMapApiKey } = useServiceApiManager();
 
-  if (!currentSchedule) {
-    return <Navigate to={'/'} replace />;
-  }
+  const [position, setPosition] = useState<google.maps.LatLngLiteral>({
+    lat: 0,
+    lng: 0,
+  });
+  const [watchError, setWatchError] = useState<boolean>(false);
 
   const CustomMarkerContent = () => {
     return (
@@ -29,78 +27,82 @@ function CurrentScheduleTravel() {
     );
   };
 
-  function CurrentLocationMap() {
-    const [position, setPosition] = useState<google.maps.LatLngLiteral | null>(
-      null,
-    );
-    const [error, setError] = useState<string>('');
+  useEffect(() => {
+    if (navigator.geolocation) {
+      const watchId = navigator.geolocation.watchPosition(
+        pos => {
+          setPosition({
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          });
 
-    useEffect(() => {
-      if (navigator.geolocation) {
-        const watchId = navigator.geolocation.watchPosition(
-          pos => {
-            setPosition({
-              lat: pos.coords.latitude,
-              lng: pos.coords.longitude,
-            });
+          setWatchError(false);
+        },
+        err => {
+          console.error('Error getting location:', err);
 
-            setError('');
-          },
-          err => {
-            setError(err.message);
-          },
-          { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
-        );
-
-        return () => navigator.geolocation.clearWatch(watchId);
-      } else {
-        setError('Geolocation is not supported by your browser');
-      }
-    }, []);
-
-    if (error != '') {
-      return (
-        <MainResponsiveLayout>
-          <div>Error: {error}</div>
-        </MainResponsiveLayout>
+          setWatchError(true);
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
       );
-    }
 
-    if (!position) {
-      return (
-        <APIProvider apiKey={googleApiKey}>
-          <Map
-            zoom={3}
-            style={{ height: '100vh' }}
-            mapId={googleManagementMapApiKey}
-          ></Map>
-        </APIProvider>
-      );
+      return () => navigator.geolocation.clearWatch(watchId);
+    } else {
+      setWatchError(true);
     }
+  }, []);
 
+  if (watchError) {
     return (
-      <APIProvider apiKey={googleApiKey}>
-        <Map
-          defaultCenter={position}
-          defaultZoom={10}
-          style={{ height: '100vh' }}
-          mapId={googleManagementMapApiKey}
-          zoomControl={false}
-          streetViewControl={false}
-          cameraControl={false}
-          controlled={false}
-          disableDefaultUI={true}
-        >
-          <AdvancedMarker
-            position={position}
-            draggable={false}
-            clickable={false}
-          >
-            <CustomMarkerContent />
-          </AdvancedMarker>
-        </Map>
-      </APIProvider>
+      <GoogleMapView
+        center={position}
+        apiKey={googleApiKey}
+        mapId={googleManagementMapApiKey}
+        zoom={3}
+        style={{
+          height: '100vh',
+        }}
+      >
+        {currentSchedule && (
+          <GoogleMapRouting
+            origin={currentSchedule.origin.address}
+            destination={currentSchedule.destination.address}
+            catchNotFoundRoute={() => {}}
+          />
+        )}
+      </GoogleMapView>
     );
+  }
+
+  return (
+    <GoogleMapView
+      center={position}
+      apiKey={googleApiKey}
+      mapId={googleManagementMapApiKey}
+      zoom={3}
+      style={{
+        height: '100vh',
+      }}
+    >
+      {currentSchedule && (
+        <GoogleMapRouting
+          origin={currentSchedule.origin.address}
+          destination={currentSchedule.destination.address}
+          catchNotFoundRoute={() => {}}
+        />
+      )}
+      <AdvancedMarker position={position} draggable={false} clickable={false}>
+        <CustomMarkerContent />
+      </AdvancedMarker>
+    </GoogleMapView>
+  );
+}
+
+function CurrentScheduleTravel() {
+  const { currentSchedule } = useTravelManagementContext();
+
+  if (!currentSchedule) {
+    return <Navigate to={'/'} replace />;
   }
 
   return (

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useMap } from '@vis.gl/react-google-maps';
 import StreetRouteProps from '@components/map/StreetRouteProps.ts';
 
-const GoogleRouting = ({
+const GoogleMapRouting = ({
   origin,
   destination,
   catchNotFoundRoute,
@@ -52,4 +52,4 @@ const GoogleRouting = ({
   return null;
 };
 
-export default GoogleRouting;
+export default GoogleMapRouting;

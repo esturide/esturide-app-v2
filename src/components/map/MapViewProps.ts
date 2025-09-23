@@ -6,6 +6,7 @@ type MapViewProps = {
   zoom?: number;
   style?: React.CSSProperties;
   apiKey?: string;
+  mapId?: string;
 };
 
 export default MapViewProps;

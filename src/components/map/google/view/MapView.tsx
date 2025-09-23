@@ -8,6 +8,7 @@ export default function GoogleMapView({
   children,
   style,
   apiKey = '',
+  mapId = '',
 }: PropsWithChildren<MapViewProps>) {
   return (
     <APIProvider apiKey={apiKey}>
@@ -15,6 +16,7 @@ export default function GoogleMapView({
         defaultCenter={center as google.maps.LatLngLiteral}
         defaultZoom={zoom}
         style={style}
+        mapId={mapId}
         disableDefaultUI
       >
         {children}

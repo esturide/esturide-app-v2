@@ -2,6 +2,7 @@ import React, {
   createContext,
   PropsWithChildren,
   useContext,
+  useEffect,
   useState,
 } from 'react';
 import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
@@ -18,6 +19,8 @@ import LocationAddress from '$libs/types/LocationAddress.ts';
 import loaderEffect from '$libs/loaderEffect.ts';
 import ScheduleTravelData from '$libs/request/response/ScheduleTravelData.ts';
 import { atom, useAtom } from 'jotai';
+import { recordCurrentLocation } from '$libs/request/record.ts';
+import Location from '$libs/types/Location.ts';
 
 export interface LocationAddressParams {
   readonly addressFrom: string;
@@ -56,6 +59,25 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
   const [currentSchedule, setCurrentSchedule] = useAtom(
     currentScheduleDataAtom,
   );
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      const watchId = navigator.geolocation.watchPosition(
+        async pos => {
+          await recordCurrentLocation(getRequestRoot(), {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          });
+        },
+        err => {
+          console.error('Error getting location:', err);
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
+      );
+
+      return () => navigator.geolocation.clearWatch(watchId);
+    }
+  }, []);
 
   const restoreCurrentTravel = async () => {
     let status = false;

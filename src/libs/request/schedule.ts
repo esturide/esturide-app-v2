@@ -9,8 +9,6 @@ export const requestScheduleTravel = async (
   request: ScheduleState,
 ) => {
   try {
-    console.log(request);
-
     const response: AxiosResponse = await root.post(
       `/schedule`,
       request,

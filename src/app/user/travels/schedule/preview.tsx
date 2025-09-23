@@ -3,7 +3,7 @@ import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { failureMessage } from '$libs/toast/failure.ts';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
-import GoogleRouting from '@components/map/google/GoogleRouting.tsx';
+import GoogleMapRouting from '@components/map/google/GoogleMapRouting.tsx';
 import FloatingDialog from '@components/dialog/FloatingDialog.tsx';
 import SmallButton from '@components/buttons/SmallButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
@@ -32,7 +32,6 @@ function PreviewScheduleTravel() {
 
   useEffect(() => {
     if (!noEmptyStrings([addressTo, addressFrom])) {
-      failureMessage('Both addresses are invalid.');
       navigate('/home/travels/schedule/');
     }
   }, [state]);
@@ -124,7 +123,7 @@ function PreviewScheduleTravel() {
             height: '100vh',
           }}
         >
-          <GoogleRouting
+          <GoogleMapRouting
             origin={addressTo}
             destination={addressFrom}
             catchNotFoundRoute={catchNotFoundRoute}

@@ -6,6 +6,7 @@ import { ItemType } from '@components/navbar/types.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
 import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
+import { TravelManagementProvider } from '@/context/TravelManagementContext.tsx';
 import { selectThemeFromRole } from '$libs/select/color.ts';
 
 const HomeLayout = () => {
@@ -54,7 +55,9 @@ const HomeLayout = () => {
 
   return (
     <ResponsiveLayout items={items}>
-      <Outlet />
+      <TravelManagementProvider>
+        <Outlet />
+      </TravelManagementProvider>
     </ResponsiveLayout>
   );
 };
