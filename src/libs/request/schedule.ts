@@ -56,3 +56,5 @@ export const requestCurrentScheduleTravel = async (
     throw e;
   }
 };
+
+export const updateCurrentSchedule = async (root: AxiosInstance) => {};

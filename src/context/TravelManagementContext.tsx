@@ -35,9 +35,11 @@ interface TravelManagementProps {
   ) => Promise<boolean>;
   currentSchedule?: ScheduleTravelData;
   restoreCurrentTravel: () => Promise<boolean>;
+  watchPosition: Location;
 }
 
 const currentScheduleDataAtom = atom<ScheduleTravelData | undefined>(undefined);
+const currentWatchPositionAtom = atom<Location>({ latitude: 0, longitude: 0 });
 
 const ScheduleTravel = createContext<TravelManagementProps>({
   scheduleTravel: async () => {
@@ -49,6 +51,10 @@ const ScheduleTravel = createContext<TravelManagementProps>({
   restoreCurrentTravel: async () => {
     return false;
   },
+  watchPosition: {
+    longitude: 0,
+    latitude: 0,
+  },
 });
 
 export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
@@ -56,6 +62,7 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
 }) => {
   const [loading, setLoading] = useState(false);
 
+  const [watchPosition, setWatchPosition] = useAtom(currentWatchPositionAtom);
   const [currentSchedule, setCurrentSchedule] = useAtom(
     currentScheduleDataAtom,
   );
@@ -64,6 +71,11 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
     if (navigator.geolocation) {
       const watchId = navigator.geolocation.watchPosition(
         async pos => {
+          setWatchPosition({
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude,
+          });
+
           await recordCurrentLocation(getRequestRoot(), {
             latitude: pos.coords.latitude,
             longitude: pos.coords.longitude,
@@ -126,6 +138,7 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
         scheduleTravel: scheduleTravel,
         currentSchedule: currentSchedule,
         restoreCurrentTravel: restoreCurrentTravel,
+        watchPosition: watchPosition,
       }}
     >
       {children}

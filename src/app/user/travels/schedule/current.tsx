@@ -8,16 +8,15 @@ import GoogleMapRouting from '@components/map/google/GoogleMapRouting.tsx';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
 
 import '@styles/map/google-map-style.scss';
+import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
+import UserInputIcon from '@components/input/UserInputIcon.tsx';
+import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
+import DraggableDialog from '@components/dialog/DraggableDialog.tsx';
+import FloatingDialog from '@components/dialog/FloatingDialog.tsx';
 
 function CurrentLocationMap() {
-  const { currentSchedule } = useTravelManagementContext();
+  const { currentSchedule, watchPosition } = useTravelManagementContext();
   const { googleApiKey, googleManagementMapApiKey } = useServiceApiManager();
-
-  const [position, setPosition] = useState<google.maps.LatLngLiteral>({
-    lat: 0,
-    lng: 0,
-  });
-  const [watchError, setWatchError] = useState<boolean>(false);
 
   const CustomMarkerContent = () => {
     return (
@@ -27,56 +26,12 @@ function CurrentLocationMap() {
     );
   };
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      const watchId = navigator.geolocation.watchPosition(
-        pos => {
-          setPosition({
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude,
-          });
-
-          setWatchError(false);
-        },
-        err => {
-          console.error('Error getting location:', err);
-
-          setWatchError(true);
-        },
-        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 },
-      );
-
-      return () => navigator.geolocation.clearWatch(watchId);
-    } else {
-      setWatchError(true);
-    }
-  }, []);
-
-  if (watchError) {
-    return (
-      <GoogleMapView
-        center={position}
-        apiKey={googleApiKey}
-        mapId={googleManagementMapApiKey}
-        zoom={3}
-        style={{
-          height: '100vh',
-        }}
-      >
-        {currentSchedule && (
-          <GoogleMapRouting
-            origin={currentSchedule.origin.address}
-            destination={currentSchedule.destination.address}
-            catchNotFoundRoute={() => {}}
-          />
-        )}
-      </GoogleMapView>
-    );
-  }
-
   return (
     <GoogleMapView
-      center={position}
+      center={{
+        lat: watchPosition.latitude,
+        lng: watchPosition.longitude,
+      }}
       apiKey={googleApiKey}
       mapId={googleManagementMapApiKey}
       zoom={3}
@@ -91,7 +46,14 @@ function CurrentLocationMap() {
           catchNotFoundRoute={() => {}}
         />
       )}
-      <AdvancedMarker position={position} draggable={false} clickable={false}>
+      <AdvancedMarker
+        position={{
+          lat: watchPosition.latitude,
+          lng: watchPosition.longitude,
+        }}
+        draggable={false}
+        clickable={false}
+      >
         <CustomMarkerContent />
       </AdvancedMarker>
     </GoogleMapView>
@@ -100,15 +62,50 @@ function CurrentLocationMap() {
 
 function CurrentScheduleTravel() {
   const { currentSchedule } = useTravelManagementContext();
+  const { isMobile } = useDeviceManagement();
 
   if (!currentSchedule) {
     return <Navigate to={'/'} replace />;
   }
 
+  type CurrentTravelDialogProps = {
+    draggable?: boolean;
+  };
+
+  const CurrentTravelDialog = ({
+    draggable = false,
+  }: CurrentTravelDialogProps) => {
+    const PreviewRouteInformation = () => {
+      return (
+        <div className={'flex flex-col gap-4'}>
+          <div className={'flex flex-col gap-2'}>
+            <UserInputIcon icon={CiCircleCheck} readOnly disabled />
+            <UserInputIcon icon={CiCircleRemove} readOnly disabled />
+          </div>
+        </div>
+      );
+    };
+
+    if (draggable) {
+      return (
+        <DraggableDialog title={'Viaje actual'}>
+          <PreviewRouteInformation />
+        </DraggableDialog>
+      );
+    } else {
+      return (
+        <FloatingDialog title={'Viaje actual'} style={'solid'}>
+          <PreviewRouteInformation />
+        </FloatingDialog>
+      );
+    }
+  };
+
   return (
-    <>
+    <div className={'flex flex-col h-full'}>
       <CurrentLocationMap />
-    </>
+      <CurrentTravelDialog draggable={!isMobile} />
+    </div>
   );
 }
 

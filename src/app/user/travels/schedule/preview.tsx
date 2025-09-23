@@ -110,29 +110,27 @@ function PreviewScheduleTravel() {
   };
 
   return (
-    <>
-      <div className={'flex flex-col h-full'}>
-        <GoogleMapView
-          apiKey={googleApiKey}
-          zoom={1}
-          center={{
-            lat: 20.566646720860327,
-            lng: -103.22860101349919,
-          }}
-          style={{
-            height: '100vh',
-          }}
-        >
-          <GoogleMapRouting
-            origin={addressTo}
-            destination={addressFrom}
-            catchNotFoundRoute={catchNotFoundRoute}
-          />
-        </GoogleMapView>
+    <div className={'flex flex-col h-full'}>
+      <GoogleMapView
+        apiKey={googleApiKey}
+        zoom={1}
+        center={{
+          lat: 20.566646720860327,
+          lng: -103.22860101349919,
+        }}
+        style={{
+          height: '100vh',
+        }}
+      >
+        <GoogleMapRouting
+          origin={addressTo}
+          destination={addressFrom}
+          catchNotFoundRoute={catchNotFoundRoute}
+        />
+      </GoogleMapView>
 
-        <PreviewRouteDialog draggable={!isMobile} />
-      </div>
-    </>
+      <PreviewRouteDialog draggable={!isMobile} />
+    </div>
   );
 }
 
