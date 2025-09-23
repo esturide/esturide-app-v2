@@ -54,8 +54,6 @@ function ScheduleTravelForm({ currentSchedule, onSchedule, onCancel }: Props) {
   });
 
   const onScheduleSubmit = async () => {
-    console.log(scheduleTravelDataRef.current);
-
     if (onSchedule) {
       await onSchedule(scheduleTravelDataRef.current);
     }

@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { LocationState } from '@/context/ScheduleTravelContext.tsx';
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
-import ScheduleTravelForm from '@components/forms/ScheduleTravelForm.tsx';
+import ScheduleTravelForm, {
+  CurrentSchedule,
+} from '@components/forms/ScheduleTravelForm.tsx';
 
 function ScheduleConfig() {
   const navigate = useNavigate();
@@ -13,11 +15,16 @@ function ScheduleConfig() {
 
   const { googleApiKey } = useServiceApiManager();
 
+  const onSchedule = async (schedule: CurrentSchedule) => {
+    console.log(schedule);
+  };
+
   return (
     <>
       <MainResponsiveLayout reserveSpace>
         <ScheduleTravelForm
           currentSchedule={{ addressFrom: addressFrom, addressTo: addressTo }}
+          onSchedule={onSchedule}
           onCancel={() => {
             navigate('/home/travels/schedule/');
           }}
