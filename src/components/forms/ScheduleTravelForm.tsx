@@ -9,11 +9,11 @@ import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 import { TbCancel } from 'react-icons/tb';
 import SmallButton from '@components/buttons/SmallButton.tsx';
-import { LocationState } from '@/context/ScheduleTravelContext.tsx';
 import DateTimePickerInput from '@components/input/DateTimePickerInput.tsx';
 import { MdOutlineAlarmOn } from 'react-icons/md';
 import { failureMessage } from '$libs/toast/failure.ts';
 import Seat from '$libs/types/Seats.ts';
+import { LocationAddressParams } from '@/context/TravelManagementContext.tsx';
 
 interface GenderOptionFilter {
   female: boolean;
@@ -30,7 +30,7 @@ export interface ScheduleTravelInput {
 }
 
 type Props = {
-  currentSchedule: LocationState;
+  currentSchedule: LocationAddressParams;
   onCancel?: () => void;
   onSchedule?: (current: ScheduleTravelInput) => Promise<void>;
   theme?: ColorTheme;

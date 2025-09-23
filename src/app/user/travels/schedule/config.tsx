@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import ScheduleTravelForm, {
   ScheduleTravelInput,
@@ -11,26 +10,39 @@ import {
   LocationAddressParams,
   useTravelManagementContext,
 } from '@/context/TravelManagementContext.tsx';
+import Gender from '$libs/types/Gender.ts';
 
 function ScheduleConfig() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { addressTo, addressFrom } = state as LocationAddressParams;
 
-  const { googleApiKey } = useServiceApiManager();
   const { scheduleTravel } = useTravelManagementContext();
 
   const onSchedule = async (schedule: ScheduleTravelInput) => {
+    const genderFilter: Gender[] = [];
+
+    if (schedule.genderFilter.female) {
+      genderFilter.push('female');
+    }
+
+    if (schedule.genderFilter.male) {
+      genderFilter.push('male');
+    }
+
     const status = await scheduleTravel({
-      from: schedule.addressFrom,
-      to: schedule.addressTo,
+      origin: addressTo,
+      destination: addressFrom,
       seats: schedule.seats,
-      maxPassengers: schedule.seats.length,
       price: schedule.price,
       returnHome: false,
+      genderFilter: genderFilter,
+      startDate: new Date(),
     });
 
-    if (!status) {
+    if (status) {
+      navigate('/home/travels/schedule/current');
+    } else {
       failureMessage('No se pudo agendar tu viaje.');
     }
   };

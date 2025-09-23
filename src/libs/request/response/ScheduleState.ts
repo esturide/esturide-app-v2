@@ -1,12 +1,14 @@
 import Seat from '$libs/types/Seats.ts';
+import Gender from '$libs/types/Gender.ts';
 
 interface ScheduleState {
-  readonly maxPassengers: number;
   readonly seats: Seat[];
-  readonly from: string;
-  readonly to: string;
+  readonly origin: string;
+  readonly destination: string;
   readonly returnHome: boolean;
   readonly price: number;
+  readonly genderFilter: Gender[];
+  readonly startDate: Date;
 }
 
 export default ScheduleState;
