@@ -34,7 +34,7 @@ interface TravelManagementProps {
     setResults: (results: LocationAddress[]) => void,
   ) => Promise<boolean>;
   currentSchedule?: ScheduleTravelData;
-  restoreCurrentTravel: () => Promise<boolean>;
+  restoreCurrentTravel: (loader?: boolean) => Promise<boolean>;
   watchPosition: Location;
 }
 
@@ -91,15 +91,22 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
     }
   }, []);
 
-  const restoreCurrentTravel = async () => {
+  const restoreCurrentTravel = async (loader: boolean = false) => {
     let status = false;
 
-    await loaderEffect(async () => {
+    if (loader) {
+      await loaderEffect(async () => {
+        status = await requestCurrentScheduleTravel(
+          getRequestRoot(),
+          setCurrentSchedule,
+        );
+      }, setLoading);
+    } else {
       status = await requestCurrentScheduleTravel(
         getRequestRoot(),
         setCurrentSchedule,
       );
-    }, setLoading);
+    }
 
     return status;
   };

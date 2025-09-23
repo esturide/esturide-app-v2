@@ -15,8 +15,23 @@ import DraggableDialog from '@components/dialog/DraggableDialog.tsx';
 import FloatingDialog from '@components/dialog/FloatingDialog.tsx';
 
 function CurrentLocationMap() {
-  const { currentSchedule, watchPosition } = useTravelManagementContext();
+  const { restoreCurrentTravel, currentSchedule, watchPosition } =
+    useTravelManagementContext();
   const { googleApiKey, googleManagementMapApiKey } = useServiceApiManager();
+
+  useEffect(() => {
+    const intervalId = setInterval(async () => {
+      const status = await restoreCurrentTravel();
+
+      if (!status) {
+        console.error('Failure restore current travel.');
+      } else {
+        console.log('Success request current travel.');
+      }
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const CustomMarkerContent = () => {
     return (
