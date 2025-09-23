@@ -13,6 +13,8 @@ import { getRequestRoot } from '$libs/request/api.ts';
 import {
   requestCurrentScheduleTravel,
   requestScheduleTravel,
+  ScheduleOption,
+  updateCurrentSchedule,
 } from '$libs/request/schedule.ts';
 import ScheduleState from '$libs/request/response/ScheduleState.ts';
 import LocationAddress from '$libs/types/LocationAddress.ts';
@@ -35,6 +37,7 @@ interface TravelManagementProps {
   ) => Promise<boolean>;
   currentSchedule?: ScheduleTravelData;
   restoreCurrentTravel: (loader?: boolean) => Promise<boolean>;
+  updateCurrentScheduleTravel: (options: ScheduleOption) => Promise<boolean>;
   watchPosition: Location;
 }
 
@@ -49,6 +52,9 @@ const ScheduleTravel = createContext<TravelManagementProps>({
     return false;
   },
   restoreCurrentTravel: async () => {
+    return false;
+  },
+  updateCurrentScheduleTravel: async () => {
     return false;
   },
   watchPosition: {
@@ -108,6 +114,20 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
       );
     }
 
+    if (!status) {
+      setCurrentSchedule(null);
+    }
+
+    return status;
+  };
+
+  const updateCurrentScheduleTravel = async (options: ScheduleOption) => {
+    let status = false;
+
+    await loaderEffect(async () => {
+      status = await updateCurrentSchedule(getRequestRoot(), options);
+    }, setLoading);
+
     return status;
   };
 
@@ -145,6 +165,7 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
         scheduleTravel: scheduleTravel,
         currentSchedule: currentSchedule,
         restoreCurrentTravel: restoreCurrentTravel,
+        updateCurrentScheduleTravel: updateCurrentScheduleTravel,
         watchPosition: watchPosition,
       }}
     >

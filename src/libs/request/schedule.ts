@@ -4,6 +4,12 @@ import ScheduleTravelData from '$libs/request/response/ScheduleTravelData.ts';
 import { ResponseData } from '$libs/request/response';
 import ScheduleState from '$libs/request/response/ScheduleState.ts';
 
+export interface ScheduleOption {
+  readonly terminate: boolean;
+  readonly cancel: boolean;
+  readonly starting: Date;
+}
+
 export const requestScheduleTravel = async (
   root: AxiosInstance,
   request: ScheduleState,
@@ -57,4 +63,27 @@ export const requestCurrentScheduleTravel = async (
   }
 };
 
-export const updateCurrentSchedule = async (root: AxiosInstance) => {};
+export const updateCurrentSchedule = async (
+  root: AxiosInstance,
+  request: ScheduleOption,
+) => {
+  try {
+    const response: AxiosResponse = await root.post(
+      `/schedule/update`,
+      {
+        terminate: request.terminate,
+        cancel: request.cancel,
+        starting: request.starting.toISOString(),
+      },
+      getRequestConfig(),
+    );
+
+    return [200, 201].includes(response.status);
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      return false;
+    }
+
+    throw e;
+  }
+};

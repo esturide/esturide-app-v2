@@ -10,9 +10,12 @@ import GoogleMapView from '@components/map/google/view/MapView.tsx';
 import '@styles/map/google-map-style.scss';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
-import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
+import { CiCircleCheck, CiCircleRemove, CiTimer } from 'react-icons/ci';
 import DraggableDialog from '@components/dialog/DraggableDialog.tsx';
 import FloatingDialog from '@components/dialog/FloatingDialog.tsx';
+import IconButton from '@components/buttons/IconButton.tsx';
+import { MdCancel, MdIndeterminateCheckBox } from 'react-icons/md';
+import SmallButton from '@components/buttons/SmallButton.tsx';
 
 function CurrentLocationMap() {
   const { restoreCurrentTravel, currentSchedule, watchPosition } =
@@ -90,12 +93,55 @@ function CurrentScheduleTravel() {
   const CurrentTravelDialog = ({
     draggable = false,
   }: CurrentTravelDialogProps) => {
-    const PreviewRouteInformation = () => {
+    const { updateCurrentScheduleTravel, restoreCurrentTravel } =
+      useTravelManagementContext();
+
+    const PreviewScheduleTravelInformation = () => {
       return (
-        <div className={'flex flex-col gap-4'}>
+        <div className={'flex flex-col gap-2'}>
           <div className={'flex flex-col gap-2'}>
-            <UserInputIcon icon={CiCircleCheck} readOnly disabled />
-            <UserInputIcon icon={CiCircleRemove} readOnly disabled />
+            <UserInputIcon
+              value={currentSchedule.origin.address}
+              icon={CiCircleCheck}
+              readOnly
+              disabled
+            />
+            <UserInputIcon
+              value={currentSchedule.destination.address}
+              icon={CiCircleRemove}
+              readOnly
+              disabled
+            />
+          </div>
+
+          <div className={'flex flex-col gap-2'}>
+            {currentSchedule.starting && (
+              <UserInputIcon
+                value={currentSchedule.starting}
+                icon={CiTimer}
+                readOnly
+                disabled
+              />
+            )}
+          </div>
+
+          <div className={'flex flex-row justify-between gap-2'}>
+            <IconButton icon={MdCancel} />
+            <IconButton icon={MdIndeterminateCheckBox} />
+            <SmallButton
+              label={'Iniciar'}
+              onClick={async () => {
+                const status = await updateCurrentScheduleTravel({
+                  starting: new Date(),
+                  terminate: false,
+                  cancel: false,
+                });
+
+                if (status) {
+                  await restoreCurrentTravel();
+                }
+              }}
+            />
           </div>
         </div>
       );
@@ -104,13 +150,13 @@ function CurrentScheduleTravel() {
     if (draggable) {
       return (
         <DraggableDialog title={'Viaje actual'}>
-          <PreviewRouteInformation />
+          <PreviewScheduleTravelInformation />
         </DraggableDialog>
       );
     } else {
       return (
         <FloatingDialog title={'Viaje actual'} style={'solid'}>
-          <PreviewRouteInformation />
+          <PreviewScheduleTravelInformation />
         </FloatingDialog>
       );
     }
