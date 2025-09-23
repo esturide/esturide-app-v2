@@ -115,7 +115,7 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
     }
 
     if (!status) {
-      setCurrentSchedule(null);
+      setCurrentSchedule(undefined);
     }
 
     return status;
