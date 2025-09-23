@@ -36,10 +36,9 @@ type Props = {
   theme?: ColorTheme;
 };
 
-const defaultMinimumPrice = 1;
-
 function ScheduleTravelForm({ currentSchedule, onSchedule, onCancel }: Props) {
   const [scheduleDateTime, setScheduleDateTime] = useState<Date | null>(null);
+  const defaultMinimumPrice = 1;
 
   const scheduleTravelDataRef = useRef<CurrentSchedule>({
     addressFrom: '',
@@ -71,21 +70,17 @@ function ScheduleTravelForm({ currentSchedule, onSchedule, onCancel }: Props) {
       if (scheduleDateTime) {
         setIsValidScheduleDateTime(scheduleDateTime.getTime() >= now.getTime());
 
+        if (!isValidScheduleDateTime) {
+          failureMessage('Horario de planificacion incorrecto.');
+        }
+
         if (isValidScheduleDateTime) {
           scheduleTravelDataRef.current.dateTime = scheduleDateTime;
         }
-
-        console.log(scheduleDateTime);
       } else {
         setIsValidScheduleDateTime(true);
       }
-    }, [isValidScheduleDateTime]);
-
-    useEffect(() => {
-      if (!isValidScheduleDateTime) {
-        failureMessage('Horario de planificacion incorrecto.');
-      }
-    }, [isValidScheduleDateTime]);
+    }, [isValidScheduleDateTime, scheduleDateTime]);
 
     return (
       <div className={'flex flex-col gap-2 w-full'}>

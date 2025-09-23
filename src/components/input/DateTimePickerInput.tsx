@@ -73,6 +73,7 @@ function DateTimePickerInput({
   return (
     <div className={'flex flex-col w-full'}>
       {label && <label className={allTextThemeColors[theme]}>{label}</label>}
+
       <DateTimePicker
         onChange={onChangeDateTime}
         value={dateTime}
@@ -81,6 +82,7 @@ function DateTimePickerInput({
         calendarIcon={CalenderIcon}
         clearIcon={ClearIcon}
       />
+
       {!valid && (
         <p className={'px-3 pt-1 text-xs text-red-500'}>{invalidMessage}</p>
       )}
