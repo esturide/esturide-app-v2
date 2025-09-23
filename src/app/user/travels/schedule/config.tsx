@@ -1,27 +1,43 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { LocationState } from '@/context/ScheduleTravelContext.tsx';
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import ScheduleTravelForm, {
-  CurrentSchedule,
+  ScheduleTravelInput,
 } from '@components/forms/ScheduleTravelForm.tsx';
+import { failureMessage } from '$libs/toast/failure.ts';
+import {
+  LocationAddressParams,
+  useTravelManagementContext,
+} from '@/context/TravelManagementContext.tsx';
 
 function ScheduleConfig() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { addressTo, addressFrom } = state as LocationState;
+  const { addressTo, addressFrom } = state as LocationAddressParams;
 
   const { googleApiKey } = useServiceApiManager();
+  const { scheduleTravel } = useTravelManagementContext();
 
-  const onSchedule = async (schedule: CurrentSchedule) => {
-    console.log(schedule);
+  const onSchedule = async (schedule: ScheduleTravelInput) => {
+    const status = await scheduleTravel({
+      from: schedule.addressFrom,
+      to: schedule.addressTo,
+      seats: schedule.seats,
+      maxPassengers: schedule.seats.length,
+      price: schedule.price,
+      returnHome: false,
+    });
+
+    if (!status) {
+      failureMessage('No se pudo agendar tu viaje.');
+    }
   };
 
   return (
     <>
-      <MainResponsiveLayout reserveSpace>
+      <MainResponsiveLayout>
         <ScheduleTravelForm
           currentSchedule={{ addressFrom: addressFrom, addressTo: addressTo }}
           onSchedule={onSchedule}

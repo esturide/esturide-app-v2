@@ -20,6 +20,8 @@ import UserProfile from '~/user/profile';
 import UserSettings from '~/user/profile/settings.tsx';
 import ScheduleTravel from '~/user/travels/schedule';
 import PreviewScheduleTravel from '~/user/travels/schedule/preview.tsx';
+import ScheduleConfig from '~/user/travels/schedule/config.tsx';
+import CurrentScheduleTravel from '~/user/travels/schedule/current.tsx';
 
 import RideTravel from '~/user/travels/ride';
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
@@ -33,7 +35,6 @@ import { UserManagerProvider } from '@/context/UserManager.tsx';
 import { UserThemeProvider } from '@/context/UserTheme.tsx';
 
 import '@/index.css';
-import ScheduleConfig from '~/user/travels/schedule/config.tsx';
 import { ServiceApiKeyProvider } from '@/context/ServiceApiKeyManager.tsx';
 
 const router = createBrowserRouter([
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
               {
                 path: 'config',
                 element: <ScheduleConfig />,
+              },
+              {
+                path: 'current',
+                element: <CurrentScheduleTravel />,
               },
             ],
           },

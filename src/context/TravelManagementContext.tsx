@@ -2,7 +2,6 @@ import React, {
   createContext,
   PropsWithChildren,
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
@@ -20,32 +19,36 @@ import loaderEffect from '$libs/loaderEffect.ts';
 import ScheduleTravelData from '$libs/request/response/ScheduleTravelData.ts';
 import { atom, useAtom } from 'jotai';
 
-export interface LocationState {
+export interface LocationAddressParams {
   readonly addressFrom: string;
   readonly addressTo: string;
 }
 
-interface ScheduleTravelProps {
+interface TravelManagementProps {
   scheduleTravel: (state: ScheduleState) => Promise<boolean>;
   searchAddress: (
     address: string,
     setResults: (results: LocationAddress[]) => void,
   ) => Promise<boolean>;
   currentSchedule?: ScheduleTravelData;
+  restoreCurrentTravel: () => Promise<boolean>;
 }
 
 const currentScheduleDataAtom = atom<ScheduleTravelData | undefined>(undefined);
 
-const ScheduleTravel = createContext<ScheduleTravelProps>({
+const ScheduleTravel = createContext<TravelManagementProps>({
   scheduleTravel: async () => {
     return false;
   },
   searchAddress: async () => {
     return false;
   },
+  restoreCurrentTravel: async () => {
+    return false;
+  },
 });
 
-export const ScheduleTravelProvider: React.FC<PropsWithChildren> = ({
+export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [loading, setLoading] = useState(false);
@@ -54,17 +57,15 @@ export const ScheduleTravelProvider: React.FC<PropsWithChildren> = ({
     currentScheduleDataAtom,
   );
 
-  useEffect(() => {
-    restoreCurrentTravel();
-  }, []);
-
   const restoreCurrentTravel = async () => {
     let status = false;
 
-    status = await requestCurrentScheduleTravel(
-      getRequestRoot(),
-      setCurrentSchedule,
-    );
+    await loaderEffect(async () => {
+      status = await requestCurrentScheduleTravel(
+        getRequestRoot(),
+        setCurrentSchedule,
+      );
+    }, setLoading);
 
     return status;
   };
@@ -102,6 +103,7 @@ export const ScheduleTravelProvider: React.FC<PropsWithChildren> = ({
         searchAddress: searchAddress,
         scheduleTravel: scheduleTravel,
         currentSchedule: currentSchedule,
+        restoreCurrentTravel: restoreCurrentTravel,
       }}
     >
       {children}
@@ -116,6 +118,6 @@ export const ScheduleTravelProvider: React.FC<PropsWithChildren> = ({
   );
 };
 
-export const useScheduleTravel = () => {
+export const useTravelManagementContext = () => {
   return useContext(ScheduleTravel);
 };

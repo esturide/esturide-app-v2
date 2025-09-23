@@ -20,7 +20,7 @@ interface GenderOptionFilter {
   male: boolean;
 }
 
-export interface CurrentSchedule {
+export interface ScheduleTravelInput {
   addressFrom: string;
   addressTo: string;
   dateTime: Date;
@@ -32,7 +32,7 @@ export interface CurrentSchedule {
 type Props = {
   currentSchedule: LocationState;
   onCancel?: () => void;
-  onSchedule?: (current: CurrentSchedule) => Promise<void>;
+  onSchedule?: (current: ScheduleTravelInput) => Promise<void>;
   theme?: ColorTheme;
 };
 
@@ -40,7 +40,7 @@ function ScheduleTravelForm({ currentSchedule, onSchedule, onCancel }: Props) {
   const [scheduleDateTime, setScheduleDateTime] = useState<Date | null>(null);
   const defaultMinimumPrice = 1;
 
-  const scheduleTravelDataRef = useRef<CurrentSchedule>({
+  const scheduleTravelDataRef = useRef<ScheduleTravelInput>({
     addressFrom: '',
     addressTo: '',
     dateTime: new Date(),

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { failureMessage } from '$libs/toast/failure.ts';
-import { LocationState } from '@/context/ScheduleTravelContext.tsx';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
 import GoogleRouting from '@components/map/google/GoogleRouting.tsx';
 import FloatingDialog from '@components/dialog/FloatingDialog.tsx';
@@ -16,11 +15,12 @@ import { TbCancel } from 'react-icons/tb';
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
 import DraggableDialog from '@components/dialog/DraggableDialog.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
+import { LocationAddressParams } from '@/context/TravelManagementContext.tsx';
 
 function PreviewScheduleTravel() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { addressTo, addressFrom } = state as LocationState;
+  const { addressTo, addressFrom } = state as LocationAddressParams;
 
   const { googleApiKey } = useServiceApiManager();
   const { isMobile } = useDeviceManagement();
