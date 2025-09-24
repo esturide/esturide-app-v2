@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { FaCar } from 'react-icons/fa';
+import { MdCancel, MdSupervisedUserCircle } from 'react-icons/md';
 import { AdvancedMarker } from '@vis.gl/react-google-maps';
+import loaderEffect from '$libs/loaderEffect.ts';
+import RideData from '$libs/request/response/RideData.ts';
 import { useTravelManagementContext } from '@/context/TravelManagementContext.tsx';
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
+import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import GoogleMapRouting from '@components/map/google/GoogleMapRouting.tsx';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
-
-import '@styles/map/google-map-style.scss';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
-import UserInputIcon from '@components/input/UserInputIcon.tsx';
-import { CiCircleCheck, CiCircleRemove, CiTimer } from 'react-icons/ci';
-import DraggableDialog from '@components/dialog/DraggableDialog.tsx';
 import FloatingDialog from '@components/dialog/FloatingDialog.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
-import { MdCancel, MdIndeterminateCheckBox } from 'react-icons/md';
 import SmallButton from '@components/buttons/SmallButton.tsx';
+import UserInput from '@components/input/UserInput.tsx';
+import DraggableDialogImprovement from '@components/dialog/DraggableDialogImprovement.tsx';
+import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
+import HeaderText from '@components/text/HeaderText.tsx';
 
-function CurrentLocationMap() {
+import '@styles/map/google-map-style.scss';
+
+const CurrentLocationMap = () => {
   const { restoreCurrentTravel, currentSchedule, watchPosition } =
     useTravelManagementContext();
   const { googleApiKey, googleManagementMapApiKey } = useServiceApiManager();
@@ -28,8 +34,6 @@ function CurrentLocationMap() {
 
       if (!status) {
         console.error('Failure restore current travel.');
-      } else {
-        console.log('Success request current travel.');
       }
     }, 5000);
 
@@ -76,96 +80,212 @@ function CurrentLocationMap() {
       </AdvancedMarker>
     </GoogleMapView>
   );
-}
+};
 
 function CurrentScheduleTravel() {
-  const { currentSchedule } = useTravelManagementContext();
-  const { isMobile } = useDeviceManagement();
+  const navigate = useNavigate();
 
-  if (!currentSchedule) {
-    return <Navigate to={'/'} replace />;
-  }
+  const [loading, setLoading] = useState(false);
+  const [showPassengerList, setShowPassengerList] = useState(false);
 
-  type CurrentTravelDialogProps = {
-    draggable?: boolean;
+  const onTogglePassengerList = async () => {
+    setShowPassengerList(!showPassengerList);
   };
 
-  const CurrentTravelDialog = ({
-    draggable = false,
-  }: CurrentTravelDialogProps) => {
-    const { updateCurrentScheduleTravel, restoreCurrentTravel } =
-      useTravelManagementContext();
+  const ScheduleTravelInformation = () => {
+    const {
+      currentSchedule,
+      updateCurrentScheduleTravel,
+      restoreCurrentTravel,
+    } = useTravelManagementContext();
 
-    const PreviewScheduleTravelInformation = () => {
-      return (
+    if (!currentSchedule) {
+      return <Navigate to={'/'} replace />;
+    }
+
+    const onStartingTravel = async () => {
+      await loaderEffect(async () => {
+        const status = await updateCurrentScheduleTravel({
+          starting: new Date(),
+        });
+
+        if (status) {
+          await restoreCurrentTravel();
+        }
+      }, setLoading);
+    };
+
+    const onCancel = async () => {
+      await loaderEffect(async () => {
+        const status = await updateCurrentScheduleTravel({
+          cancel: true,
+        });
+
+        if (status) {
+          await restoreCurrentTravel();
+          navigate('/home/travels');
+        }
+      }, setLoading);
+    };
+
+    const onTerminate = async () => {
+      await loaderEffect(async () => {
+        const status = await updateCurrentScheduleTravel({
+          terminate: true,
+        });
+
+        if (status) {
+          await restoreCurrentTravel();
+          navigate('/home/travels');
+        }
+      }, setLoading);
+    };
+
+    const ControlScheduleTravel = () => {
+      if (currentSchedule.starting) {
+        return (
+          <SmallButton
+            label={'Terminar'}
+            onClick={onTerminate}
+            theme={'teal'}
+          />
+        );
+      } else {
+        return <SmallButton label={'Iniciar'} onClick={onStartingTravel} />;
+      }
+    };
+
+    return (
+      <div className={'flex flex-col gap-4'}>
         <div className={'flex flex-col gap-2'}>
-          <div className={'flex flex-col gap-2'}>
-            <UserInputIcon
+          <div className={'flex flex-row gap-2'}>
+            <UserInput
+              label={'Origen'}
               value={currentSchedule.origin.address}
-              icon={CiCircleCheck}
               readOnly
-              disabled
             />
-            <UserInputIcon
+            <UserInput
+              label={'Destino'}
               value={currentSchedule.destination.address}
-              icon={CiCircleRemove}
               readOnly
-              disabled
-            />
-          </div>
-
-          <div className={'flex flex-col gap-2'}>
-            {currentSchedule.starting && (
-              <UserInputIcon
-                value={currentSchedule.starting}
-                icon={CiTimer}
-                readOnly
-                disabled
-              />
-            )}
-          </div>
-
-          <div className={'flex flex-row justify-between gap-2'}>
-            <IconButton icon={MdCancel} />
-            <IconButton icon={MdIndeterminateCheckBox} />
-            <SmallButton
-              label={'Iniciar'}
-              onClick={async () => {
-                const status = await updateCurrentScheduleTravel({
-                  starting: new Date(),
-                  terminate: false,
-                  cancel: false,
-                });
-
-                if (status) {
-                  await restoreCurrentTravel();
-                }
-              }}
             />
           </div>
         </div>
-      );
-    };
 
-    if (draggable) {
+        <div className={'flex flex-row justify-between gap-2'}>
+          <IconButton icon={MdCancel} theme={'gray'} onClick={onCancel} />
+          <IconButton
+            icon={MdSupervisedUserCircle}
+            theme={'teal'}
+            onClick={onTogglePassengerList}
+          />
+
+          <ControlScheduleTravel />
+        </div>
+      </div>
+    );
+  };
+
+  const CurrentTravelDialog = () => {
+    const { isMobile } = useDeviceManagement();
+
+    if (!isMobile) {
       return (
-        <DraggableDialog title={'Viaje actual'}>
-          <PreviewScheduleTravelInformation />
-        </DraggableDialog>
+        <DraggableDialogImprovement>
+          <ScheduleTravelInformation />
+        </DraggableDialogImprovement>
       );
     } else {
       return (
-        <FloatingDialog title={'Viaje actual'} style={'solid'}>
-          <PreviewScheduleTravelInformation />
+        <FloatingDialog style={'solid'}>
+          <ScheduleTravelInformation />
         </FloatingDialog>
       );
     }
   };
 
+  const ShowAllRides = () => {
+    const {
+      currentSchedule,
+      updateCurrentScheduleTravel,
+      restoreCurrentTravel,
+    } = useTravelManagementContext();
+
+    if (!currentSchedule) {
+      return null;
+    }
+
+    const Ride: React.FC<{ ride: RideData }> = ({ ride }) => {
+      return (
+        <div className={'border border-gray-200 rounded-4xl px-2 pt-2 py-4'}>
+          <div className={'flex flex-col gap-2'}>
+            <UserInput
+              label={'Nombre'}
+              value={ride.passenger.firstName}
+              readOnly
+            />
+
+            <div className={'flex flex-row gap-2'}>
+              <UserInput
+                label={'Nombre'}
+                value={ride.passenger.maternalSurname}
+                readOnly
+              />
+              <UserInput
+                label={'Nombre'}
+                value={ride.passenger.paternalSurname}
+                readOnly
+              />
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    if (currentSchedule.rides.length === 0) {
+      return (
+        <div className={'flex flex-col h-full gap-4'}>
+          <HeaderText title={'No hay pasajeros'} weight={1} />
+          <SmallButton label={'Volver'} onClick={onTogglePassengerList} />
+        </div>
+      );
+    } else {
+      return (
+        <div className={'flex flex-col h-full gap-4'}>
+          <HeaderText title={'Pasajeros abordo'} weight={1} />
+
+          <div className={'flex flex-col gap-2'}>
+            {currentSchedule.rides.map(ride => (
+              <Ride ride={ride} />
+            ))}
+          </div>
+
+          <SmallButton label={'Volver'} onClick={onTogglePassengerList} />
+        </div>
+      );
+    }
+  };
+
+  if (loading) {
+    return (
+      <PartialScreenContainer>
+        <SpinnerLoader />
+      </PartialScreenContainer>
+    );
+  }
+
+  if (showPassengerList) {
+    return (
+      <MainResponsiveLayout>
+        <ShowAllRides />
+      </MainResponsiveLayout>
+    );
+  }
+
   return (
     <div className={'flex flex-col h-full'}>
       <CurrentLocationMap />
-      <CurrentTravelDialog draggable={!isMobile} />
+      <CurrentTravelDialog />
     </div>
   );
 }

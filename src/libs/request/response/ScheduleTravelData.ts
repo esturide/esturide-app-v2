@@ -1,11 +1,12 @@
-import UserState from '$libs/request/response/UserState.ts';
+import UserData from '$libs/request/response/UserData.ts';
 import Seat from '$libs/types/Seats.ts';
 import LocationAddress from '$libs/types/LocationAddress.ts';
 import Gender from '$libs/types/Gender.ts';
+import RideData from '$libs/request/response/RideData.ts';
 
 interface ScheduleTravelData {
   readonly uuid: string;
-  readonly driver: UserState;
+  readonly driver: UserData;
   readonly price: number;
   readonly terminate: boolean;
   readonly cancel: boolean;
@@ -15,7 +16,7 @@ interface ScheduleTravelData {
   readonly seats: Seat[];
   readonly origin: LocationAddress;
   readonly destination: LocationAddress;
-  readonly rides: UserState[];
+  readonly rides: RideData[];
   readonly genderFilter: Gender[];
 }
 

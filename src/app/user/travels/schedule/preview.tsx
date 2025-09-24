@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
+import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
+import { TbCancel } from 'react-icons/tb';
+
+import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
+import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
+import { LocationAddressParams } from '@/context/TravelManagementContext.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
 import GoogleMapRouting from '@components/map/google/GoogleMapRouting.tsx';
@@ -9,13 +15,7 @@ import SmallButton from '@components/buttons/SmallButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
 import { noEmptyStrings } from '$libs/string.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
-
-import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
-import { TbCancel } from 'react-icons/tb';
-import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
-import DraggableDialog from '@components/dialog/DraggableDialog.tsx';
-import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
-import { LocationAddressParams } from '@/context/TravelManagementContext.tsx';
+import DraggableDialogImprovement from '@components/dialog/DraggableDialogImprovement.tsx';
 
 function PreviewScheduleTravel() {
   const navigate = useNavigate();
@@ -96,9 +96,9 @@ function PreviewScheduleTravel() {
 
     if (draggable) {
       return (
-        <DraggableDialog title={'Visualizacion de ruta'}>
+        <DraggableDialogImprovement title={'Visualizacion de ruta'}>
           <PreviewRouteInformation />
-        </DraggableDialog>
+        </DraggableDialogImprovement>
       );
     } else {
       return (

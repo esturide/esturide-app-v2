@@ -3,11 +3,8 @@ import React, {
   PropsWithChildren,
   useContext,
   useEffect,
-  useState,
 } from 'react';
-import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
-import CenterElementsLayouts from '@layouts/container/CenterElementsLayouts.tsx';
-import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
+import { atom, useAtom } from 'jotai';
 import { searchLocationFromAddress } from '$libs/request/search.ts';
 import { getRequestRoot } from '$libs/request/api.ts';
 import {
@@ -18,9 +15,7 @@ import {
 } from '$libs/request/schedule.ts';
 import ScheduleState from '$libs/request/response/ScheduleState.ts';
 import LocationAddress from '$libs/types/LocationAddress.ts';
-import loaderEffect from '$libs/loaderEffect.ts';
 import ScheduleTravelData from '$libs/request/response/ScheduleTravelData.ts';
-import { atom, useAtom } from 'jotai';
 import { recordCurrentLocation } from '$libs/request/record.ts';
 import Location from '$libs/types/Location.ts';
 
@@ -36,7 +31,7 @@ interface TravelManagementProps {
     setResults: (results: LocationAddress[]) => void,
   ) => Promise<boolean>;
   currentSchedule?: ScheduleTravelData;
-  restoreCurrentTravel: (loader?: boolean) => Promise<boolean>;
+  restoreCurrentTravel: () => Promise<boolean>;
   updateCurrentScheduleTravel: (options: ScheduleOption) => Promise<boolean>;
   watchPosition: Location;
 }
@@ -66,8 +61,6 @@ const ScheduleTravel = createContext<TravelManagementProps>({
 export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [loading, setLoading] = useState(false);
-
   const [watchPosition, setWatchPosition] = useAtom(currentWatchPositionAtom);
   const [currentSchedule, setCurrentSchedule] = useAtom(
     currentScheduleDataAtom,
@@ -82,10 +75,9 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
             longitude: pos.coords.longitude,
           });
 
-          await recordCurrentLocation(getRequestRoot(), {
-            latitude: pos.coords.latitude,
-            longitude: pos.coords.longitude,
-          });
+          if (currentSchedule) {
+            await recordCurrentLocation(getRequestRoot(), watchPosition);
+          }
         },
         err => {
           console.error('Error getting location:', err);
@@ -97,22 +89,13 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
     }
   }, []);
 
-  const restoreCurrentTravel = async (loader: boolean = false) => {
+  const restoreCurrentTravel = async () => {
     let status = false;
 
-    if (loader) {
-      await loaderEffect(async () => {
-        status = await requestCurrentScheduleTravel(
-          getRequestRoot(),
-          setCurrentSchedule,
-        );
-      }, setLoading);
-    } else {
-      status = await requestCurrentScheduleTravel(
-        getRequestRoot(),
-        setCurrentSchedule,
-      );
-    }
+    status = await requestCurrentScheduleTravel(
+      getRequestRoot(),
+      setCurrentSchedule,
+    );
 
     if (!status) {
       setCurrentSchedule(undefined);
@@ -122,21 +105,18 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
   };
 
   const updateCurrentScheduleTravel = async (options: ScheduleOption) => {
-    let status = false;
+    const status = await updateCurrentSchedule(getRequestRoot(), options);
 
-    await loaderEffect(async () => {
-      status = await updateCurrentSchedule(getRequestRoot(), options);
-    }, setLoading);
-
+    if (status) {
+      await restoreCurrentTravel();
+    }
     return status;
   };
 
   const scheduleTravel = async (schedule: ScheduleState) => {
     let status = false;
 
-    await loaderEffect(async () => {
-      status = await requestScheduleTravel(getRequestRoot(), schedule);
-    }, setLoading);
+    status = await requestScheduleTravel(getRequestRoot(), schedule);
 
     return status;
   };
@@ -147,13 +127,11 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
   ) => {
     let status = false;
 
-    await loaderEffect(async () => {
-      status = await searchLocationFromAddress(
-        getRequestRoot(),
-        address,
-        setAddressResult,
-      );
-    }, setLoading);
+    status = await searchLocationFromAddress(
+      getRequestRoot(),
+      address,
+      setAddressResult,
+    );
 
     return status;
   };
@@ -170,13 +148,6 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
       }}
     >
       {children}
-      {loading && (
-        <FullScreenContainer>
-          <CenterElementsLayouts>
-            <SpinnerLoader />
-          </CenterElementsLayouts>
-        </FullScreenContainer>
-      )}
     </ScheduleTravel.Provider>
   );
 };

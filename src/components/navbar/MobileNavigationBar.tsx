@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { IconContext } from 'react-icons';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +16,42 @@ interface NavigationBarProps {
   dark?: boolean;
 }
 
+type CurrentNavProps = {
+  defaultPath: string;
+  index: number;
+  item: ItemType;
+  theme: ColorTheme;
+};
+
+const CurrentNavItem: React.FC<CurrentNavProps> = ({
+  defaultPath,
+  index,
+  item,
+  theme,
+}) => {
+  const navigate = useNavigate();
+
+  const handleItemClick = async (item: ItemType) => {
+    if (item.action) {
+      await item.action();
+    }
+  };
+
+  return (
+    <NavItem
+      key={index}
+      item={item}
+      isActive={defaultPath === item.href}
+      onClick={async () => {
+        await handleItemClick(item);
+
+        navigate(item.href);
+      }}
+      color={theme}
+    />
+  );
+};
+
 const MobileNavigationBar: React.FC<NavigationBarProps> = ({
   items,
   theme = 'teal',
@@ -23,7 +59,6 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
   dark = false,
 }) => {
   const location = useLocation();
-  const navigate = useNavigate();
   const defaultPath = location.pathname;
 
   const styleThemes = {
@@ -31,33 +66,6 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
       'pt-3.5 pb-2.5 mx-4 navbar-mobile-animated-background bg-gradient-to-r from-gray-700/10 via-gray-100/85 to-gray-200/25 rounded-4xl z-50 text-gray-900 backdrop-blur-xs shadow-xl inset-shadow-sm',
     solid:
       'pt-3.5 pb-2.5 mx-4 bg-white rounded-4xl z-50 text-gray-900 inset-shadow-sm',
-  };
-
-  type CurrentNavProps = {
-    index: number;
-    item: ItemType;
-  };
-
-  const CurrentNavItem: React.FC<CurrentNavProps> = ({ index, item }) => {
-    return (
-      <NavItem
-        key={index}
-        item={item}
-        isActive={defaultPath === item.href}
-        onClick={async () => {
-          await handleItemClick(item);
-
-          navigate(item.href);
-        }}
-        color={theme}
-      />
-    );
-  };
-
-  const handleItemClick = async (item: ItemType) => {
-    if (item.action) {
-      await item.action();
-    }
   };
 
   return (
@@ -75,7 +83,12 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
         >
           <ul className={'flex justify-between items-center'}>
             {items.map((item, index) => (
-              <CurrentNavItem index={index} item={item} />
+              <CurrentNavItem
+                defaultPath={defaultPath}
+                index={index}
+                item={item}
+                theme={theme}
+              />
             ))}
           </ul>
         </IconContext.Provider>

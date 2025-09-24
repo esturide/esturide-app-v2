@@ -12,10 +12,6 @@ import { atomWithStorage } from 'jotai/utils';
 import createCookieStorage from '$libs/storage/cookies.ts';
 import UserRole from '$libs/types/UserRole.ts';
 import { getUserRole, setUserRole } from '$libs/request/role.ts';
-import loaderEffect from '$libs/loaderEffect.ts';
-import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
-import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
-import CenterElementsLayouts from '@layouts/container/CenterElementsLayouts.tsx';
 
 interface UserManagerProps {
   isAuthenticated: boolean;
@@ -38,8 +34,7 @@ const authTokenStorage = atomWithStorage<string>('authToken', '', storage, {
 
 const UserManagerContext = createContext<UserManagerProps>({
   isAuthenticated: false,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  login: async (code: number, password: string) => {
+  login: async () => {
     return false;
   },
   logout: async () => {
@@ -48,8 +43,7 @@ const UserManagerContext = createContext<UserManagerProps>({
   refresh: async () => {
     return false;
   },
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  refreshRole: async (role: UserRole) => {
+  refreshRole: async () => {
     return false;
   },
   role: 'not-verified',
@@ -64,7 +58,6 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
     authToken?.length != 0,
   );
   const [currentRole, setCurrentRole] = useState<UserRole>('not-verified');
-  const [isLoading, setIsLoading] = useState(false);
 
   const requestRole = async () => {
     if (isAuthenticated && headAuthTokenLoad) {
@@ -85,7 +78,7 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   }, [isAuthenticated, authToken]);
 
   useEffect(() => {
-    loaderEffect(requestRole, setIsLoading);
+    requestRole();
   }, [headAuthTokenLoad]);
 
   const removeAuthToken = async () => {
@@ -137,13 +130,6 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   return (
     <UserManagerContext.Provider value={props}>
       {children}
-      {isLoading && (
-        <FullScreenContainer>
-          <CenterElementsLayouts>
-            <SpinnerLoader />
-          </CenterElementsLayouts>
-        </FullScreenContainer>
-      )}
     </UserManagerContext.Provider>
   );
 };

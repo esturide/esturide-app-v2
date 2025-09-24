@@ -2,21 +2,31 @@ import React, { useState, useRef, useEffect } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import StyleTheme from '$libs/types/Style.ts';
 
+type Position = {
+  x: number;
+  y: number;
+};
+
 type Props = {
   onClose?: () => void;
   title?: string;
   closable?: boolean;
   style?: StyleTheme;
+  defaultPosition?: Position;
 };
 
+/**
+ * @deprecated Deprecated component, uses DraggableDialogImprovement.
+ */
 const DraggableDialog = ({
   children,
   onClose,
   title,
   closable = false,
   style = 'solid',
+  defaultPosition = { x: 0, y: 0 },
 }: React.PropsWithChildren<Props>) => {
-  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [position, setPosition] = useState<Position>(defaultPosition);
   const [isDragging, setIsDragging] = useState(false);
   const dragOffset = useRef({ x: 0, y: 0 });
 
@@ -28,6 +38,10 @@ const DraggableDialog = ({
     solid:
       'w-sm absolute bg-white shadow-lg rounded-lg z-50 flex flex-col p-4 sm:px-6 sm:py-4 rounded-b-lg bg-white shadow-lg inset-shadow-sm',
   };
+
+  useEffect(() => {
+    console.log(position);
+  }, [position]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -61,13 +75,14 @@ const DraggableDialog = ({
       style={{ left: position.x, top: position.y }}
     >
       <div
-        className="flex justify-between items-center cursor-grab"
+        className={'flex justify-between items-center cursor-grab'}
         onMouseDown={e => {
           setIsDragging(true);
 
           if (dialogRef !== null) {
             if (dialogRef.current && e !== undefined) {
               const dialogRect = dialogRef.current.getBoundingClientRect();
+
               dragOffset.current = {
                 x: e.clientX - dialogRect.left,
                 y: e.clientY - dialogRect.top,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import CarSelector from '@assets/images/car-selector.png';
 import Seat from '$libs/types/Seats.ts';
 import ColorTheme from '$libs/types/Theme.ts';
@@ -72,6 +72,8 @@ const SeatSelector: React.FC<SeatSelectorProps> = ({
   onToggle,
   theme = 'teal',
 }) => {
+  const id = useId();
+
   const allStyles = {
     teal: 'flex flex-row items-center justify-center w-14 h-14 bg-white border border-solid border-stone-300 min-h-14 rounded-[32px] focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2',
     indigo:
@@ -88,6 +90,7 @@ const SeatSelector: React.FC<SeatSelectorProps> = ({
 
   return (
     <button
+      id={id}
       className={isSelected ? allStyleFocus[theme] : allStyles[theme]}
       onClick={() => onToggle(seatId)}
       role="checkbox"
@@ -117,6 +120,8 @@ function SeatSelectorInput({
   showButton = false,
   onChange,
 }: Props) {
+  const id = useId();
+
   const defaultAllSeats: Seat[] = ['A', 'B', 'C'] as const;
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
 
@@ -181,7 +186,7 @@ function SeatSelectorInput({
   };
 
   return (
-    <div className="w-full" aria-label="Driver journey seat selection">
+    <div className="w-full" aria-label="Driver journey seat selection" id={id}>
       {label && <label className={allTextThemeColors[theme]}>{label}</label>}
 
       <div className="flex flex-col gap-4 justify-center items-center w-full">

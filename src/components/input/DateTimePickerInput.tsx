@@ -80,7 +80,7 @@ function DateTimePickerInput({
         className={allInputThemeColors[theme]}
         disabled={readOnly}
         calendarIcon={CalenderIcon}
-        clearIcon={ClearIcon}
+        clearIcon={readOnly ? null : ClearIcon}
       />
 
       {!valid && (

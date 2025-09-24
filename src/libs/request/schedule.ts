@@ -5,19 +5,29 @@ import { ResponseData } from '$libs/request/response';
 import ScheduleState from '$libs/request/response/ScheduleState.ts';
 
 export interface ScheduleOption {
-  readonly terminate: boolean;
-  readonly cancel: boolean;
-  readonly starting: Date;
+  readonly terminate?: boolean;
+  readonly cancel?: boolean;
+  readonly starting?: Date;
 }
 
 export const requestScheduleTravel = async (
   root: AxiosInstance,
   request: ScheduleState,
 ) => {
+  const dataRequest = {
+    seats: request.seats,
+    origin: request.origin,
+    destination: request.destination,
+    price: Math.ceil(request.price),
+    genderFilter: request.genderFilter,
+    startDate: request.startDate.toISOString(),
+    returnHome: request.returnHome,
+  };
+
   try {
     const response: AxiosResponse = await root.post(
-      `/schedule`,
-      request,
+      `/schedule/`,
+      dataRequest,
       getRequestConfig(),
     );
 
@@ -73,7 +83,7 @@ export const updateCurrentSchedule = async (
       {
         terminate: request.terminate,
         cancel: request.cancel,
-        starting: request.starting.toISOString(),
+        starting: request.starting ? request.starting.toISOString() : undefined,
       },
       getRequestConfig(),
     );

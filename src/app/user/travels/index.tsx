@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useUserManager } from '@/context/UserManager.tsx';
@@ -23,9 +23,9 @@ function UserTravels() {
       if (status) {
         if (role !== 'driver') {
           failureMessage('Tienes un viaje pendiente.');
-        }
 
-        await refreshRole('driver');
+          await refreshRole('driver');
+        }
         navigate('/home/travels/schedule/current');
       }
     };

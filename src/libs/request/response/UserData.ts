@@ -1,6 +1,6 @@
 import Location from '$libs/types/Location.ts';
 
-interface UserState {
+interface UserData {
   readonly code: number;
   readonly firstName: string;
   readonly maternalSurname: string;
@@ -8,4 +8,4 @@ interface UserState {
   readonly position: Location;
 }
 
-export default UserState;
+export default UserData;
