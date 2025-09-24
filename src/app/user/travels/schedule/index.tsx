@@ -6,7 +6,7 @@ import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import { noEmptyStrings } from '$libs/string.ts';
 import { failureMessage } from '$libs/toast/failure.ts';
 
-function ScheduleTravel() {
+function RequestScheduleTravel() {
   const navigate = useNavigate();
 
   const { theme } = useUserTheme();
@@ -39,4 +39,4 @@ function ScheduleTravel() {
   );
 }
 
-export default ScheduleTravel;
+export default RequestScheduleTravel;

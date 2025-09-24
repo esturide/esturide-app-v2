@@ -1,5 +1,5 @@
 import Seat from '$libs/types/Seats.ts';
-import UserData from '$libs/request/response/UserData.ts';
+import UserData from '$libs/types/data/UserData.ts';
 
 interface RideData {
   readonly accept: boolean;

@@ -18,24 +18,26 @@ import UserTravels from '~/user/travels';
 import UserNotify from '~/user/notify.tsx';
 import UserProfile from '~/user/profile';
 import UserSettings from '~/user/profile/settings.tsx';
-import ScheduleTravel from '~/user/travels/schedule';
+import RequestScheduleTravel from '~/user/travels/schedule';
 import PreviewScheduleTravel from '~/user/travels/schedule/preview.tsx';
 import ScheduleConfig from '~/user/travels/schedule/config.tsx';
 import CurrentScheduleTravel from '~/user/travels/schedule/current.tsx';
+import CurrentRide from '~/user/travels/ride/current.tsx';
 
-import RideTravel from '~/user/travels/ride';
+import RequestRideTravel from '~/user/travels/ride';
 import HomeLayout from '@layouts/route/HomeLayout.tsx';
 import IndexLayout from '@layouts/route/IndexLayout.tsx';
 import EmptyLayout from '@layouts/route/EmptyLayout.tsx';
 import ScheduleLayout from '@layouts/route/ScheduleLayout.tsx';
-
+import RideLayout from '@layouts/route/RideLayout.tsx';
 import TravelLayout from '@layouts/route/TravelLayout.tsx';
 
 import { UserManagerProvider } from '@/context/UserManager.tsx';
 import { UserThemeProvider } from '@/context/UserTheme.tsx';
+import { ServiceApiKeyProvider } from '@/context/ServiceApiKeyManager.tsx';
 
 import '@/index.css';
-import { ServiceApiKeyProvider } from '@/context/ServiceApiKeyManager.tsx';
+import { WatchLivePositionProvider } from '@/context/WatchLivePositionContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -57,10 +59,15 @@ const router = createBrowserRouter([
           },
           {
             path: 'ride',
+            element: <RideLayout />,
             children: [
               {
                 index: true,
-                element: <RideTravel />,
+                element: <RequestRideTravel />,
+              },
+              {
+                path: 'current',
+                element: <CurrentRide />,
               },
             ],
           },
@@ -70,7 +77,7 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <ScheduleTravel />,
+                element: <RequestScheduleTravel />,
               },
               {
                 path: 'preview',
@@ -138,27 +145,29 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <CookiesProvider defaultSetOptions={{ path: '/' }}>
       <JotaiProvider>
         <DeviceManagementProvider>
-          <UserManagerProvider>
-            <UserThemeProvider>
-              <ServiceApiKeyProvider>
-                <Notifications />
-                <RouterProvider router={router} />
-                <ToastContainer
-                  position="top-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick={false}
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="colored"
-                  transition={Bounce}
-                />
-              </ServiceApiKeyProvider>
-            </UserThemeProvider>
-          </UserManagerProvider>
+          <WatchLivePositionProvider>
+            <UserManagerProvider>
+              <UserThemeProvider>
+                <ServiceApiKeyProvider>
+                  <Notifications />
+                  <RouterProvider router={router} />
+                  <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                    transition={Bounce}
+                  />
+                </ServiceApiKeyProvider>
+              </UserThemeProvider>
+            </UserManagerProvider>
+          </WatchLivePositionProvider>
         </DeviceManagementProvider>
       </JotaiProvider>
     </CookiesProvider>

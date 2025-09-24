@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useUserManager } from '@/context/UserManager.tsx';
@@ -64,7 +64,7 @@ function UserTravels() {
           label={'Buscar'}
           theme={theme}
           onClick={async () => {
-            navigate('schedule/');
+            navigate('ride/');
           }}
         />
       </div>

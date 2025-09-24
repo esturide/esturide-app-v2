@@ -1,8 +1,8 @@
-import UserData from '$libs/request/response/UserData.ts';
+import UserData from '$libs/types/data/UserData.ts';
 import Seat from '$libs/types/Seats.ts';
 import LocationAddress from '$libs/types/LocationAddress.ts';
 import Gender from '$libs/types/Gender.ts';
-import RideData from '$libs/request/response/RideData.ts';
+import RideData from '$libs/types/data/RideData.ts';
 
 interface ScheduleTravelData {
   readonly uuid: string;

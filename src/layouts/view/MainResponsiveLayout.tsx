@@ -16,7 +16,7 @@ function MainResponsiveLayout({
       return (
         <div
           className={
-            'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full w-screen pb-24'
+            'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full md:h-screen w-screen pb-24'
           }
         >
           {children}
@@ -26,7 +26,9 @@ function MainResponsiveLayout({
 
     return (
       <div
-        className={'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full w-screen'}
+        className={
+          'mx-auto max-w-7xl px-6 py-4 flex flex-col h-full md:h-screen w-screen'
+        }
       >
         {children}
       </div>
@@ -36,7 +38,7 @@ function MainResponsiveLayout({
       return (
         <div
           className={
-            'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen pb-26'
+            'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full md:h-screen w-screen pb-26'
           }
         >
           {children}
@@ -46,7 +48,9 @@ function MainResponsiveLayout({
 
     return (
       <div
-        className={'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen'}
+        className={
+          'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full md:h-screen w-screen'
+        }
       >
         {children}
       </div>
@@ -54,7 +58,9 @@ function MainResponsiveLayout({
   } else if (['lg', 'xl'].includes(size)) {
     return (
       <div
-        className={'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen'}
+        className={
+          'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full md:h-screen w-screen'
+        }
       >
         {children}
       </div>

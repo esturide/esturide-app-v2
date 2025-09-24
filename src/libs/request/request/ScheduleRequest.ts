@@ -1,7 +1,7 @@
 import Seat from '$libs/types/Seats.ts';
 import Gender from '$libs/types/Gender.ts';
 
-interface ScheduleState {
+interface ScheduleRequest {
   readonly seats: Seat[];
   readonly origin: string;
   readonly destination: string;
@@ -11,4 +11,4 @@ interface ScheduleState {
   readonly startDate: Date;
 }
 
-export default ScheduleState;
+export default ScheduleRequest;

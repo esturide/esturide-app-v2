@@ -5,7 +5,7 @@ import { FaCar } from 'react-icons/fa';
 import { MdCancel, MdSupervisedUserCircle } from 'react-icons/md';
 import { AdvancedMarker } from '@vis.gl/react-google-maps';
 import loaderEffect from '$libs/loaderEffect.ts';
-import RideData from '$libs/request/response/RideData.ts';
+import RideData from '$libs/types/data/RideData.ts';
 import { useTravelManagementContext } from '@/context/TravelManagementContext.tsx';
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
@@ -21,10 +21,13 @@ import DraggableDialogImprovement from '@components/dialog/DraggableDialogImprov
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
 
+import { useWatchLivePositionContext } from '@/context/WatchLivePositionContext.tsx';
+
 import '@styles/map/google-map-style.scss';
 
 const CurrentLocationMap = () => {
-  const { restoreCurrentTravel, currentSchedule, watchPosition } =
+  const { watchPosition } = useWatchLivePositionContext();
+  const { restoreCurrentTravel, currentSchedule } =
     useTravelManagementContext();
   const { googleApiKey, googleManagementMapApiKey } = useServiceApiManager();
 

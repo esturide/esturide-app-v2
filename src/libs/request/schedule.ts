@@ -1,8 +1,8 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
-import ScheduleTravelData from '$libs/request/response/ScheduleTravelData.ts';
+import ScheduleTravelData from '$libs/types/data/ScheduleTravelData.ts';
 import { ResponseData } from '$libs/request/response';
-import ScheduleState from '$libs/request/response/ScheduleState.ts';
+import ScheduleRequest from '$libs/request/request/ScheduleRequest.ts';
 
 export interface ScheduleOption {
   readonly terminate?: boolean;
@@ -12,7 +12,7 @@ export interface ScheduleOption {
 
 export const requestScheduleTravel = async (
   root: AxiosInstance,
-  request: ScheduleState,
+  request: ScheduleRequest,
 ) => {
   const dataRequest = {
     seats: request.seats,
