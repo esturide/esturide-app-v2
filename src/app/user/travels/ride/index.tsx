@@ -57,14 +57,17 @@ function RequestRideTravel() {
 
   return (
     <MainResponsiveLayout>
-      <div className={'flex flex-col gap-4 h-screen'}>
-        <div className={''}>
-          <ScheduleTravelCard schedule={schedule} showMap />
-        </div>
-
-        <div className={'flex flex-row gap-2'}>
+      <div className={'flex flex-col gap-4'}>
+        <div className={'absolute top-0 flex flex-row gap-2 bg-red-500 z-40'}>
           <MediumButton label={'Buscar'} theme={theme} onClick={onSearch} />
           <MediumButton label={'Filtrar'} theme={theme} onClick={onSearch} />
+        </div>
+
+        <div
+          className={'flex flex-col overflow-y-auto gap-8 pt-12 pb-24 md:pb-26'}
+        >
+          <ScheduleTravelCard schedule={schedule} showMap />
+          <ScheduleTravelCard schedule={schedule} showMap />
         </div>
       </div>
     </MainResponsiveLayout>

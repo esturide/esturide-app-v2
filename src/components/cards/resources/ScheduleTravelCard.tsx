@@ -12,7 +12,7 @@ const ScheduleTravelCard = ({ schedule, showMap }: Props) => {
   const driver = schedule.driver;
 
   return (
-    <div className={'p-4 border border-gray-200 rounded-xl shadow-md'}>
+    <div className={'p-4 border bg-white border-gray-200 rounded-xl shadow-md'}>
       <div className={'flex flex-col md:flex-row gap-4'}>
         <div className={'flex md:flex-col flex-row gap-2 w-full'}>
           <UserInput
@@ -21,6 +21,7 @@ const ScheduleTravelCard = ({ schedule, showMap }: Props) => {
             type={'number'}
             readOnly
           />
+
           <UserInput
             value={`${schedule.price}$`}
             label={'Precio por asiento'}

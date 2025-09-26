@@ -58,7 +58,7 @@ function UserProfile() {
 
   return (
     <MainResponsiveLayout>
-      <div className={'flex flex-col h-screen gap-4 md:gap-6'}>
+      <div className={'flex flex-col h-full gap-4 md:gap-6'}>
         <div className={'flex flex-col'}>
           <SelectOptions
             theme={currentTheme}

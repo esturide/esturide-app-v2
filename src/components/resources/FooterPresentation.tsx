@@ -13,7 +13,7 @@ function FooterPresentation() {
   return (
     <div
       className={
-        'px-8 py-6 w-full flex flex-col bg-teal-700 inset-shadow-sm inset-shadow-teal-800 text-white'
+        'px-8 py-6 z-40 w-full flex flex-col bg-teal-700 inset-shadow-sm inset-shadow-teal-800 text-white'
       }
     >
       <div className={'flex flex-col gap-12 overflow-auto overflow-x-hidden'}>
