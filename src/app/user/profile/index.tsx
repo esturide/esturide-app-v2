@@ -50,11 +50,11 @@ function UserProfile() {
   const UserProfile = () => {
     const { userProfile } = useUserProfile();
 
-    if (userProfile === undefined) {
+    if (!userProfile) {
       return (
-        <PartialScreenContainer>
+        <div className="flex flex-col h-full justify-center">
           <SpinnerLoader />
-        </PartialScreenContainer>
+        </div>
       );
     }
 
@@ -69,9 +69,11 @@ function UserProfile() {
   if (loading) {
     return (
       <MainResponsiveLayout>
-        <PartialScreenContainer>
-          <SpinnerLoader />
-        </PartialScreenContainer>
+        <div className={'h-screen'}>
+          <PartialScreenContainer>
+            <SpinnerLoader />
+          </PartialScreenContainer>
+        </div>
       </MainResponsiveLayout>
     );
   }

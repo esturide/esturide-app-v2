@@ -8,9 +8,9 @@ import Welcome from '@components/resources/Welcome.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
 import SimpleCarPresentation from '@components/cards/SimpleCarPresentation.tsx';
 
-import CommunityPeople from '@assets/images/resources/community-university.jpeg';
-import TravelCar from '@assets/images/resources/travel-car.jpg';
-import TravelWoman from '@assets/images/resources/travel-woman.jpg';
+import CommunityPeople from '@assets/images/resources/university-community.webp';
+import TravelCar from '@assets/images/resources/travel-car.webp';
+import TravelWoman from '@assets/images/resources/woman-traveling.webp';
 
 function UserIndex() {
   const { isAuthenticated } = useUserManager();

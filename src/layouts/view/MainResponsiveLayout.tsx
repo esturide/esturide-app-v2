@@ -41,7 +41,7 @@ function MainResponsiveLayout({
         return (
           <div
             className={
-              'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full md:h-screen w-screen pb-26'
+              'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen pb-26'
             }
           >
             {children}
@@ -52,7 +52,7 @@ function MainResponsiveLayout({
       return (
         <div
           className={
-            'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full md:h-screen w-screen'
+            'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen'
           }
         >
           {children}
@@ -62,7 +62,7 @@ function MainResponsiveLayout({
       return (
         <div
           className={
-            'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full md:h-screen w-screen'
+            'mx-auto max-w-2xl py-8 px-6 flex flex-col h-full w-screen'
           }
         >
           {children}
