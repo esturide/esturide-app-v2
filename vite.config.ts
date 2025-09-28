@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react';
-import legacy from '@vitejs/plugin-legacy';
 import tailwindcss from '@tailwindcss/vite';
 
 import * as path from 'path';
@@ -40,12 +39,6 @@ export default defineConfig({
       maxDirectoryDepth: 5,
       allowEmptyDirectories: false,
       addLeadingSlash: true,
-    }),
-
-    legacy({
-      targets: ['defaults', 'not IE 11', 'safari >= 14'],
-      renderLegacyChunks: true,
-      modernPolyfills: true,
     }),
 
     VitePWA({
@@ -97,23 +90,7 @@ export default defineConfig({
   ],
 
   build: {
-    target: 'ES2020',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        comparisons: true,
-        dead_code: true,
-        conditionals: true,
-        ecma: 2020,
-      },
-      format: {
-        comments: false,
-      },
-      mangle: {
-        toplevel: true,
-      },
-    },
+    target: 'ES2024',
+    minify: 'esbuild',
   },
 });
