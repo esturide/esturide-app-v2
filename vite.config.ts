@@ -12,7 +12,7 @@ export default defineConfig({
   base: './',
   publicDir: 'public',
 
-  assetsInclude: ['**/*.gif', '**/*.png', '**/*.ttf'],
+  assetsInclude: ['**/*.gif', '**/*.png', '**/*.ttf', '***/*.webp'],
 
   resolve: {
     alias: {
@@ -32,7 +32,6 @@ export default defineConfig({
     react(),
 
     staticAssetsPlugin({
-      // Optional configuration (defaults shown):
       directory: 'public',
       outputFile: 'src/static-assets.ts',
       ignore: ['.DS_Store'],
@@ -44,8 +43,9 @@ export default defineConfig({
     }),
 
     legacy({
-      targets: ['defaults', 'not IE 11'],
-      additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
+      targets: ['defaults', 'not IE 11', 'safari >= 14'],
+      renderLegacyChunks: true,
+      modernPolyfills: true,
     }),
 
     VitePWA({
@@ -95,4 +95,25 @@ export default defineConfig({
       },
     }),
   ],
+
+  build: {
+    target: 'ES2020',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        comparisons: true,
+        dead_code: true,
+        conditionals: true,
+        ecma: 2020,
+      },
+      format: {
+        comments: false,
+      },
+      mangle: {
+        toplevel: true,
+      },
+    },
+  },
 });
