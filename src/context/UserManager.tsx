@@ -6,12 +6,16 @@ import React, {
   useState,
 } from 'react';
 import { useAtom } from 'jotai';
+import useIntervalEffect from '$libs/useIntervalEffect.ts';
 import { loginUser } from '$libs/request/login.ts';
 import { configHeaderAuthToken, getRequestRoot } from '$libs/request/api.ts';
 import { atomWithStorage } from 'jotai/utils';
 import createCookieStorage from '$libs/storage/cookies.ts';
 import UserRole from '$libs/types/UserRole.ts';
 import { getUserRole, setUserRole } from '$libs/request/role.ts';
+import { refreshToken } from '$libs/request/authToken.ts';
+
+const AUTH_CHECK_INTERVAL = 1000 * 60 * 5;
 
 interface UserManagerProps {
   isAuthenticated: boolean;
@@ -64,6 +68,10 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
       await getUserRole(getRequestRoot(), setCurrentRole);
     }
   };
+
+  useIntervalEffect(async () => {
+    await refreshToken(getRequestRoot(), setAuthToken);
+  }, AUTH_CHECK_INTERVAL);
 
   useEffect(() => {
     setIsAuthenticated(authToken.length != 0);
