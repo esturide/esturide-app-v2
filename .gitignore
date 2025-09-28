@@ -17,6 +17,8 @@ psd
 thumb
 sketch
 
+**/static-assets.ts
+
 ### ReactNative ###
 # React Native Stack Base
 
