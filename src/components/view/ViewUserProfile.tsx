@@ -1,6 +1,6 @@
 import React from 'react';
-import HeaderText from '@components/text/HeaderText.tsx';
 import QRCode from 'react-qr-code';
+import HeaderText from '@components/text/HeaderText.tsx';
 import UserInput from '@components/input/UserInput.tsx';
 import UserProfileResponse from '$libs/request/response/UserProfileResponse.ts';
 
