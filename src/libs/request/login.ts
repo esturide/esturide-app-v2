@@ -1,10 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
-
-export interface UserDataLogin {
-  readonly code: number;
-  readonly password: string;
-}
+import UserDataLogin from '$libs/request/response/UserDataLogin.ts';
 
 export const loginUser = async (
   root: AxiosInstance,

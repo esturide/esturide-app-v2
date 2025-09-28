@@ -1,5 +1,7 @@
 import { useUserManager } from '@/context/UserManager.tsx';
-import SelectOptions from '@components/input/selector/SelectOptions.tsx';
+import SelectOptions, {
+  StringOption,
+} from '@components/input/selector/SelectOptions.tsx';
 import SquareButton from '@components/buttons/SquareButton.tsx';
 import React, { useEffect, useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
@@ -14,6 +16,8 @@ import {
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
+import { useUserProfile } from '@/context/UserProfileManager.tsx';
+import ViewUserProfile from '@components/view/ViewUserProfile.tsx';
 
 function UserProfile() {
   const { logout, refreshRole, role } = useUserManager();
@@ -43,6 +47,20 @@ function UserProfile() {
     }, setLoading);
   };
 
+  const UserProfile = () => {
+    const { userProfile } = useUserProfile();
+
+    if (userProfile === undefined) {
+      return (
+        <PartialScreenContainer>
+          <SpinnerLoader />
+        </PartialScreenContainer>
+      );
+    }
+
+    return <ViewUserProfile profile={userProfile} />;
+  };
+
   useEffect(() => {
     setCurrentTheme(selectThemeFromRole(currentRole));
     setCurrentOption(searchRoleFromList(currentRole));
@@ -50,24 +68,29 @@ function UserProfile() {
 
   if (loading) {
     return (
-      <PartialScreenContainer>
-        <SpinnerLoader />
-      </PartialScreenContainer>
+      <MainResponsiveLayout>
+        <PartialScreenContainer>
+          <SpinnerLoader />
+        </PartialScreenContainer>
+      </MainResponsiveLayout>
     );
   }
 
   return (
     <MainResponsiveLayout>
-      <div className={'flex flex-col h-full gap-4 md:gap-6'}>
+      <div className={'flex flex-col gap-4 md:gap-6'}>
+        <UserProfile />
+
         <div className={'flex flex-col'}>
           <SelectOptions
+            label={'Selecciona tu tipo de sesion'}
             theme={currentTheme}
             defaultValue={currentOption}
             onSelect={onSelectRole}
             options={[
               {
                 id: 0,
-                description: 'No verificado',
+                description: 'Invitado',
               },
               {
                 id: 1,
@@ -76,14 +99,6 @@ function UserProfile() {
               {
                 id: 2,
                 description: 'Conductor',
-              },
-              {
-                id: 3,
-                description: 'Staff',
-              },
-              {
-                id: 4,
-                description: 'Administrador',
               },
             ]}
           />

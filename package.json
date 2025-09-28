@@ -54,6 +54,7 @@
     "react-leaflet-custom-control": "^1.4.0",
     "react-modal-sheet": "^4.0.1",
     "react-push-notification": "^1.5.4",
+    "react-qr-code": "^2.0.18",
     "react-router": "^7.4.1",
     "react-router-dom": "^7.4.1",
     "react-time-picker": "^8.0.2",

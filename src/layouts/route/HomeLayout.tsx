@@ -8,6 +8,7 @@ import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { TravelManagementProvider } from '@/context/TravelManagementContext.tsx';
 import { selectThemeFromRole } from '$libs/select/color.ts';
+import { UserProfileProvider } from '@/context/UserProfileManager.tsx';
 
 const HomeLayout = () => {
   const navigate = useNavigate();
@@ -55,9 +56,11 @@ const HomeLayout = () => {
 
   return (
     <ResponsiveLayout items={items}>
-      <TravelManagementProvider>
-        <Outlet />
-      </TravelManagementProvider>
+      <UserProfileProvider>
+        <TravelManagementProvider>
+          <Outlet />
+        </TravelManagementProvider>
+      </UserProfileProvider>
     </ResponsiveLayout>
   );
 };

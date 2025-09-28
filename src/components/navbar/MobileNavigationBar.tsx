@@ -29,8 +29,6 @@ const CurrentNavItem: React.FC<CurrentNavProps> = ({
   item,
   theme,
 }) => {
-  const navigate = useNavigate();
-
   const handleItemClick = async (item: ItemType) => {
     if (item.action) {
       await item.action();
@@ -44,8 +42,6 @@ const CurrentNavItem: React.FC<CurrentNavProps> = ({
       isActive={defaultPath === item.href}
       onClick={async () => {
         await handleItemClick(item);
-
-        navigate(item.href);
       }}
       color={theme}
     />
