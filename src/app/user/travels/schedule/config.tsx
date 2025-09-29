@@ -8,10 +8,10 @@ import ScheduleTravelForm, {
 import { failureMessage } from '$libs/toast/failure.ts';
 import {
   LocationAddressParams,
-  useTravelManagementContext,
-} from '@/context/TravelManagementContext.tsx';
+  useScheduleTravelManagementContext,
+} from '@/context/ScheduleTravelManagementContext.tsx';
 import Gender from '$libs/types/Gender.ts';
-import loaderEffect from '$libs/loaderEffect.ts';
+import loaderEffect from '$libs/effects/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 
@@ -20,7 +20,8 @@ function ScheduleConfig() {
   const { state } = useLocation();
   const { addressTo, addressFrom } = state as LocationAddressParams;
 
-  const { scheduleTravel, restoreCurrentTravel } = useTravelManagementContext();
+  const { scheduleTravel, restoreCurrentTravel } =
+    useScheduleTravelManagementContext();
 
   const [loading, setLoading] = useState(false);
 

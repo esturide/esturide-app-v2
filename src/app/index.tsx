@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import { GrLogin, GrUserNew } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 import { randomIntFromInterval, shuffleArray } from '$libs/random.ts';
-import { useUserManager } from '@/context/UserManager.tsx';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import Welcome from '@components/resources/Welcome.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
-import SimpleCarPresentation from '@components/cards/SimpleCarPresentation.tsx';
 
+import SimpleCarPresentation from '@components/cards/SimpleCarPresentation.tsx';
 import CommunityPeople from '@assets/images/resources/university-community.webp';
 import TravelCar from '@assets/images/resources/travel-car.webp';
 import TravelWoman from '@assets/images/resources/woman-traveling.webp';
 
 function UserIndex() {
-  const { isAuthenticated } = useUserManager();
+  const { isAuthenticated } = useUserManagerContext();
   const navigate = useNavigate();
 
   useEffect(() => {}, [isAuthenticated, navigate]);

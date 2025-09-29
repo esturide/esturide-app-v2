@@ -1,8 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { getRequestConfig } from '$libs/request/api.ts';
-import ScheduleTravelData from '$libs/types/data/ScheduleTravelData.ts';
+import { getHeaderConfig, getRequestConfig } from '$libs/request/api.ts';
+import ScheduleTravelInterface from '$libs/types/interface/ScheduleTravelInterface.ts';
 import { ResponseData } from '$libs/request/response';
 import ScheduleRequest from '$libs/request/request/ScheduleRequest.ts';
+import ScheduleFilterRequest from '$libs/request/request/ScheduleFilterRequest.ts';
 
 export interface ScheduleOption {
   readonly terminate?: boolean;
@@ -43,7 +44,7 @@ export const requestScheduleTravel = async (
 
 export const requestCurrentScheduleTravel = async (
   root: AxiosInstance,
-  setCurrentSchedule: (current: ScheduleTravelData) => void,
+  setCurrentSchedule: (current: ScheduleTravelInterface) => void,
 ) => {
   try {
     const response: AxiosResponse = await root.get(
@@ -52,7 +53,7 @@ export const requestCurrentScheduleTravel = async (
     );
 
     const status = [200, 201].includes(response.status);
-    const data: ResponseData<ScheduleTravelData> = response.data;
+    const data: ResponseData<ScheduleTravelInterface> = response.data;
     const statusData = status && data.status == 'success';
 
     if (!status) {
@@ -89,6 +90,48 @@ export const updateCurrentSchedule = async (
     );
 
     return [200, 201].includes(response.status);
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      return false;
+    }
+
+    throw e;
+  }
+};
+
+export const filterSchedule = async (
+  root: AxiosInstance,
+  request: ScheduleFilterRequest,
+  setResults: (current: ScheduleTravelInterface[]) => void,
+) => {
+  try {
+    const response: AxiosResponse = await root.get(`/schedule/search`, {
+      params: {
+        terminate: request.terminate,
+        cancel: request.cancel,
+        starting: request.starting ? request.starting.toISOString() : undefined,
+        terminated: request.terminated
+          ? request.terminated.toISOString()
+          : undefined,
+        min_price: request.minPrice,
+        max_price: request.maxPrice,
+      },
+      headers: getHeaderConfig(),
+    });
+
+    const status = [200, 201].includes(response.status);
+    const data: ResponseData<ScheduleTravelInterface[]> = response.data;
+    const statusData = status && data.status == 'success';
+
+    if (!status) {
+      return false;
+    }
+
+    if (statusData) {
+      setResults(data.data);
+    }
+
+    return statusData;
   } catch (e) {
     if (axios.isAxiosError(e)) {
       return false;

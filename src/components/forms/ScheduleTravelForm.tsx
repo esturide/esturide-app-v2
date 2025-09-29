@@ -13,7 +13,7 @@ import DateTimePickerInput from '@components/input/DateTimePickerInput.tsx';
 import { MdOutlineAlarmOn } from 'react-icons/md';
 import { failureMessage } from '$libs/toast/failure.ts';
 import Seat from '$libs/types/Seats.ts';
-import { LocationAddressParams } from '@/context/TravelManagementContext.tsx';
+import { LocationAddressParams } from '@/context/ScheduleTravelManagementContext.tsx';
 
 interface GenderOptionFilter {
   female: boolean;

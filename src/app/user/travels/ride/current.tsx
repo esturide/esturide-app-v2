@@ -1,12 +1,12 @@
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
-import RideData from '$libs/types/data/RideData.ts';
-import UserData from '$libs/types/data/UserData.ts';
+import RideInterface from '$libs/types/interface/RideInterface.ts';
+import UserInterface from '$libs/types/interface/UserInterface.ts';
 import PassengerCard from '@components/cards/resources/PassengerCard.tsx';
 import { useWatchLivePositionContext } from '@/context/WatchLivePositionContext.tsx';
 
 function CurrentRide() {
   const { watchPosition } = useWatchLivePositionContext();
-  const user: UserData = {
+  const user: UserInterface = {
     code: 0,
     firstName: 'Diego Sealtiel',
     paternalSurname: 'Valderrama',
@@ -14,7 +14,7 @@ function CurrentRide() {
     position: watchPosition,
   };
 
-  const ride: RideData = {
+  const ride: RideInterface = {
     accept: true,
     cancel: true,
     over: false,

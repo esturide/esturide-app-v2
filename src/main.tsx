@@ -32,12 +32,12 @@ import ScheduleLayout from '@layouts/route/ScheduleLayout.tsx';
 import RideLayout from '@layouts/route/RideLayout.tsx';
 import TravelLayout from '@layouts/route/TravelLayout.tsx';
 
-import { UserManagerProvider } from '@/context/UserManager.tsx';
 import { UserThemeProvider } from '@/context/UserTheme.tsx';
 import { ServiceApiKeyProvider } from '@/context/ServiceApiKeyManager.tsx';
+import { WatchLivePositionProvider } from '@/context/WatchLivePositionContext.tsx';
 
 import '@/index.css';
-import { WatchLivePositionProvider } from '@/context/WatchLivePositionContext.tsx';
+import { UserManagementProvider } from '@/context/UserManagementContext.tsx';
 
 const router = createBrowserRouter([
   {
@@ -146,7 +146,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <JotaiProvider>
         <DeviceManagementProvider>
           <WatchLivePositionProvider>
-            <UserManagerProvider>
+            <UserManagementProvider>
               <UserThemeProvider>
                 <ServiceApiKeyProvider>
                   <Notifications />
@@ -166,7 +166,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                   />
                 </ServiceApiKeyProvider>
               </UserThemeProvider>
-            </UserManagerProvider>
+            </UserManagementProvider>
           </WatchLivePositionProvider>
         </DeviceManagementProvider>
       </JotaiProvider>

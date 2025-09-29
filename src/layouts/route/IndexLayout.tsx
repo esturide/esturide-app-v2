@@ -2,17 +2,17 @@ import React, { useEffect, useId } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { FaFacebookMessenger, FaHome, FaInfoCircle } from 'react-icons/fa';
 import { ItemType } from '@components/navbar/types.ts';
-import { useUserManager } from '@/context/UserManager.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import DesktopView from '@layouts/view/DesktopView.tsx';
 import GradientAnimatedBackground from '@layouts/view/animated/GradientAnimatedBackground.tsx';
 import FooterPresentation from '@components/resources/FooterPresentation.tsx';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 
 const IndexLayout = () => {
   const id = useId();
   const navigate = useNavigate();
   const { isMobile } = useDeviceManagement();
-  const { isAuthenticated } = useUserManager();
+  const { isAuthenticated } = useUserManagerContext();
 
   useEffect(() => {
     if (isAuthenticated) {

@@ -11,10 +11,10 @@ import {
 import { ItemType } from '@components/navbar/types.ts';
 import { FaBell, FaUser } from 'react-icons/fa';
 import { LuMenu } from 'react-icons/lu';
-import { useUserManager } from '@/context/UserManager.tsx';
 import { useNavigate } from 'react-router-dom';
 import LogoResource from '@assets/images/logo.png';
 import { Link } from 'react-router';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -26,7 +26,7 @@ type Props = {
 
 const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
   const navigate = useNavigate();
-  const { isAuthenticated, logout } = useUserManager();
+  const { isAuthenticated, logout } = useUserManagerContext();
 
   const handleItemClick = async (item: ItemType) => {
     if (item.action) {

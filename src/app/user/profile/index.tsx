@@ -1,11 +1,8 @@
-import { useUserManager } from '@/context/UserManager.tsx';
-import SelectOptions, {
-  StringOption,
-} from '@components/input/selector/SelectOptions.tsx';
+import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 import SquareButton from '@components/buttons/SquareButton.tsx';
 import React, { useEffect, useState } from 'react';
 import ColorTheme from '$libs/types/Theme.ts';
-import loaderEffect from '$libs/loaderEffect.ts';
+import loaderEffect from '$libs/effects/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import UserRole from '$libs/types/UserRole.ts';
 import {
@@ -18,9 +15,10 @@ import { failureMessage } from '$libs/toast/failure.ts';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import { useUserProfile } from '@/context/UserProfileManager.tsx';
 import ViewUserProfile from '@components/view/ViewUserProfile.tsx';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 
 function UserProfile() {
-  const { logout, refreshRole, role } = useUserManager();
+  const { logout, refreshRole, role } = useUserManagerContext();
   const [loading, setLoading] = useState(false);
   const [currentOption, setCurrentOption] = useState<number>(
     searchRoleFromList(role),

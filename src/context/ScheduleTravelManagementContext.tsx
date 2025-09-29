@@ -16,7 +16,7 @@ import {
 import { useWatchLivePositionContext } from '@/context/WatchLivePositionContext.tsx';
 import ScheduleRequest from '$libs/request/request/ScheduleRequest.ts';
 import LocationAddress from '$libs/types/LocationAddress.ts';
-import ScheduleTravelData from '$libs/types/data/ScheduleTravelData.ts';
+import ScheduleTravelInterface from '$libs/types/interface/ScheduleTravelInterface.ts';
 import { recordCurrentLocation } from '$libs/request/record.ts';
 
 export interface LocationAddressParams {
@@ -30,12 +30,14 @@ interface Props {
     address: string,
     setResults: (results: LocationAddress[]) => void,
   ) => Promise<boolean>;
-  currentSchedule?: ScheduleTravelData;
+  currentSchedule?: ScheduleTravelInterface;
   restoreCurrentTravel: () => Promise<boolean>;
   updateCurrentScheduleTravel: (options: ScheduleOption) => Promise<boolean>;
 }
 
-const currentScheduleDataAtom = atom<ScheduleTravelData | undefined>(undefined);
+const currentScheduleDataAtom = atom<ScheduleTravelInterface | undefined>(
+  undefined,
+);
 
 const ScheduleTravel = createContext<Props>({
   scheduleTravel: async () => {
@@ -52,14 +54,10 @@ const ScheduleTravel = createContext<Props>({
   },
 });
 
-export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
+export const ScheduleTravelManagementProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const { watchPosition } = useWatchLivePositionContext();
-
-  const [currentSchedule, setCurrentSchedule] = useAtom(
-    currentScheduleDataAtom,
-  );
 
   useEffect(() => {
     const request = async () => {
@@ -70,6 +68,10 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
 
     request();
   }, [watchPosition]);
+
+  const [currentSchedule, setCurrentSchedule] = useAtom(
+    currentScheduleDataAtom,
+  );
 
   const restoreCurrentTravel = async () => {
     let status = false;
@@ -133,6 +135,6 @@ export const TravelManagementProvider: React.FC<PropsWithChildren> = ({
   );
 };
 
-export const useTravelManagementContext = () => {
+export const useScheduleTravelManagementContext = () => {
   return useContext(ScheduleTravel);
 };

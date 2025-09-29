@@ -2,17 +2,19 @@ import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { FaHome, FaPlus, FaUser } from 'react-icons/fa';
 import { FaMessage } from 'react-icons/fa6';
-import { ItemType } from '@components/navbar/types.ts';
-import { useUserManager } from '@/context/UserManager.tsx';
-import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
-import { useUserTheme } from '@/context/UserTheme.tsx';
-import { TravelManagementProvider } from '@/context/TravelManagementContext.tsx';
 import { selectThemeFromRole } from '$libs/select/color.ts';
+import { ItemType } from '@components/navbar/types.ts';
+import { useUserTheme } from '@/context/UserTheme.tsx';
+import { ScheduleTravelManagementProvider } from '@/context/ScheduleTravelManagementContext.tsx';
 import { UserProfileProvider } from '@/context/UserProfileManager.tsx';
+import { SessionManagementProvider } from '@/context/SessionManagementContext.tsx';
+import ResponsiveLayout from '@layouts/ResponsiveLayout.tsx';
+import RecordLocationLayout from '@layouts/record/RecordLocationLayout.tsx';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 
 const HomeLayout = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, role } = useUserManager();
+  const { isAuthenticated, role } = useUserManagerContext();
   const { setTheme } = useUserTheme();
 
   useEffect(() => {
@@ -24,8 +26,6 @@ const HomeLayout = () => {
       navigate('/login', { replace: true });
     }
   }, [isAuthenticated]);
-
-  useEffect(() => {}, []);
 
   const items: ItemType[] = [
     {
@@ -57,9 +57,13 @@ const HomeLayout = () => {
   return (
     <ResponsiveLayout items={items}>
       <UserProfileProvider>
-        <TravelManagementProvider>
-          <Outlet />
-        </TravelManagementProvider>
+        <SessionManagementProvider>
+          <ScheduleTravelManagementProvider>
+            <RecordLocationLayout>
+              <Outlet />
+            </RecordLocationLayout>
+          </ScheduleTravelManagementProvider>
+        </SessionManagementProvider>
       </UserProfileProvider>
     </ResponsiveLayout>
   );

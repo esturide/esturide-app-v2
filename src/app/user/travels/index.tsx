@@ -1,37 +1,21 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-import { useUserManager } from '@/context/UserManager.tsx';
-import { useTravelManagementContext } from '@/context/TravelManagementContext.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import MediumButton from '@components/buttons/MediumButton.tsx';
 import SorryMessage from '@components/resources/SorryMessage.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
+import { useSessionManagementProvider } from '@/context/SessionManagementContext.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
+import useLazyEffect from '$libs/effects/lazyEffect.ts';
+import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
+import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 
 function UserTravels() {
   const navigate = useNavigate();
 
-  const { role, refreshRole } = useUserManager();
   const { theme } = useUserTheme();
-  const { restoreCurrentTravel } = useTravelManagementContext();
-
-  useEffect(() => {
-    const requestCurrentTravel = async () => {
-      const status = await restoreCurrentTravel();
-
-      if (status) {
-        if (role !== 'driver') {
-          failureMessage('Tienes un viaje pendiente.');
-
-          await refreshRole('driver');
-        }
-        navigate('/home/travels/schedule/current');
-      }
-    };
-
-    requestCurrentTravel();
-  }, []);
 
   const ViewDriver = () => {
     return (
@@ -81,6 +65,39 @@ function UserTravels() {
   };
 
   const ViewRole = () => {
+    const { role, refreshRole } = useUserManagerContext();
+    const { updateCurrentSession } = useSessionManagementProvider();
+
+    const { loading } = useLazyEffect(async () => {
+      const userSession = await updateCurrentSession();
+
+      if (userSession.scheduleFound) {
+        if (role !== 'driver') {
+          failureMessage('You have a travel pending.');
+
+          await refreshRole('driver');
+        }
+
+        navigate('/home/travels/schedule/current');
+      } else if (userSession.rideFound) {
+        if (role !== 'passenger') {
+          failureMessage('You have a pending ride.');
+
+          await refreshRole('passenger');
+        }
+
+        navigate('/home/travels/ride/current');
+      }
+    });
+
+    if (loading) {
+      return (
+        <PartialScreenContainer>
+          <SpinnerLoader />
+        </PartialScreenContainer>
+      );
+    }
+
     if (role === 'driver') {
       return <ViewDriver />;
     } else if (role === 'passenger') {

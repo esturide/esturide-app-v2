@@ -7,7 +7,7 @@ import React, {
 } from 'react';
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
-import useIntervalEffect from '$libs/useIntervalEffect.ts';
+import useIntervalEffect from '$libs/effects/useIntervalEffect.ts';
 import { loginUser } from '$libs/request/login.ts';
 import { configHeaderAuthToken, getRequestRoot } from '$libs/request/api.ts';
 import createCookieStorage from '$libs/storage/cookies.ts';
@@ -53,15 +53,20 @@ const UserManagerContext = createContext<UserManagerProps>({
   role: 'not-verified',
 });
 
-export const UserManagerProvider: React.FC<PropsWithChildren> = ({
+export const UserManagementProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [authToken, setAuthToken] = useAtom(authTokenStorage);
-  const [headAuthTokenLoad, setHeadAuthTokenLoad] = useState(false);
+  const [authTokenCookiesStorage, setAuthTokenCookiesStorage] =
+    useAtom(authTokenStorage);
+
   const [isAuthenticated, setIsAuthenticated] = useState(
-    authToken?.length != 0,
+    authTokenCookiesStorage?.length != 0,
   );
   const [currentRole, setCurrentRole] = useState<UserRole>('not-verified');
+  const [authTokenCacheMemory, setAuthTokenCacheMemory] = useState(
+    authTokenCookiesStorage,
+  );
+  const [headAuthTokenLoad, setHeadAuthTokenLoad] = useState(false);
 
   const requestRole = async () => {
     if (isAuthenticated && headAuthTokenLoad) {
@@ -70,27 +75,31 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   };
 
   useIntervalEffect(async () => {
-    await refreshToken(getRequestRoot(), setAuthToken);
+    await refreshToken(getRequestRoot(), setAuthTokenCacheMemory);
   }, AUTH_CHECK_INTERVAL);
 
   useEffect(() => {
-    setIsAuthenticated(authToken.length != 0);
-  }, [authToken]);
+    setAuthTokenCookiesStorage(authTokenCacheMemory);
+  }, [authTokenCacheMemory]);
+
+  useEffect(() => {
+    setIsAuthenticated(authTokenCookiesStorage.length != 0);
+  }, [authTokenCookiesStorage]);
 
   useEffect(() => {
     if (isAuthenticated) {
-      configHeaderAuthToken(authToken);
+      configHeaderAuthToken(authTokenCookiesStorage);
     }
 
     setHeadAuthTokenLoad(isAuthenticated);
-  }, [isAuthenticated, authToken]);
+  }, [isAuthenticated, authTokenCookiesStorage]);
 
   useEffect(() => {
     requestRole();
   }, [headAuthTokenLoad]);
 
   const removeAuthToken = async () => {
-    await setAuthToken('');
+    setAuthTokenCacheMemory('');
     await storage.removeItem('authToken');
   };
 
@@ -101,7 +110,7 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
         code: code,
         password: password,
       },
-      setAuthToken,
+      setAuthTokenCacheMemory,
     );
   };
 
@@ -113,11 +122,15 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   };
 
   const refresh = async () => {
-    return authToken.length != 0;
+    return authTokenCookiesStorage.length != 0;
   };
 
   const refreshRole = async (role: UserRole) => {
-    const status = await setUserRole(getRequestRoot(), role, setAuthToken);
+    const status = await setUserRole(
+      getRequestRoot(),
+      role,
+      setAuthTokenCacheMemory,
+    );
 
     if (status) {
       setCurrentRole(role);
@@ -142,6 +155,6 @@ export const UserManagerProvider: React.FC<PropsWithChildren> = ({
   );
 };
 
-export const useUserManager = () => {
+export const useUserManagerContext = () => {
   return useContext(UserManagerContext);
 };

@@ -1,12 +1,12 @@
 import React from 'react';
-import UserData from '$libs/types/data/UserData.ts';
+import UserInterface from '$libs/types/interface/UserInterface.ts';
 import UserInput from '@components/input/UserInput.tsx';
-
-import '@styles/map/google-map-style.scss';
 import MapPositionCard from '@components/cards/resources/MapPositionCard.tsx';
 
+import '@styles/map/google-map-style.scss';
+
 type Props = {
-  user: UserData;
+  user: UserInterface;
   showMap?: boolean;
 };
 

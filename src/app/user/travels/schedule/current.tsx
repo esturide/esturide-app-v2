@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router';
 import { useNavigate } from 'react-router-dom';
 import { FaCar } from 'react-icons/fa';
 import { MdCancel, MdSupervisedUserCircle } from 'react-icons/md';
 import { AdvancedMarker } from '@vis.gl/react-google-maps';
-import loaderEffect from '$libs/loaderEffect.ts';
-import RideData from '$libs/types/data/RideData.ts';
-import { useTravelManagementContext } from '@/context/TravelManagementContext.tsx';
+import loaderEffect from '$libs/effects/loaderEffect.ts';
+import RideInterface from '$libs/types/interface/RideInterface.ts';
+import { useScheduleTravelManagementContext } from '@/context/ScheduleTravelManagementContext.tsx';
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
@@ -25,71 +24,71 @@ import { useWatchLivePositionContext } from '@/context/WatchLivePositionContext.
 
 import '@styles/map/google-map-style.scss';
 
-const CurrentLocationMap = () => {
-  const { watchPosition } = useWatchLivePositionContext();
-  const { restoreCurrentTravel, currentSchedule } =
-    useTravelManagementContext();
-  const { googleApiKey, googleManagementMapApiKey } = useServiceApiManager();
-
-  useEffect(() => {
-    const intervalId = setInterval(async () => {
-      const status = await restoreCurrentTravel();
-
-      if (!status) {
-        console.error('Failure restore current travel.');
-      }
-    }, 5000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
-  const CustomMarkerContent = () => {
-    return (
-      <div className={'bg-white rounded-full p-1.5 shadow-lg'}>
-        <FaCar size={28} />
-      </div>
-    );
-  };
-
-  return (
-    <GoogleMapView
-      center={{
-        lat: watchPosition.latitude,
-        lng: watchPosition.longitude,
-      }}
-      apiKey={googleApiKey}
-      mapId={googleManagementMapApiKey}
-      zoom={3}
-      style={{
-        height: '100vh',
-      }}
-    >
-      {currentSchedule && (
-        <GoogleMapRouting
-          origin={currentSchedule.origin.address}
-          destination={currentSchedule.destination.address}
-          catchNotFoundRoute={() => {}}
-        />
-      )}
-      <AdvancedMarker
-        position={{
-          lat: watchPosition.latitude,
-          lng: watchPosition.longitude,
-        }}
-        draggable={false}
-        clickable={false}
-      >
-        <CustomMarkerContent />
-      </AdvancedMarker>
-    </GoogleMapView>
-  );
-};
-
 function CurrentScheduleTravel() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [showPassengerList, setShowPassengerList] = useState(false);
+
+  const CurrentLocationMap = () => {
+    const { watchPosition } = useWatchLivePositionContext();
+    const { restoreCurrentTravel, currentSchedule } =
+      useScheduleTravelManagementContext();
+    const { googleApiKey, googleManagementMapApiKey } = useServiceApiManager();
+
+    useEffect(() => {
+      const intervalId = setInterval(async () => {
+        const status = await restoreCurrentTravel();
+
+        if (!status) {
+          console.error('Failure restore current travel.');
+        }
+      }, 5000);
+
+      return () => clearInterval(intervalId);
+    }, []);
+
+    const CustomMarkerContent = () => {
+      return (
+        <div className={'bg-white rounded-full p-1.5 shadow-lg'}>
+          <FaCar size={28} />
+        </div>
+      );
+    };
+
+    return (
+      <GoogleMapView
+        center={{
+          lat: watchPosition.latitude,
+          lng: watchPosition.longitude,
+        }}
+        apiKey={googleApiKey}
+        mapId={googleManagementMapApiKey}
+        zoom={3}
+        style={{
+          height: '100vh',
+        }}
+      >
+        {currentSchedule && (
+          <GoogleMapRouting
+            origin={currentSchedule.origin.address}
+            destination={currentSchedule.destination.address}
+            catchNotFoundRoute={() => {}}
+          />
+        )}
+        <AdvancedMarker
+          position={{
+            lat: watchPosition.latitude,
+            lng: watchPosition.longitude,
+          }}
+          draggable={false}
+          clickable={false}
+        >
+          <CustomMarkerContent />
+        </AdvancedMarker>
+      </GoogleMapView>
+    );
+  };
 
   const onTogglePassengerList = async () => {
     setShowPassengerList(!showPassengerList);
@@ -100,10 +99,10 @@ function CurrentScheduleTravel() {
       currentSchedule,
       updateCurrentScheduleTravel,
       restoreCurrentTravel,
-    } = useTravelManagementContext();
+    } = useScheduleTravelManagementContext();
 
     if (!currentSchedule) {
-      return <Navigate to={'/'} replace />;
+      return null;
     }
 
     const onStartingTravel = async () => {
@@ -208,17 +207,13 @@ function CurrentScheduleTravel() {
   };
 
   const ShowAllRides = () => {
-    const {
-      currentSchedule,
-      updateCurrentScheduleTravel,
-      restoreCurrentTravel,
-    } = useTravelManagementContext();
+    const { currentSchedule } = useScheduleTravelManagementContext();
 
     if (!currentSchedule) {
       return null;
     }
 
-    const Ride: React.FC<{ ride: RideData }> = ({ ride }) => {
+    const Ride: React.FC<{ ride: RideInterface }> = ({ ride }) => {
       return (
         <div className={'border border-gray-200 rounded-4xl px-2 pt-2 py-4'}>
           <div className={'flex flex-col gap-2'}>

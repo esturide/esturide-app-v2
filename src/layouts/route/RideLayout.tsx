@@ -1,11 +1,12 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useUserManager } from '@/context/UserManager.tsx';
 import { Navigate } from 'react-router';
 import { failureMessage } from '$libs/toast/failure.ts';
-import { useEffect } from 'react';
+import { PassengerManagementProvider } from '@/context/PassengerManagementContext.tsx';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 
 function RideLayout() {
-  const { role } = useUserManager();
+  const { role } = useUserManagerContext();
 
   const FailureNavigate = () => {
     useEffect(() => {
@@ -19,7 +20,11 @@ function RideLayout() {
     return <FailureNavigate />;
   }
 
-  return <Outlet />;
+  return (
+    <PassengerManagementProvider>
+      <Outlet />
+    </PassengerManagementProvider>
+  );
 }
 
 export default RideLayout;

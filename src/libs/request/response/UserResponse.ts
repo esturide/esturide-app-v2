@@ -1,6 +1,6 @@
 import UserRole from '$libs/types/UserRole.ts';
 
-interface UserData {
+interface UserResponse {
   readonly code: number;
   readonly firstName: string;
   readonly maternalSurname: string;
@@ -9,4 +9,4 @@ interface UserData {
   readonly role: UserRole;
 }
 
-export default UserData;
+export default UserResponse;

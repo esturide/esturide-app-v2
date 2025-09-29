@@ -1,13 +1,13 @@
 import Seat from '$libs/types/Seats.ts';
-import UserData from '$libs/types/data/UserData.ts';
+import UserInterface from '$libs/types/interface/UserInterface.ts';
 
-interface RideData {
+interface RideInterface {
   readonly accept: boolean;
   readonly cancel: boolean;
   readonly over: boolean;
-  readonly passenger: UserData;
+  readonly passenger: UserInterface;
   readonly seat: Seat;
   readonly uuid: string;
 }
 
-export default RideData;
+export default RideInterface;

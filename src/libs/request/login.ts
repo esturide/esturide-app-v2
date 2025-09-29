@@ -7,7 +7,7 @@ import TokenResponse from '$libs/request/response/TokenResponse.ts';
 export const loginUser = async (
   root: AxiosInstance,
   user: UserDataLogin,
-  setAuthToken: (token: string) => Promise<void>,
+  setAuthToken: (token: string) => void,
 ) => {
   try {
     const response: AxiosResponse = await root.post(
@@ -20,10 +20,10 @@ export const loginUser = async (
     );
 
     const status = [200, 201].includes(response.status);
-    const dataResponse: ResponseData<TokenResponse> = response.data;
+    const dataResponse: TokenResponse = response.data;
 
     if (status) {
-      await setAuthToken(dataResponse.data.token);
+      setAuthToken(dataResponse.token);
     }
 
     return status;

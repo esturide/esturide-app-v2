@@ -1,10 +1,10 @@
 import React from 'react';
-import ScheduleTravelData from '$libs/types/data/ScheduleTravelData.ts';
+import ScheduleTravelInterface from '$libs/types/interface/ScheduleTravelInterface.ts';
 import UserInput from '@components/input/UserInput.tsx';
 import MapRouteCard from '@components/cards/resources/MapRouteCard.tsx';
 
 type Props = {
-  schedule: ScheduleTravelData;
+  schedule: ScheduleTravelInterface;
   showMap?: boolean;
 };
 
