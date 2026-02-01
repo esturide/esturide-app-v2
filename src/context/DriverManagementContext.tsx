@@ -10,8 +10,6 @@ import {
   ScheduleOption,
   updateCurrentSchedule,
 } from '$libs/request/schedule.ts';
-import { useSessionManagementProvider } from '@/context/SessionManagementContext.tsx';
-import { useWatchLivePositionContext } from '@/context/WatchLivePositionContext.tsx';
 import { getRequestRoot } from '$libs/request/api.ts';
 
 interface Props {

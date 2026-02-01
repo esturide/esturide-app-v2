@@ -1,4 +1,3 @@
-import { IconType } from 'react-icons';
 import { To } from 'react-router-dom';
 
 interface LinkProps {

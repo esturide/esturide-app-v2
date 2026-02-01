@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from 'react';
-import BubbleAnimatedBackground from '@layouts/view/animated/BubbleAnimatedBackground.tsx';
 
 import '@/styles/background/animated/bubble-dark-animation.scss';
 import GradientAnimatedBackground from '@layouts/view/animated/GradientAnimatedBackground.tsx';

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useRouteError, isRouteErrorResponse } from 'react-router-dom';
+import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 import GradientAnimatedBackground from '@layouts/view/animated/GradientAnimatedBackground.tsx';
 import FooterPresentation from '@components/resources/FooterPresentation.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';

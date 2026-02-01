@@ -1,7 +1,6 @@
-import React, { useId } from 'react';
+import React from 'react';
 import { IconContext } from 'react-icons';
 import { useLocation } from 'react-router';
-import { useNavigate } from 'react-router-dom';
 import ColorTheme from '$libs/types/Theme.ts';
 import { ItemType } from '@components/navbar/types.ts';
 import NavItem from '@components/navbar/NavItem.tsx';
