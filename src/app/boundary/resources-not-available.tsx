@@ -1,16 +1,16 @@
 import SorryMessage from '@components/resources/SorryMessage.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 
 function ResourcesNotAvailable() {
   return (
-    <MainLayout>
+    <MainResponsiveLayout>
       <SorryMessage
         message={'Este apartado no se encuentra disponible.'}
         title={'Próximamente'}
         shadow
         dark
       />
-    </MainLayout>
+    </MainResponsiveLayout>
   );
 }
 export default ResourcesNotAvailable;

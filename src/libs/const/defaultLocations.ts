@@ -31,7 +31,7 @@ const defaultLocationList: LocationOption[] = [
     },
   },
   {
-    id: 3,
+    id: 2,
     description: 'CUAAD',
     location: {
       lat: 20.73926734516559,
@@ -39,7 +39,7 @@ const defaultLocationList: LocationOption[] = [
     },
   },
   {
-    id: 4,
+    id: 3,
     description: 'CUCSH',
     location: {
       lat: 20.738665021477242,
@@ -47,7 +47,7 @@ const defaultLocationList: LocationOption[] = [
     },
   },
   {
-    id: 5,
+    id: 4,
     description: 'GUGDL',
     location: {
       lat: 20.694282978877933,
@@ -55,7 +55,7 @@ const defaultLocationList: LocationOption[] = [
     },
   },
   {
-    id: 6,
+    id: 5,
     description: 'CUCBA',
     location: {
       lat: 20.747260897834302,
@@ -63,7 +63,7 @@ const defaultLocationList: LocationOption[] = [
     },
   },
   {
-    id: 7,
+    id: 6,
     description: 'CUTLAJO',
     location: {
       lat: 20.465505894192166,
@@ -71,7 +71,7 @@ const defaultLocationList: LocationOption[] = [
     },
   },
   {
-    id: 8,
+    id: 7,
     description: 'CUCEA',
     location: {
       lat: 20.739605446415595,

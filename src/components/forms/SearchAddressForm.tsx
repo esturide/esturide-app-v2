@@ -6,7 +6,7 @@ import { getRequestRoot } from '$libs/request/api.ts';
 import { failureMessage } from '$libs/toast/failure.ts';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import { FaSearch } from 'react-icons/fa';
-import loaderEffect from '$libs/loaderEffect.ts';
+import loaderEffect from '$libs/effects/loaderEffect.ts';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import ScrollLayout from '@layouts/scroll/ScrollLayout.tsx';

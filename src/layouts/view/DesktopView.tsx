@@ -8,12 +8,15 @@ type Props = {
 
 function DesktopView({ children, items }: React.PropsWithChildren<Props>) {
   return (
-    <>
-      <DesktopNavigationBar items={items} />
-      <div className={'pt-16 h-screen max-md:overflow-y-scroll'}>
+    <div className={'flex flex-col'}>
+      <div className={'h-16'}>
+        <DesktopNavigationBar items={items} />
+      </div>
+
+      <div className={'top-16 h-screen max-md:overflow-y-scroll'}>
         {children}
       </div>
-    </>
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useId, useRef, useState } from 'react';
+import React, { useId, useState } from 'react';
 import { FaCheckCircle, FaChevronDown } from 'react-icons/fa';
 import {
   Label,
@@ -49,11 +49,11 @@ function isOptionArray(arr: any[]): arr is StringOption[] {
 }
 
 const SelectOptions: React.FC<Props> = ({
-  name = undefined,
-  label = null,
+  name,
+  label,
   options,
   defaultValue = 0,
-  onSelect = null,
+  onSelect,
   theme = 'teal',
   disabled = false,
 }) => {
@@ -208,7 +208,7 @@ const SelectOptions: React.FC<Props> = ({
             id={id}
             transition
             className={
-              'absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'
+              'absolute z-50 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'
             }
           >
             <AllElements />

@@ -1,24 +1,34 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { IconContext } from 'react-icons';
-import { ItemType } from '@components/navbar/types.ts';
-import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
-import NavItem from '@components/navbar/NavItem.tsx';
+import { useNavigate } from 'react-router-dom';
 import ColorTheme from '$libs/types/Theme.ts';
+import { ItemType } from '@components/navbar/types.ts';
+import NavItem from '@components/navbar/NavItem.tsx';
+import StyleTheme from '$libs/types/Style.ts';
+
+import '@styles/navbar/navbar-mobile-animated-background.scss';
 
 interface NavigationBarProps {
   items: ItemType[];
   theme?: ColorTheme;
+  style?: StyleTheme;
+  dark?: boolean;
 }
 
-const MobileNavigationBar: React.FC<NavigationBarProps> = ({
-  items,
-  theme = 'teal',
-}) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const currentPath = location.pathname;
+type CurrentNavProps = {
+  defaultPath: string;
+  index: number;
+  item: ItemType;
+  theme: ColorTheme;
+};
 
+const CurrentNavItem: React.FC<CurrentNavProps> = ({
+  defaultPath,
+  index,
+  item,
+  theme,
+}) => {
   const handleItemClick = async (item: ItemType) => {
     if (item.action) {
       await item.action();
@@ -26,32 +36,60 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
   };
 
   return (
-    <nav
-      className={'fixed bottom-0 w-full bg-white text-white shadow-md'}
-      role="navigation"
+    <NavItem
+      key={index}
+      item={item}
+      isActive={defaultPath === item.href}
+      onClick={async () => {
+        await handleItemClick(item);
+      }}
+      color={theme}
+    />
+  );
+};
+
+const MobileNavigationBar: React.FC<NavigationBarProps> = ({
+  items,
+  theme = 'teal',
+  style = 'solid',
+  dark = false,
+}) => {
+  const location = useLocation();
+  const defaultPath = location.pathname;
+
+  const styleThemes = {
+    glass:
+      'pt-3.5 pb-2.5 mx-4 navbar-mobile-animated-background bg-gradient-to-r from-gray-700/10 via-gray-100/85 to-gray-200/25 rounded-4xl z-50 text-gray-900 backdrop-blur-xs shadow-xl inset-shadow-sm',
+    solid:
+      'pt-3.5 pb-2.5 mx-4 bg-white rounded-4xl z-50 text-gray-900 inset-shadow-sm',
+  };
+
+  return (
+    <div
+      className={
+        'fixed bottom-4 left-1/2 transform -translate-x-1/2 w-full sm:w-2/3'
+      }
     >
-      <IconContext.Provider
-        value={{
-          size: '1.5em',
-          color: theme === 'teal' ? '#4CAF50' : '#8E24AA',
-        }}
-      >
-        <ul className="flex justify-between items-center mt-5">
-          {items.map((item, index) => (
-            <NavItem
-              key={index}
-              item={item}
-              isActive={item.href == currentPath}
-              onClick={async () => {
-                await handleItemClick(item);
-                navigate(item.href);
-              }}
-              color={theme}
-            />
-          ))}
-        </ul>
-      </IconContext.Provider>
-    </nav>
+      <nav className={styleThemes[style]} role="navigation">
+        <IconContext.Provider
+          value={{
+            size: '1.5em',
+            color: theme === 'teal' ? '#4CAF50' : '#8E24AA',
+          }}
+        >
+          <ul className={'flex justify-between items-center'}>
+            {items.map((item, index) => (
+              <CurrentNavItem
+                defaultPath={defaultPath}
+                index={index}
+                item={item}
+                theme={theme}
+              />
+            ))}
+          </ul>
+        </IconContext.Provider>
+      </nav>
+    </div>
   );
 };
 

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import { FaBackspace, FaExchangeAlt, FaSearch } from 'react-icons/fa';
-import OptionButton from '@components/buttons/OptionButton.tsx';
+import MediumButton from '@components/buttons/MediumButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
 import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 import ColorTheme from '$libs/types/Theme.ts';
 import defaultLocationList, {
   searchCurrentItem,
 } from '$libs/const/defaultLocations.ts';
+import { failureMessage } from '$libs/toast/failure.ts';
 
 type Props = {
   theme: ColorTheme;
@@ -27,6 +28,7 @@ function ScheduleForm({
   const [currentIndex, setCurrentIndex] = useState(0);
   const [address, setAddress] = useState('');
   const [addressOption, setAddressOption] = useState('');
+  const [validAddress, setValidAddress] = useState(true);
 
   const [swapTravelStatus, setSwapTravelStatus] = useState(false);
 
@@ -72,6 +74,7 @@ function ScheduleForm({
         onChange={async (address: string) => {
           setAddress(address);
         }}
+        valid={validAddress}
       />
     );
   };
@@ -97,10 +100,15 @@ function ScheduleForm({
 
   const onScheduleClick = async () => {
     if (onSchedule) {
-      if (swapTravelStatus) {
-        await onSchedule(address, addressOption);
+      if (address.length > 3) {
+        if (swapTravelStatus) {
+          await onSchedule(address, addressOption);
+        } else {
+          await onSchedule(addressOption, address);
+        }
       } else {
-        await onSchedule(addressOption, address);
+        failureMessage('Direccion invalida.');
+        setValidAddress(false);
       }
     }
   };
@@ -136,7 +144,7 @@ function ScheduleForm({
       <TravelOptions />
       <div className={'flex flex-row gap-2 items-center justify-center'}>
         <CancelButton />
-        <OptionButton
+        <MediumButton
           label={'Agendar'}
           theme={theme}
           onClick={onScheduleClick}

@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import { GrLogin, GrUserNew } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
 import { randomIntFromInterval, shuffleArray } from '$libs/random.ts';
-import { useUserManager } from '@/context/UserManager.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import Welcome from '@components/resources/Welcome.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
-import SimpleCarPresentation from '@components/cards/SimpleCarPresentation.tsx';
 
-import CommunityPeople from '@assets/images/resources/community-university.jpeg';
-import TravelCar from '@assets/images/resources/travel-car.jpg';
-import TravelWoman from '@assets/images/resources/travel-woman.jpg';
+import SimpleCarPresentation from '@components/cards/SimpleCarPresentation.tsx';
+import CommunityPeople from '@assets/images/resources/university-community.webp';
+import TravelCar from '@assets/images/resources/travel-car.webp';
+import TravelWoman from '@assets/images/resources/woman-traveling.webp';
 
 function UserIndex() {
-  const { isAuthenticated } = useUserManager();
+  const { isAuthenticated } = useUserManagerContext();
   const navigate = useNavigate();
 
   useEffect(() => {}, [isAuthenticated, navigate]);
@@ -150,13 +150,13 @@ function UserIndex() {
   };
 
   return (
-    <MainLayout>
+    <MainResponsiveLayout>
       <div className={'flex flex-col gap-8'}>
         <WelcomeMessage />
         <BenefitsCards />
         <ConclusionMessage />
       </div>
-    </MainLayout>
+    </MainResponsiveLayout>
   );
 }
 
