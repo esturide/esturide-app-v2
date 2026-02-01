@@ -1,10 +1,14 @@
-import React, { createContext, PropsWithChildren, useContext } from 'react';
+import React, {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+} from 'react';
 import { atom, useAtom } from 'jotai';
 
 const defaultGoogleAPIKey = import.meta.env.VITE_GOOGLE_API_KEY;
 const defaultGoogleManagementMapsAPIKey = import.meta.env
   .VITE_GOOGLE_MANAGEMENT_API;
-const defaultGoogleMapStyle = import.meta.env.VITE_GOOGLE_MAP_STYLE;
 
 interface ServiceApiProps {
   googleApiKey: string;
@@ -26,6 +30,11 @@ export const ServiceApiKeyProvider: React.FC<PropsWithChildren> = ({
 }) => {
   const [googleApiKey] = useAtom(googleMapApiKeyAtom);
   const [googleManagementMapApiKey] = useAtom(googleManagementMapsApiKeyAtom);
+
+  useEffect(() => {
+    console.log(`Google API Key: ${googleApiKey}`);
+    console.log(`Google Map API Key: ${googleManagementMapApiKey}`);
+  }, []);
 
   const props: ServiceApiProps = {
     googleApiKey: googleApiKey,
