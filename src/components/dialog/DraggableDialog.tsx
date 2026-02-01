@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import StyleTheme from '$libs/types/Style.ts';
 

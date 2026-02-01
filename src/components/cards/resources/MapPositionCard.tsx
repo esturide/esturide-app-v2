@@ -14,7 +14,7 @@ type Props = {
 };
 
 const MapPositionCard = ({ position, style, readonly = false }: Props) => {
-  const { googleApiKey, googleManagementMapApiKey } = useServiceApiManager();
+  const { googleApiKey } = useServiceApiManager();
 
   return (
     <div
@@ -24,7 +24,6 @@ const MapPositionCard = ({ position, style, readonly = false }: Props) => {
     >
       <GoogleMapView
         apiKey={googleApiKey}
-        mapId={googleManagementMapApiKey}
         zoom={15}
         center={{
           lat: position.latitude,

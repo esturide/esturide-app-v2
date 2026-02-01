@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useRef, useId } from 'react';
+import React, { PropsWithChildren, useId, useRef } from 'react';
 import { IconType } from 'react-icons';
 import { FaCircleCheck } from 'react-icons/fa6';
 import ColorTheme from '$libs/types/Theme.ts';

@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
 import UserDataLogin from '$libs/request/response/UserDataLogin.ts';
-import { ResponseData } from '$libs/request/response';
 import TokenResponse from '$libs/request/response/TokenResponse.ts';
 
 export const loginUser = async (
