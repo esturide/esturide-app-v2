@@ -34,7 +34,7 @@ function CurrentScheduleTravel() {
     const { watchPosition } = useWatchLivePositionContext();
     const { restoreCurrentTravel, currentSchedule } =
       useScheduleTravelManagementContext();
-    const { googleApiKey, googleManagementMapApiKey } = useServiceApiManager();
+    const { googleApiKey } = useServiceApiManager();
 
     useEffect(() => {
       const intervalId = setInterval(async () => {
@@ -63,7 +63,6 @@ function CurrentScheduleTravel() {
           lng: watchPosition.longitude,
         }}
         apiKey={googleApiKey}
-        mapId={googleManagementMapApiKey}
         zoom={3}
         style={{
           height: '100vh',
