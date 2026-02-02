@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
 
-const baseURL = 'https://api.esturide.com';
+const baseURL = import.meta.env.VITE_API_URL;
 
 const requestRoot = axios.create({
   baseURL: baseURL,

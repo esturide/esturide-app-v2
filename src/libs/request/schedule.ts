@@ -20,14 +20,15 @@ export const requestScheduleTravel = async (
     origin: request.origin,
     destination: request.destination,
     price: Math.ceil(request.price),
-    genderFilter: request.genderFilter,
-    startDate: request.startDate.toISOString(),
+    genders: request.genderFilter,
+    starting: request.startDate.toISOString(),
     returnHome: request.returnHome,
+    waypoints: [''],
   };
 
   try {
     const response: AxiosResponse = await root.post(
-      `/schedule/`,
+      `/travel/`,
       dataRequest,
       getRequestConfig(),
     );
@@ -48,7 +49,7 @@ export const requestCurrentScheduleTravel = async (
 ) => {
   try {
     const response: AxiosResponse = await root.get(
-      `/schedule/current`,
+      `/travel/current`,
       getRequestConfig(),
     );
 
@@ -80,7 +81,7 @@ export const updateCurrentSchedule = async (
 ) => {
   try {
     const response: AxiosResponse = await root.post(
-      `/schedule/update`,
+      `/travel/update`,
       {
         terminate: request.terminate,
         cancel: request.cancel,

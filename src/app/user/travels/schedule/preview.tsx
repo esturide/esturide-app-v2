@@ -22,7 +22,7 @@ function PreviewScheduleTravel() {
   const { state } = useLocation();
   const { addressTo, addressFrom } = state as LocationAddressParams;
 
-  const { googleApiKey } = useServiceApiManager();
+  const { googleApiKey, googleMapsID } = useServiceApiManager();
   const { isMobile } = useDeviceManagement();
 
   const catchNotFoundRoute = () => {
@@ -113,6 +113,7 @@ function PreviewScheduleTravel() {
     <div className={'flex flex-col h-full'}>
       <GoogleMapView
         apiKey={googleApiKey}
+        mapId={googleMapsID}
         zoom={1}
         center={{
           lat: 20.566646720860327,

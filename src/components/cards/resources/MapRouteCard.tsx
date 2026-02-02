@@ -16,7 +16,7 @@ type Props = {
 };
 
 function MapRouteCard({ defaultCenter, addressFrom, addressTo, style }: Props) {
-  const { googleApiKey } = useServiceApiManager();
+  const { googleApiKey, googleMapsID } = useServiceApiManager();
 
   return (
     <div
@@ -30,7 +30,7 @@ function MapRouteCard({ defaultCenter, addressFrom, addressTo, style }: Props) {
           lat: defaultCenter.latitude,
           lng: defaultCenter.longitude,
         }}
-        mapId={googleApiKey}
+        mapId={googleMapsID}
         zoom={10}
         style={style}
       >
