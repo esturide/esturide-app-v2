@@ -20,6 +20,7 @@ import {
 
 function UserTravels() {
   const navigate = useNavigate();
+  const { authToken } = useUserManagerContext();
 
   const { theme } = useUserTheme();
 
@@ -132,8 +133,8 @@ function UserTravels() {
     <MainResponsiveLayout>
       <SocketManagerProvider
         namespace={'travel'}
-        token={'my-secret-token'}
-        eventListener={['greetings']}
+        token={authToken}
+        eventListener={['ping']}
       >
         <ViewRole />
       </SocketManagerProvider>

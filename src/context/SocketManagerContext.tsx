@@ -63,11 +63,7 @@ export function SocketManagerProvider({
     });
 
     for (const event of eventListener) {
-      console.log(`Listener on: ${event}`);
-
       socketRef.current.on(event, data => {
-        console.log(`Message received from ${event}`);
-
         setMessages(prev => [
           ...prev,
           {
@@ -106,7 +102,7 @@ export function useSocket() {
   const context = useContext(SocketManagerContext);
 
   if (!context) {
-    throw new Error('useSocket debe usarse dentro de SocketProvider');
+    throw new Error('useSocket must be used within SocketProvider.');
   }
 
   return context;
