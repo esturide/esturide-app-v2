@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { io } from 'socket.io-client';
+
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import MediumButton from '@components/buttons/MediumButton.tsx';
@@ -11,6 +13,10 @@ import useLazyEffect from '$libs/effects/lazyEffect.ts';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
+import {
+  SocketManagerProvider,
+  useSocket,
+} from '@/context/SocketManagerContext.tsx';
 
 function UserTravels() {
   const navigate = useNavigate();
@@ -67,6 +73,21 @@ function UserTravels() {
   const ViewRole = () => {
     const { role, refreshRole } = useUserManagerContext();
     const { updateCurrentSession } = useSessionManagementProvider();
+    const { connected, messages, sendMessage } = useSocket();
+
+    useEffect(() => {
+      console.log(`Socket status: ${connected}`);
+
+      if (connected) {
+        sendMessage('hello-world', 'Hello world!');
+      }
+    }, [connected]);
+
+    useEffect(() => {
+      while (messages.length > 0) {
+        console.log(messages.pop());
+      }
+    }, [connected, messages]);
 
     const { loading } = useLazyEffect(async () => {
       const userSession = await updateCurrentSession();
@@ -109,7 +130,13 @@ function UserTravels() {
 
   return (
     <MainResponsiveLayout>
-      <ViewRole />
+      <SocketManagerProvider
+        namespace={'travel'}
+        token={'my-secret-token'}
+        eventListener={['greetings']}
+      >
+        <ViewRole />
+      </SocketManagerProvider>
     </MainResponsiveLayout>
   );
 }

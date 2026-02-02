@@ -49,7 +49,7 @@ export const requestCurrentScheduleTravel = async (
 ) => {
   try {
     const response: AxiosResponse = await root.get(
-      `/travel/current`,
+      `/travel/current/`,
       getRequestConfig(),
     );
 

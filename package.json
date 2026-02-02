@@ -15,7 +15,7 @@
   "dependencies": {
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@headlessui/react": "^2.2.0",
-    "@react-google-maps/api": "^2.20.7",
+    "@react-google-maps/api": "^2.20.8",
     "@rollup/plugin-terser": "^0.4.4",
     "@tailwindcss/postcss": "^4.0.17",
     "@tailwindcss/vite": "^4.0.17",
@@ -59,6 +59,8 @@
     "react-router-dom": "^7.4.1",
     "react-time-picker": "^8.0.2",
     "react-toastify": "^11.0.5",
+    "react-use": "^17.6.0",
+    "socket.io-client": "^4.8.3",
     "styled-components": "^6.1.19",
     "vite-plugin-compression": "^0.5.1"
   },
