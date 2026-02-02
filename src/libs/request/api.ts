@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
 import { baseURL } from '$libs/const/defaultURL.ts';
 
 const requestRoot = axios.create({
-  baseURL: `https://${baseURL}/`,
+  baseURL: baseURL,
 });
 
 const requestConfig: AxiosRequestConfig = {

@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { io, Socket } from 'socket.io-client';
-import { baseURL } from '$libs/const/defaultURL.ts';
+import { baseSocket } from '$libs/const/defaultURL.ts';
 
 interface DataEventMessage {
   from: string;
@@ -41,14 +41,14 @@ export function SocketManagerProvider({
   eventListener = [],
 }: PropsWithChildren<SocketProviderProps>) {
   const socketRef = useRef<Socket | null>(null);
-  const defaultURL = url ? url : baseURL;
+  const defaultURL = url ? url : baseSocket;
   const defaultNamespace = namespace ? namespace : '';
 
   const [connected, setConnected] = useState(false);
   const [messages, setMessages] = useState<DataEventMessage[]>([]);
 
   useEffect(() => {
-    socketRef.current = io(`ws://${defaultURL}/${defaultNamespace}`, {
+    socketRef.current = io(`${defaultURL}/${defaultNamespace}`, {
       auth: {
         token: token,
       },
