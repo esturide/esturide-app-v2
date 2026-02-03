@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
-
-const baseURL = import.meta.env.VITE_API_URL;
+import { baseURL } from '$libs/const/defaultURL.ts';
 
 const requestRoot = axios.create({
   baseURL: baseURL,

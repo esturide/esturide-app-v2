@@ -24,6 +24,7 @@ interface UserManagerProps {
   refresh: () => Promise<boolean>;
   refreshRole: (role: UserRole) => Promise<boolean>;
   role: UserRole;
+  authToken: string;
 }
 
 const storage = createCookieStorage<string>({
@@ -51,6 +52,7 @@ const UserManagerContext = createContext<UserManagerProps>({
     return false;
   },
   role: 'not-verified',
+  authToken: '',
 });
 
 export const UserManagementProvider: React.FC<PropsWithChildren> = ({
@@ -146,6 +148,7 @@ export const UserManagementProvider: React.FC<PropsWithChildren> = ({
     refresh: refresh,
     refreshRole: refreshRole,
     role: currentRole,
+    authToken: authTokenCookiesStorage,
   };
 
   return (

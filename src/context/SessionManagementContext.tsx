@@ -1,44 +1,27 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-import {
-  checkRideAvailable,
-  checkScheduleAvailable,
-} from '$libs/request/check.ts';
+import { findCurrentSession } from '$libs/request/check.ts';
 import { getRequestRoot } from '$libs/request/api.ts';
-
-type SessionType = {
-  readonly scheduleFound: boolean;
-  readonly rideFound: boolean;
-};
+import CurrentSessionStatus from '$libs/types/CurrentSessionStatus.ts';
 
 interface Props {
-  updateCurrentSession: () => Promise<SessionType>;
+  refreshCurrentSession: () => Promise<CurrentSessionStatus>;
 }
 
 const SessionManagementContext = createContext<Props>({
-  updateCurrentSession: async () => {
-    return { scheduleFound: false, rideFound: false };
-  },
+  refreshCurrentSession: async () => 'free',
 });
 
 export const SessionManagementProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const requestCurrentSession = async () => {
-    const scheduleFound = await checkScheduleAvailable(getRequestRoot());
-    const rideFound = await checkRideAvailable(getRequestRoot());
-
-    const currentSession: SessionType = {
-      scheduleFound: scheduleFound,
-      rideFound: rideFound,
-    };
-
-    return currentSession;
+    return await findCurrentSession(getRequestRoot());
   };
 
   return (
     <SessionManagementContext.Provider
       value={{
-        updateCurrentSession: requestCurrentSession,
+        refreshCurrentSession: requestCurrentSession,
       }}
     >
       {children}

@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
-import { ResponseMessage } from '$libs/request/response';
+import { ResponseData, ResponseMessage } from '$libs/request/response';
+import CurrentSessionStatus from '$libs/types/CurrentSessionStatus.ts';
 
 export const checkRideAvailable = async (root: AxiosInstance) => {
   try {
@@ -48,4 +49,28 @@ export const checkScheduleAvailable = async (root: AxiosInstance) => {
   }
 
   return false;
+};
+
+export const findCurrentSession = async (root: AxiosInstance) => {
+  try {
+    const response: AxiosResponse = await root.get(
+      `/find/status`,
+      getRequestConfig(),
+    );
+
+    const status = [200, 201].includes(response.status);
+    const dataResponse: ResponseData<CurrentSessionStatus> = response.data;
+
+    if (status) {
+      return dataResponse.data as CurrentSessionStatus;
+    }
+  } catch (e) {
+    if (axios.isAxiosError(e)) {
+      return 'free';
+    }
+
+    throw e;
+  }
+
+  return 'free';
 };

@@ -8,7 +8,7 @@ const PassengerManagement = createContext<Props>({});
 export const PassengerManagementProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const { updateCurrentSession } = useSessionManagementProvider();
+  const { refreshCurrentSession } = useSessionManagementProvider();
 
   return (
     <PassengerManagement.Provider value={{}}>
