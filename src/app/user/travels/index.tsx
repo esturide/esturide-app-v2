@@ -73,7 +73,7 @@ function UserTravels() {
 
   const ViewRole = () => {
     const { role, refreshRole } = useUserManagerContext();
-    const { updateCurrentSession } = useSessionManagementProvider();
+    const { refreshCurrentSession } = useSessionManagementProvider();
     const { connected, messages, sendMessage } = useSocket();
 
     useEffect(() => {
@@ -91,9 +91,9 @@ function UserTravels() {
     }, [connected, messages]);
 
     const { loading } = useLazyEffect(async () => {
-      const userSession = await updateCurrentSession();
+      const userSession = await refreshCurrentSession();
 
-      if (userSession.scheduleFound) {
+      if (userSession === 'travel') {
         if (role !== 'driver') {
           failureMessage('You have a travel pending.');
 
@@ -101,7 +101,7 @@ function UserTravels() {
         }
 
         navigate('/home/travels/schedule/current');
-      } else if (userSession.rideFound) {
+      } else if (userSession === 'ride') {
         if (role !== 'passenger') {
           failureMessage('You have a pending ride.');
 

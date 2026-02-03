@@ -8,12 +8,12 @@ import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 const RecordLocationLayout = ({ children }: React.PropsWithChildren) => {
   const { isAuthenticated } = useUserManagerContext();
   const { watchPosition } = useWatchLivePositionContext();
-  const { updateCurrentSession } = useSessionManagementProvider();
+  const { refreshCurrentSession } = useSessionManagementProvider();
 
   useEffect(() => {
     const request = async () => {
       if (isAuthenticated) {
-        const userSession = await updateCurrentSession();
+        const userSession = await refreshCurrentSession();
 
         if (userSession.rideFound || userSession.scheduleFound) {
           await recordCurrentLocation(getRequestRoot(), watchPosition);
