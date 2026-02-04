@@ -25,7 +25,7 @@ import { MdOutlineAlarmOn } from 'react-icons/md';
 type Props = {
   theme: ColorTheme;
   onSwap?: (state: boolean) => void;
-  onSearchRequest?: (addressFrom: string, addressTo: string) => Promise<void>;
+  onRideRequest?: (addressFrom: string, addressTo: string, exiting: Date) => Promise<void>;
   onCancel?: () => void;
   homeAddress?: string;
 };
@@ -39,7 +39,7 @@ export interface RideTravelInput {
 function RideForm({
   theme,
   onSwap,
-  onSearchRequest,
+  onRideRequest,
   onCancel,
   homeAddress,
 }: Props) {
@@ -59,7 +59,7 @@ function RideForm({
     }
   }, [swapTravelStatus]);
 
-  const ScheduleDateTime = () => {
+  const RideDateTime = () => {
     const defaultToleranceMinutes = 3;
 
     const [scheduleDateTime, setScheduleDateTime] = useState<Date | null>(null);
@@ -161,7 +161,7 @@ function RideForm({
   };
 
   const onSearchClick = async () => {
-    if (!onSearchRequest) {
+    if (!onRideRequest) {
       return;
     }
 
@@ -169,10 +169,12 @@ function RideForm({
       return;
     }
 
+    const exiting = scheduleTravelDataRef.current.dateTime;
+
     if (swapTravelStatus) {
-      await onSearchRequest(addressOption, homeAddress);
+      await onRideRequest(addressOption, homeAddress, exiting);
     } else {
-      await onSearchRequest(homeAddress, addressOption);
+      await onRideRequest(homeAddress, addressOption, exiting);
     }
   };
 
@@ -244,7 +246,7 @@ function RideForm({
         }
       >
         <TravelOptions />
-        <ScheduleDateTime />
+        <RideDateTime />
       </div>
 
       <div className={'flex flex-row gap-2 items-center justify-center'}>

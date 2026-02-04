@@ -8,7 +8,7 @@ import ScheduleTravelForm, {
 } from '@components/forms/ScheduleTravelForm.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
 import {
-  LocationAddressParams,
+  ScheduleLocationAddressParams,
   useScheduleTravelManagementContext,
 } from '@/context/ScheduleTravelManagementContext.tsx';
 import Gender from '$libs/types/Gender.ts';
@@ -19,7 +19,7 @@ import PartialScreenContainer from '@layouts/container/PartialScreenContainer.ts
 function ScheduleConfig() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { addressTo, addressFrom } = state as LocationAddressParams;
+  const { addressTo, addressFrom } = state as ScheduleLocationAddressParams;
 
   const { scheduleTravel, restoreCurrentTravel } =
     useScheduleTravelManagementContext();

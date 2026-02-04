@@ -10,9 +10,13 @@ function RequestRideTravel() {
   const navigate = useNavigate();
   const { theme } = useUserTheme();
 
-  const onSchedule = async (addressFrom: string, addressTo: string) => {
+  const onRideRequest = async (addressFrom: string, addressTo: string, exiting: Date) => {
     navigate('/home/travels/ride/preview', {
-      state: { addressTo: addressTo, addressFrom: addressFrom },
+      state: {
+        addressTo: addressTo,
+        addressFrom: addressFrom,
+        exitingTime: exiting,
+      },
     });
   };
 
@@ -27,7 +31,7 @@ function RequestRideTravel() {
 
           <RideForm
             theme={theme}
-            onSearchRequest={onSchedule}
+            onRideRequest={onRideRequest}
             onCancel={() => navigate('/home/travels')}
             homeAddress={'Av zoquipan 1109'}
           />

@@ -13,7 +13,7 @@ import DateTimePickerInput from '@components/input/DateTimePickerInput.tsx';
 import { MdOutlineAlarmOn } from 'react-icons/md';
 import { failureMessage } from '$libs/toast/failure.ts';
 import Seat from '$libs/types/Seats.ts';
-import { LocationAddressParams } from '@/context/ScheduleTravelManagementContext.tsx';
+import { ScheduleLocationAddressParams } from '@/context/ScheduleTravelManagementContext.tsx';
 
 interface GenderOptionFilter {
   female: boolean;
@@ -30,7 +30,7 @@ export interface ScheduleTravelInput {
 }
 
 type Props = {
-  currentSchedule: LocationAddressParams;
+  currentSchedule: ScheduleLocationAddressParams;
   onCancel?: () => void;
   onSchedule?: (current: ScheduleTravelInput) => Promise<void>;
   theme?: ColorTheme;

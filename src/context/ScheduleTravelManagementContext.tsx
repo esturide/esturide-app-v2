@@ -19,7 +19,7 @@ import LocationAddress from '$libs/types/LocationAddress.ts';
 import ScheduleTravelInterface from '$libs/types/interface/ScheduleTravelInterface.ts';
 import { recordCurrentLocation } from '$libs/request/record.ts';
 
-export interface LocationAddressParams {
+export interface ScheduleLocationAddressParams {
   readonly addressFrom: string;
   readonly addressTo: string;
 }

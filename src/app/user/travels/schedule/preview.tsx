@@ -6,7 +6,7 @@ import { TbCancel } from 'react-icons/tb';
 
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
-import { LocationAddressParams } from '@/context/ScheduleTravelManagementContext.tsx';
+import { ScheduleLocationAddressParams } from '@/context/ScheduleTravelManagementContext.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
 import GoogleMapRouting from '@components/map/google/GoogleMapRouting.tsx';
@@ -20,7 +20,7 @@ import DraggableDialogImprovement from '@components/dialog/DraggableDialogImprov
 function PreviewScheduleTravel() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { addressTo, addressFrom } = state as LocationAddressParams;
+  const { addressTo, addressFrom } = state as ScheduleLocationAddressParams;
 
   const { googleApiKey, googleMapsID } = useServiceApiManager();
   const { isMobile } = useDeviceManagement();

@@ -4,6 +4,7 @@ import { Navigate } from 'react-router';
 import { failureMessage } from '$libs/toast/failure.ts';
 import { PassengerManagementProvider } from '@/context/PassengerManagementContext.tsx';
 import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
+import { RideTravelManagementProvider } from '@/context/RideTravelManagmentContext.tsx';
 
 function RideLayout() {
   const { role } = useUserManagerContext();
@@ -21,9 +22,11 @@ function RideLayout() {
   }
 
   return (
-    <PassengerManagementProvider>
-      <Outlet />
-    </PassengerManagementProvider>
+    <RideTravelManagementProvider>
+      <PassengerManagementProvider>
+        <Outlet />
+      </PassengerManagementProvider>
+    </RideTravelManagementProvider>
   );
 }
 

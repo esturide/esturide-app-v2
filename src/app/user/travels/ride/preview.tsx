@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router';
-import { LocationAddressParams } from '@/context/ScheduleTravelManagementContext.tsx';
+import { ScheduleLocationAddressParams } from '@/context/ScheduleTravelManagementContext.tsx';
 import { useServiceApiManager } from '@/context/ServiceApiKeyManager.tsx';
 import { useDeviceManagement } from '@/context/DeviceManagment.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
@@ -15,14 +15,19 @@ import DraggableDialogImprovement from '@components/dialog/DraggableDialogImprov
 import FloatingDialog from '@components/dialog/FloatingDialog.tsx';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
 import GoogleMapRouting from '@components/map/google/GoogleMapRouting.tsx';
+import {
+  RideLocationAddressParams,
+  useRideTravelManagementContext,
+} from '@/context/RideTravelManagmentContext.tsx';
 
 function PreviewRideTravel() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { addressTo, addressFrom } = state as LocationAddressParams;
+  const { addressTo, addressFrom, exitingTime } = state as RideLocationAddressParams;
 
   const { googleApiKey, googleMapsID } = useServiceApiManager();
   const { isMobile } = useDeviceManagement();
+  const { requestRide } = useRideTravelManagementContext();
 
   const catchNotFoundRoute = () => {
     failureMessage('Could not find a route.');
@@ -53,9 +58,11 @@ function PreviewRideTravel() {
         theme={'indigo'}
         label={'Confirmar'}
         onClick={async () => {
-          navigate('/home/travels/ride/match', {
-            state: { addressTo: addressTo, addressFrom: addressFrom },
-          });
+          const status = await requestRide(addressTo, addressFrom, exitingTime);
+
+          if(status) {
+            navigate('/home/travels/ride/match');
+          }
         }}
       />
     );

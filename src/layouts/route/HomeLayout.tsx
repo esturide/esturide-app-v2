@@ -58,11 +58,9 @@ const HomeLayout = () => {
     <ResponsiveLayout items={items}>
       <UserProfileProvider>
         <SessionManagementProvider>
-          <ScheduleTravelManagementProvider>
-            <RecordLocationLayout>
-              <Outlet />
-            </RecordLocationLayout>
-          </ScheduleTravelManagementProvider>
+          <RecordLocationLayout>
+            <Outlet />
+          </RecordLocationLayout>
         </SessionManagementProvider>
       </UserProfileProvider>
     </ResponsiveLayout>
