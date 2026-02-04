@@ -56,17 +56,19 @@ function ErrorPage() {
 
   return (
     <GradientAnimatedBackground>
-      <div className={'pt-16 h-screen max-md:overflow-y-scroll'}>
+      <div className={'pt-auto h-screen max-md:overflow-y-scroll'}>
         <MainResponsiveLayout>
           <div
             className={
-              'flex flex-col gap-2 bg-white rounded-lg px-6 py-8 shadow-xl inset-shadow-sm'
+              'flex flex-col gap-2 bg-white rounded-lg px-6 py-4 shadow-xl inset-shadow-sm'
             }
           >
             <ShowMessage />
 
             <div
-              className={'flex flex-row justify-between items-stretch gap-2'}
+              className={
+                'flex h-full flex-row justify-between items-stretch gap-2'
+              }
             >
               <ButtonLink label={'Regresar'} to={'/'} theme={'gray'} />
               <ButtonLink
@@ -78,7 +80,6 @@ function ErrorPage() {
           </div>
         </MainResponsiveLayout>
       </div>
-      <FooterPresentation />
     </GradientAnimatedBackground>
   );
 }
