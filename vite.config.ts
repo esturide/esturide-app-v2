@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 import * as path from 'path';
 import staticAssetsPlugin from 'vite-static-assets-plugin';
+import { qrcode } from 'vite-plugin-qrcode';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -26,6 +27,8 @@ export default defineConfig({
   },
 
   plugins: [
+    qrcode(),
+
     tailwindcss(),
 
     react(),
@@ -92,5 +95,13 @@ export default defineConfig({
   build: {
     target: 'ES2024',
     minify: 'esbuild',
+  },
+
+  server: {
+    host: true, // Set host to true to make the server accessible over the local network
+    // Optional: set a custom port
+    // port: 3000,
+    // Optional: open the browser automatically
+    // open: true,
   },
 });

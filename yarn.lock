@@ -8881,10 +8881,10 @@ vite-plugin-pwa@^1.0.2:
     workbox-build "^7.3.0"
     workbox-window "^7.3.0"
 
-vite-plugin-qrcode@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.npmjs.org/vite-plugin-qrcode/-/vite-plugin-qrcode-0.2.4.tgz"
-  integrity sha512-XFNNSCTXdxCZFJrVVJlwFD6yk3jhf14xDFImI9y34FpIcRPjGcdmXXZ6V8YO6LUisB+n5AMbYITe2J7rOxwhmA==
+vite-plugin-qrcode@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/vite-plugin-qrcode/-/vite-plugin-qrcode-0.3.0.tgz#fb8b0e62945aae808be7c1aa73afacfac2d9ee0a"
+  integrity sha512-tCsN3ckHmFs9vRyFwdNdmlMzzt8iX7hZQrMMOhIIpu8SchfHgA78TIGBfeRnXARBo71qBPC7+O2rgMqPsOdCzg==
   dependencies:
     qrcode-terminal "^0.12.0"
 
