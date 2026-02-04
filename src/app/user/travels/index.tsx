@@ -73,7 +73,6 @@ function UserTravels() {
   const ViewRole = () => {
     const { role, refreshRole } = useUserManagerContext();
     const { refreshCurrentSession } = useSessionManagementProvider();
-    const { connected, messages, sendMessage } = useSocket();
 
     const { loading } = useLazyEffect(async () => {
       const userSession = await refreshCurrentSession();
