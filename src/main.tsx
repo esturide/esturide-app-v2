@@ -39,6 +39,7 @@ import { WatchLivePositionProvider } from '@/context/WatchLivePositionContext.ts
 import '@/index.css';
 import { UserManagementProvider } from '@/context/UserManagementContext.tsx';
 import PreviewRideTravel from '~/user/travels/ride/preview.tsx';
+import MatchRideTravel from '~/user/travels/ride/match.tsx';
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
               {
                 path: 'preview',
                 element: <PreviewRideTravel />,
+              },
+              {
+                path: 'match',
+                element: <MatchRideTravel />,
               },
             ],
           },

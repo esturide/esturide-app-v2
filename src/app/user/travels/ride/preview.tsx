@@ -53,7 +53,7 @@ function PreviewRideTravel() {
         theme={'indigo'}
         label={'Confirmar'}
         onClick={async () => {
-          navigate('/home/travels/ride/config', {
+          navigate('/home/travels/ride/match', {
             state: { addressTo: addressTo, addressFrom: addressFrom },
           });
         }}
