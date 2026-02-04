@@ -34,8 +34,6 @@ function RequestRideTravel() {
 
   const onSchedule = async (addressFrom: string, addressTo: string) => {};
 
-  const elements = [{}];
-
   return (
     <MainResponsiveLayout>
       <TravelMessage
