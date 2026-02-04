@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
 import {
   FaBackspace,
@@ -17,23 +17,110 @@ import defaultLocationList, {
 import LineElementList, {
   LineItem,
 } from '@components/resources/LineElementList.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
+import TravelMessage from '@components/resources/message/TravelMessage.tsx';
+import { useNavigate } from 'react-router-dom';
+import { failureMessage } from '$libs/toast/failure.ts';
+import HeaderText from '@components/text/HeaderText.tsx';
+import DateTimePickerInput from '@components/input/DateTimePickerInput.tsx';
+import { MdOutlineAlarmOn } from 'react-icons/md';
 
 type Props = {
   theme: ColorTheme;
   onSwap?: (state: boolean) => void;
   onSearchRequest?: (addressFrom: string, addressTo: string) => Promise<void>;
   onCancel?: () => void;
+  homeAddress?: string;
 };
 
-function RideForm({ theme, onSwap, onSearchRequest, onCancel }: Props) {
+export interface RideTravelInput {
+  addressFrom: string;
+  addressTo: string;
+  dateTime: Date;
+}
+
+function RideForm({
+  theme,
+  onSwap,
+  onSearchRequest,
+  onCancel,
+  homeAddress,
+}: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [addressOption, setAddressOption] = useState('');
   const [swapTravelStatus, setSwapTravelStatus] = useState(false);
+
+  const scheduleTravelDataRef = useRef<RideTravelInput>({
+    addressFrom: '',
+    addressTo: '',
+    dateTime: new Date(),
+  });
 
   useEffect(() => {
     if (onSwap) {
       onSwap(swapTravelStatus);
     }
   }, [swapTravelStatus]);
+
+  const ScheduleDateTime = () => {
+    const defaultToleranceMinutes = 3;
+
+    const [scheduleDateTime, setScheduleDateTime] = useState<Date | null>(null);
+    const [isValidScheduleDateTime, setIsValidScheduleDateTime] =
+      useState(true);
+
+    useEffect(() => {
+      const now = new Date();
+
+      if (scheduleDateTime) {
+        setIsValidScheduleDateTime(scheduleDateTime.getTime() >= now.getTime());
+
+        if (!isValidScheduleDateTime) {
+          failureMessage('Horario de planificacion incorrecto.');
+        }
+
+        if (isValidScheduleDateTime) {
+          scheduleTravelDataRef.current.dateTime = scheduleDateTime;
+        }
+      } else {
+        setIsValidScheduleDateTime(true);
+      }
+    }, [isValidScheduleDateTime, scheduleDateTime]);
+
+    return (
+      <div className={'flex flex-col gap-2 w-full'}>
+        <HeaderText title={'Hora de salida'} weight={2} />
+
+        <div className={'flex flex-col justify-start'}>
+          <div className={'flex flex-row items-end gap-2 w-full'}>
+            <DateTimePickerInput
+              label={'Horario de salida'}
+              value={scheduleDateTime}
+              onInput={setScheduleDateTime}
+              theme={'indigo'}
+            />
+
+            <IconButton
+              icon={MdOutlineAlarmOn}
+              onClick={() => {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() + defaultToleranceMinutes);
+
+                setScheduleDateTime(now);
+              }}
+              theme={'indigo'}
+            />
+          </div>
+
+          {!isValidScheduleDateTime && (
+            <p className={'px-3 pt-1 text-xs text-red-500 text-left'}>
+              No se puede programar el viaje a esta hora.
+            </p>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   const ChangeButton = () => {
     return (
@@ -53,18 +140,17 @@ function RideForm({ theme, onSwap, onSearchRequest, onCancel }: Props) {
 
   const HomeAddress = () => {
     return (
-      <UserInputIcon
-        icon={FaHome}
-        theme={theme}
-        value={'Regresar a casa'}
-        readOnly
-      />
+      <UserInputIcon icon={FaHome} theme={theme} value={'Casa'} readOnly />
     );
   };
 
   const SelectAddress = () => {
     useEffect(() => {
       const item = searchCurrentItem(currentIndex);
+
+      if (item !== undefined) {
+        setAddressOption(item.description);
+      }
     }, [currentIndex]);
 
     return (
@@ -78,8 +164,18 @@ function RideForm({ theme, onSwap, onSearchRequest, onCancel }: Props) {
   };
 
   const onSearchClick = async () => {
-    if (onSearchRequest) {
-      await onSearchRequest('', '');
+    if (!onSearchRequest) {
+      return;
+    }
+
+    if (!homeAddress) {
+      return;
+    }
+
+    if (swapTravelStatus) {
+      await onSearchRequest(addressOption, homeAddress);
+    } else {
+      await onSearchRequest(homeAddress, addressOption);
     }
   };
 
@@ -145,8 +241,13 @@ function RideForm({ theme, onSwap, onSearchRequest, onCancel }: Props) {
 
   return (
     <form className={'grow flex flex-col justify-start gap-4 sm:gap-8'}>
-      <div className={'px-6 py-4 sm:py-6 rounded-3xl border border-stone-300'}>
+      <div
+        className={
+          'flex flex-col gap-6 px-6 py-4 sm:py-6 rounded-3xl border border-stone-300'
+        }
+      >
         <TravelOptions />
+        <ScheduleDateTime />
       </div>
 
       <div className={'flex flex-row gap-2 items-center justify-center'}>

@@ -33,9 +33,9 @@ function DateTimePickerInput({
   );
 
   const allTextThemeColors = {
-    gray: 'my-2 mx-2 text-left text-sm font-medium text-gray-900',
-    teal: 'my-2 mx-2 text-left text-sm font-medium text-teal-900',
-    indigo: 'my-2 mx-2 text-left text-sm font-medium text-indigo-900',
+    gray: 'absolute my-2 mx-2 text-left text-sm font-medium text-gray-900',
+    teal: 'absolute my-2 mx-2 text-left text-sm font-medium text-teal-900',
+    indigo: 'absolute my-2 mx-2 text-left text-sm font-medium text-indigo-900',
   };
 
   const allInputThemeColors = {

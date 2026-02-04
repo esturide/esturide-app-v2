@@ -201,15 +201,15 @@ const SelectOptions: React.FC<Props> = ({
             {label}
           </Label>
         )}
-        <div className="sticky w-full z-50">
+        <div className="w-full">
           <ShowSelectedOption />
 
-          <div className={'absolute w-full'}>
+          <div className={'absolute w-full z-50'}>
             <ListboxOptions
               id={id}
               transition
               className={
-                'w-auto z-50 mt-1 max-h-35 overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'
+                'absolute w-full z-50 mt-1 max-h-35 overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'
               }
             >
               <AllElements />

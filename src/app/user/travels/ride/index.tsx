@@ -1,51 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
-import { filterSchedule } from '$libs/request/schedule.ts';
-import { getRequestRoot } from '$libs/request/api.ts';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useNavigate } from 'react-router-dom';
 import RideForm from '@components/forms/RideForm.tsx';
+import WeightLayout from '@layouts/WeightLayout.tsx';
 
 function RequestRideTravel() {
   const navigate = useNavigate();
-
   const { theme } = useUserTheme();
 
-  useEffect(() => {
-    const request = async () => {
-      await filterSchedule(
-        getRequestRoot(),
-        {
-          terminate: false,
-          cancel: false,
-          minPrice: 1,
-          maxPrice: 100,
-          limit: 10,
-        },
-        results => {
-          console.log(results);
-        },
-      );
-    };
-
-    request();
-  });
-
-  const onSchedule = async (addressFrom: string, addressTo: string) => {};
+  const onSchedule = async (addressFrom: string, addressTo: string) => {
+    navigate('/home/travels/ride/preview', {
+      state: { addressTo: addressTo, addressFrom: addressFrom },
+    });
+  };
 
   return (
     <MainResponsiveLayout>
-      <TravelMessage
-        title={'Busca un ride aqui.'}
-        message={'¿A donde quieres ir?'}
-      />
+      <WeightLayout>
+        <div className={'relative h-full flex flex-col gap-4'}>
+          <TravelMessage
+            title={'Busca una ruta.'}
+            message={'¿A donde quieres ir?'}
+          />
 
-      <RideForm
-        theme={theme}
-        onSearchRequest={onSchedule}
-        onCancel={() => navigate('/home/travels')}
-      />
+          <RideForm
+            theme={theme}
+            onSearchRequest={onSchedule}
+            onCancel={() => navigate('/home/travels')}
+            homeAddress={'Av zoquipan 1109'}
+          />
+        </div>
+      </WeightLayout>
     </MainResponsiveLayout>
   );
 }

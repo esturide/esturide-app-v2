@@ -27,7 +27,7 @@ type Props = {
   onCancel?: () => void;
 };
 
-function ScheduleForm({
+function ScheduleAddressForm({
   theme,
   onSwap,
   onSearch,
@@ -192,4 +192,4 @@ function ScheduleForm({
   );
 }
 
-export default ScheduleForm;
+export default ScheduleAddressForm;

@@ -1,10 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-import ScheduleForm from '@components/forms/ScheduleForm.tsx';
+import ScheduleAddressForm from '@components/forms/ScheduleAddressForm.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import { noEmptyStrings } from '$libs/string.ts';
 import { failureMessage } from '$libs/toast/failure.ts';
+import WeightLayout from '@layouts/WeightLayout.tsx';
+import HeaderText from '@components/text/HeaderText.tsx';
+import React from 'react';
 
 function RequestScheduleTravel() {
   const navigate = useNavigate();
@@ -23,18 +26,20 @@ function RequestScheduleTravel() {
 
   return (
     <MainResponsiveLayout>
-      <div className={'flex flex-col gap-4'}>
-        <TravelMessage
-          title={'Inicia un viaje aqui.'}
-          message={'Programa la ruta.'}
-        />
+      <WeightLayout>
+        <div className={'relative h-full flex flex-col gap-4'}>
+          <TravelMessage
+            title={'Establece la ruta.'}
+            message={'¿A donde vamos a ir?'}
+          />
 
-        <ScheduleForm
-          theme={theme}
-          onSchedule={onSchedule}
-          onCancel={() => navigate('/home/travels')}
-        />
-      </div>
+          <ScheduleAddressForm
+            theme={theme}
+            onSchedule={onSchedule}
+            onCancel={() => navigate('/home/travels')}
+          />
+        </div>
+      </WeightLayout>
     </MainResponsiveLayout>
   );
 }

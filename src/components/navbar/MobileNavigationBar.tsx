@@ -60,7 +60,7 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
     glass:
       'pt-3.5 pb-2.5 mx-4 navbar-mobile-animated-background bg-gradient-to-r from-gray-700/10 via-gray-100/85 to-gray-200/25 rounded-4xl z-50 text-gray-900 backdrop-blur-xs shadow-xl inset-shadow-sm',
     solid:
-      'pt-3.5 pb-2.5 mx-4 bg-white rounded-4xl z-50 text-gray-900 inset-shadow-sm',
+      'pt-3.5 pb-2.5 mx-4 bg-white rounded-4xl text-gray-900 inset-shadow-sm',
   };
 
   return (

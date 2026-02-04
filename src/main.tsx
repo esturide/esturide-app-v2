@@ -38,6 +38,7 @@ import { WatchLivePositionProvider } from '@/context/WatchLivePositionContext.ts
 
 import '@/index.css';
 import { UserManagementProvider } from '@/context/UserManagementContext.tsx';
+import PreviewRideTravel from '~/user/travels/ride/preview.tsx';
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
               {
                 path: 'current',
                 element: <CurrentRide />,
+              },
+              {
+                path: 'preview',
+                element: <PreviewRideTravel />,
               },
             ],
           },
