@@ -189,7 +189,7 @@ const SelectOptions: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="relative flex flex-col w-full">
       <Listbox
         value={selected}
         onChange={onChangeValue}
@@ -201,18 +201,20 @@ const SelectOptions: React.FC<Props> = ({
             {label}
           </Label>
         )}
-        <div className="relative">
+        <div className="sticky w-full z-50">
           <ShowSelectedOption />
 
-          <ListboxOptions
-            id={id}
-            transition
-            className={
-              'absolute z-50 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'
-            }
-          >
-            <AllElements />
-          </ListboxOptions>
+          <div className={'absolute w-full'}>
+            <ListboxOptions
+              id={id}
+              transition
+              className={
+                'w-auto z-50 mt-1 max-h-50 overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'
+              }
+            >
+              <AllElements />
+            </ListboxOptions>
+          </div>
         </div>
       </Listbox>
     </div>
