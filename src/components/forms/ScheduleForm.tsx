@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import UserInputIcon from '@components/input/UserInputIcon.tsx';
-import { FaBackspace, FaExchangeAlt, FaSearch } from 'react-icons/fa';
+import {
+  FaBackspace,
+  FaCarSide,
+  FaExchangeAlt,
+  FaFlagCheckered,
+  FaSearch,
+} from 'react-icons/fa';
 import MediumButton from '@components/buttons/MediumButton.tsx';
 import IconButton from '@components/buttons/IconButton.tsx';
 import SelectOptions from '@components/input/selector/SelectOptions.tsx';
@@ -9,6 +15,9 @@ import defaultLocationList, {
   searchCurrentItem,
 } from '$libs/const/defaultLocations.ts';
 import { failureMessage } from '$libs/toast/failure.ts';
+import LineElementList, {
+  LineItem,
+} from '@components/resources/LineElementList.tsx';
 
 type Props = {
   theme: ColorTheme;
@@ -114,34 +123,63 @@ function ScheduleForm({
   };
 
   const TravelOptions = () => {
+    const FromHome = () => {
+      const elements: LineItem[] = [
+        {
+          title: 'Inicio',
+          icon: FaCarSide,
+          item: () => <SelectAddress />,
+        },
+        {
+          title: 'Destino',
+          icon: FaFlagCheckered,
+          item: () => (
+            <div className={'flex flex-row gap-2 items-center justify-center'}>
+              <SearchAddress />
+              <ChangeButton />
+            </div>
+          ),
+        },
+      ];
+
+      return <LineElementList elements={elements} />;
+    };
+
+    const ReturnHome = () => {
+      const elements: LineItem[] = [
+        {
+          title: 'Inicio',
+          icon: FaCarSide,
+          item: () => <SearchAddress />,
+        },
+        {
+          title: 'Destino',
+          icon: FaFlagCheckered,
+          item: () => (
+            <div className={'flex flex-row gap-2 items-center justify-center'}>
+              <SelectAddress />
+              <ChangeButton />
+            </div>
+          ),
+        },
+      ];
+
+      return <LineElementList elements={elements} />;
+    };
+
     if (swapTravelStatus) {
-      return (
-        <>
-          <SearchAddress />
-
-          <div className={'flex flex-row gap-2 items-center justify-center'}>
-            <SelectAddress />
-            <ChangeButton />
-          </div>
-        </>
-      );
+      return <FromHome />;
     } else {
-      return (
-        <>
-          <div className={'flex flex-row gap-2 items-center justify-center'}>
-            <SelectAddress />
-            <ChangeButton />
-          </div>
-
-          <SearchAddress />
-        </>
-      );
+      return <ReturnHome />;
     }
   };
 
   return (
-    <form className={'grow flex flex-col justify-start gap-4'}>
-      <TravelOptions />
+    <form className={'grow flex flex-col justify-start gap-4 sm:gap-8'}>
+      <div className={'px-6 py-4 sm:py-6 rounded-3xl border border-stone-300'}>
+        <TravelOptions />
+      </div>
+
       <div className={'flex flex-row gap-2 items-center justify-center'}>
         <CancelButton />
         <MediumButton

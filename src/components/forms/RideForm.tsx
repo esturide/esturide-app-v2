@@ -27,7 +27,6 @@ type Props = {
 
 function RideForm({ theme, onSwap, onSearchRequest, onCancel }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const [swapTravelStatus, setSwapTravelStatus] = useState(false);
 
   useEffect(() => {
@@ -78,7 +77,11 @@ function RideForm({ theme, onSwap, onSearchRequest, onCancel }: Props) {
     );
   };
 
-  const onSearchClick = async () => {};
+  const onSearchClick = async () => {
+    if (onSearchRequest) {
+      await onSearchRequest('', '');
+    }
+  };
 
   const TravelOptions = () => {
     const FromHome = () => {
@@ -141,8 +144,8 @@ function RideForm({ theme, onSwap, onSearchRequest, onCancel }: Props) {
   };
 
   return (
-    <form className={'grow flex flex-col justify-start gap-4'}>
-      <div className={'px-6 py-4 rounded-3xl border border-stone-300'}>
+    <form className={'grow flex flex-col justify-start gap-4 sm:gap-8'}>
+      <div className={'px-6 py-4 sm:py-6 rounded-3xl border border-stone-300'}>
         <TravelOptions />
       </div>
 
