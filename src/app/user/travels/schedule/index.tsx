@@ -32,7 +32,7 @@ function RequestScheduleTravel() {
         <ScheduleForm
           theme={theme}
           onSchedule={onSchedule}
-          onCancel={() => navigate(-1)}
+          onCancel={() => navigate('/home/travels')}
         />
       </div>
     </MainResponsiveLayout>

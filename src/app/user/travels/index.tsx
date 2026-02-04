@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { io } from 'socket.io-client';
 
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
@@ -52,7 +51,7 @@ function UserTravels() {
         />
 
         <MediumButton
-          label={'Buscar'}
+          label={'Empezar'}
           theme={theme}
           onClick={async () => {
             navigate('ride/');
@@ -75,20 +74,6 @@ function UserTravels() {
     const { role, refreshRole } = useUserManagerContext();
     const { refreshCurrentSession } = useSessionManagementProvider();
     const { connected, messages, sendMessage } = useSocket();
-
-    useEffect(() => {
-      console.log(`Socket status: ${connected}`);
-
-      if (connected) {
-        sendMessage('hello-world', 'Hello world!');
-      }
-    }, [connected]);
-
-    useEffect(() => {
-      while (messages.length > 0) {
-        console.log(messages.pop());
-      }
-    }, [connected, messages]);
 
     const { loading } = useLazyEffect(async () => {
       const userSession = await refreshCurrentSession();

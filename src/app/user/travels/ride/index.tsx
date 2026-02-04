@@ -2,8 +2,16 @@ import React, { useEffect } from 'react';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import { filterSchedule } from '$libs/request/schedule.ts';
 import { getRequestRoot } from '$libs/request/api.ts';
+import TravelMessage from '@components/resources/message/TravelMessage.tsx';
+import { useUserTheme } from '@/context/UserTheme.tsx';
+import { useNavigate } from 'react-router-dom';
+import RideForm from '@components/forms/RideForm.tsx';
 
 function RequestRideTravel() {
+  const navigate = useNavigate();
+
+  const { theme } = useUserTheme();
+
   useEffect(() => {
     const request = async () => {
       await filterSchedule(
@@ -24,9 +32,22 @@ function RequestRideTravel() {
     request();
   });
 
+  const onSchedule = async (addressFrom: string, addressTo: string) => {};
+
+  const elements = [{}];
+
   return (
     <MainResponsiveLayout>
-      <p>!s</p>
+      <TravelMessage
+        title={'Busca un ride aqui.'}
+        message={'¿A donde quieres ir?'}
+      />
+
+      <RideForm
+        theme={theme}
+        onSearchRequest={onSchedule}
+        onCancel={() => navigate('/home/travels')}
+      />
     </MainResponsiveLayout>
   );
 }
