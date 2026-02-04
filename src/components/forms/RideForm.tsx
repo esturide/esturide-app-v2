@@ -17,9 +17,6 @@ import defaultLocationList, {
 import LineElementList, {
   LineItem,
 } from '@components/resources/LineElementList.tsx';
-import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
-import TravelMessage from '@components/resources/message/TravelMessage.tsx';
-import { useNavigate } from 'react-router-dom';
 import { failureMessage } from '$libs/toast/failure.ts';
 import HeaderText from '@components/text/HeaderText.tsx';
 import DateTimePickerInput from '@components/input/DateTimePickerInput.tsx';

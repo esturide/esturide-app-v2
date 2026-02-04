@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';

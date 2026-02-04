@@ -6,7 +6,6 @@ import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import { noEmptyStrings } from '$libs/string.ts';
 import { failureMessage } from '$libs/toast/failure.ts';
 import WeightLayout from '@layouts/WeightLayout.tsx';
-import HeaderText from '@components/text/HeaderText.tsx';
 import React from 'react';
 
 function RequestScheduleTravel() {

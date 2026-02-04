@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 import GradientAnimatedBackground from '@layouts/view/animated/GradientAnimatedBackground.tsx';
-import FooterPresentation from '@components/resources/FooterPresentation.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
 import ButtonLink from '@components/text/hyperlinks/ButtonLink.tsx';

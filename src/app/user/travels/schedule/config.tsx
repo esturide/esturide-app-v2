@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { useGeolocation } from 'react-use';
 
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import ScheduleTravelForm, {
