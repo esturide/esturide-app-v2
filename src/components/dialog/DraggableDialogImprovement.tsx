@@ -21,9 +21,9 @@ function DraggableDialogImprovement({
 
   const styleThemes = {
     glass:
-      'card w-sm absolute bg-white shadow-lg rounded-lg z-50 hover:bg-white/50 flex flex-col p-4 sm:px-6 sm:py-4 rounded-b-lg bg-white/70 backdrop-blur-md shadow-lg inset-shadow-sm/50',
+      'card w-sm fixed bg-white shadow-lg rounded-lg z-50 hover:bg-white/50 flex flex-col p-4 sm:px-6 sm:py-4 rounded-b-lg bg-white/70 backdrop-blur-md shadow-lg inset-shadow-sm/50',
     solid:
-      'card w-sm absolute bg-white shadow-lg rounded-lg z-50 flex flex-col p-4 sm:px-6 sm:py-4 rounded-b-lg bg-white shadow-lg inset-shadow-sm',
+      'card w-sm fixed bg-white shadow-lg rounded-lg z-50 flex flex-col p-4 sm:px-6 sm:py-4 rounded-b-lg bg-white shadow-lg inset-shadow-sm',
   };
 
   return (
