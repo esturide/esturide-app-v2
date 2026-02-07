@@ -77,7 +77,12 @@ function UserTravels() {
     const { loading } = useLazyEffect(async () => {
       const userSession = await refreshCurrentSession();
 
-      if (userSession === 'travel') {
+      if (userSession.role !== role) {
+        failureMessage("It seems there's a problem with your current role.");
+        await refreshRole(role);
+      }
+
+      if (userSession.session === 'travel') {
         if (role !== 'driver') {
           failureMessage('You have a travel pending.');
 
@@ -85,7 +90,8 @@ function UserTravels() {
         }
 
         navigate('/home/travels/schedule/current');
-      } else if (userSession === 'ride') {
+      }
+      if (userSession.session === 'ride') {
         if (role !== 'passenger') {
           failureMessage('You have a pending ride.');
 

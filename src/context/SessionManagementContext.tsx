@@ -1,14 +1,17 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-import { findCurrentSession } from '$libs/request/check.ts';
+import { findCurrentSession, UserStatusResponse } from '$libs/request/check.ts';
 import { getRequestRoot } from '$libs/request/api.ts';
 import CurrentSessionStatus from '$libs/types/CurrentSessionStatus.ts';
 
 interface Props {
-  refreshCurrentSession: () => Promise<CurrentSessionStatus>;
+  refreshCurrentSession: () => Promise<UserStatusResponse>;
 }
 
 const SessionManagementContext = createContext<Props>({
-  refreshCurrentSession: async () => 'free',
+  refreshCurrentSession: async () => ({
+    session: 'free',
+    role: 'standard',
+  }),
 });
 
 export const SessionManagementProvider: React.FC<PropsWithChildren> = ({

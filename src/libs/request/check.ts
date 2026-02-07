@@ -1,57 +1,17 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
-import { ResponseData, ResponseMessage } from '$libs/request/response';
+import { ResponseData } from '$libs/request/response';
 import CurrentSessionStatus from '$libs/types/CurrentSessionStatus.ts';
+import UserRole from '$libs/types/UserRole.ts';
 
-export const checkRideAvailable = async (root: AxiosInstance) => {
-  try {
-    const response: AxiosResponse = await root.get(
-      `/check/find/ride`,
-      getRequestConfig(),
-    );
+export interface UserStatusResponse {
+  readonly session: CurrentSessionStatus;
+  readonly role: UserRole;
+}
 
-    const status = [200, 201].includes(response.status);
-    const dataResponse: ResponseMessage = response.data;
-
-    if (status) {
-      return dataResponse.status === 'success';
-    }
-  } catch (e) {
-    if (axios.isAxiosError(e)) {
-      return false;
-    }
-
-    throw e;
-  }
-
-  return false;
-};
-
-export const checkScheduleAvailable = async (root: AxiosInstance) => {
-  try {
-    const response: AxiosResponse = await root.get(
-      `/check/find/schedule`,
-      getRequestConfig(),
-    );
-
-    const status = [200, 201].includes(response.status);
-    const dataResponse: ResponseMessage = response.data;
-
-    if (status) {
-      return dataResponse.status === 'success';
-    }
-  } catch (e) {
-    if (axios.isAxiosError(e)) {
-      return false;
-    }
-
-    throw e;
-  }
-
-  return false;
-};
-
-export const findCurrentSession = async (root: AxiosInstance) => {
+export const findCurrentSession = async (
+  root: AxiosInstance,
+): Promise<UserStatusResponse> => {
   try {
     const response: AxiosResponse = await root.get(
       `/find/status`,
@@ -59,18 +19,24 @@ export const findCurrentSession = async (root: AxiosInstance) => {
     );
 
     const status = [200, 201].includes(response.status);
-    const dataResponse: ResponseData<CurrentSessionStatus> = response.data;
+    const dataResponse: ResponseData<UserStatusResponse> = response.data;
 
     if (status) {
-      return dataResponse.data as CurrentSessionStatus;
+      return dataResponse.data;
     }
   } catch (e) {
     if (axios.isAxiosError(e)) {
-      return 'free';
+      return {
+        session: 'free',
+        role: 'standard',
+      };
     }
 
     throw e;
   }
 
-  return 'free';
+  return {
+    session: 'free',
+    role: 'standard',
+  };
 };
