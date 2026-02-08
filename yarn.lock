@@ -1746,6 +1746,11 @@
   dependencies:
     "@types/mdx" "^2.0.0"
 
+"@microsoft/fetch-event-source@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/fetch-event-source/-/fetch-event-source-2.0.1.tgz#9ceecc94b49fbaa15666e38ae8587f64acce007d"
+  integrity sha512-W6CLUJ2eBMw3Rec70qrsEW0jOm/3twwJv21mrmj2yORiaVmVYGS4sSS5yUwvQc1ZlDLYGPnClVWmUUMagKNsfA==
+
 "@mswjs/interceptors@^0.37.0":
   version "0.37.6"
   resolved "https://registry.npmjs.org/@mswjs/interceptors/-/interceptors-0.37.6.tgz"
@@ -7361,6 +7366,13 @@ react-draggable@^4.5.0:
   dependencies:
     clsx "^2.1.1"
     prop-types "^15.8.1"
+
+react-eventsource@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-eventsource/-/react-eventsource-2.1.0.tgz#56a2b43962c36781678f2da85e70deddaf2872e5"
+  integrity sha512-I3LY51PwuyXF4m8pdJnI5wckrwSg9wMBGKXEoSMMbPaXMqLdvqCQht33gE2FSW+68pWraLPySNFT7Sb9veTF4A==
+  dependencies:
+    "@microsoft/fetch-event-source" "^2.0.1"
 
 react-fit@^3.0.0:
   version "3.0.0"

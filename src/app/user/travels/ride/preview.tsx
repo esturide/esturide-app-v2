@@ -23,7 +23,8 @@ import {
 function PreviewRideTravel() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { addressTo, addressFrom, exitingTime } = state as RideLocationAddressParams;
+  const { addressTo, addressFrom, exitingTime } =
+    state as RideLocationAddressParams;
 
   const { googleApiKey, googleMapsID } = useServiceApiManager();
   const { isMobile } = useDeviceManagement();
@@ -60,8 +61,10 @@ function PreviewRideTravel() {
         onClick={async () => {
           const status = await requestRide(addressTo, addressFrom, exitingTime);
 
-          if(status) {
-            navigate('/home/travels/ride/match');
+          if (status) {
+            navigate('/home/travels/ride/search');
+          } else {
+            failureMessage('Cannot request ride.');
           }
         }}
       />

@@ -12,14 +12,9 @@ import useLazyEffect from '$libs/effects/lazyEffect.ts';
 import PartialScreenContainer from '@layouts/container/PartialScreenContainer.tsx';
 import SpinnerLoader from '@components/resources/SpinnerLoader.tsx';
 import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
-import {
-  SocketManagerProvider,
-  useSocket,
-} from '@/context/SocketManagerContext.tsx';
 
 function UserTravels() {
   const navigate = useNavigate();
-  const { authToken } = useUserManagerContext();
 
   const { theme } = useUserTheme();
 
@@ -77,11 +72,6 @@ function UserTravels() {
     const { loading } = useLazyEffect(async () => {
       const userSession = await refreshCurrentSession();
 
-      if (userSession.role !== role) {
-        failureMessage("It seems there's a problem with your current role.");
-        await refreshRole(role);
-      }
-
       if (userSession.session === 'travel') {
         if (role !== 'driver') {
           failureMessage('You have a travel pending.');
@@ -121,13 +111,7 @@ function UserTravels() {
 
   return (
     <MainResponsiveLayout>
-      <SocketManagerProvider
-        namespace={'travel'}
-        token={authToken}
-        eventListener={['ping']}
-      >
-        <ViewRole />
-      </SocketManagerProvider>
+      <ViewRole />
     </MainResponsiveLayout>
   );
 }

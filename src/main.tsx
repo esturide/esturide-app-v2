@@ -40,6 +40,7 @@ import '@/index.css';
 import { UserManagementProvider } from '@/context/UserManagementContext.tsx';
 import PreviewRideTravel from '~/user/travels/ride/preview.tsx';
 import MatchRideTravel from '~/user/travels/ride/match.tsx';
+import SearchRide from '~/user/travels/ride/search.tsx';
 
 const router = createBrowserRouter([
   {
@@ -68,16 +69,20 @@ const router = createBrowserRouter([
                 element: <RequestRideTravel />,
               },
               {
-                path: 'current',
-                element: <CurrentRide />,
-              },
-              {
                 path: 'preview',
                 element: <PreviewRideTravel />,
               },
               {
                 path: 'match',
                 element: <MatchRideTravel />,
+              },
+              {
+                path: 'search',
+                element: <SearchRide />,
+              },
+              {
+                path: 'current',
+                element: <CurrentRide />,
               },
             ],
           },
