@@ -23,12 +23,23 @@ import HeaderText from '@components/text/HeaderText.tsx';
 import { useWatchLivePositionContext } from '@/context/WatchLivePositionContext.tsx';
 
 import '@styles/map/google-map-style.scss';
+import { useSocket } from '@/context/SocketManagerContext.tsx';
 
 function CurrentScheduleTravel() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [showPassengerList, setShowPassengerList] = useState(false);
+
+  const { connected, sendMessage, messages } = useSocket();
+
+  useEffect(() => {
+    if (connected) {
+      console.log("It's connected to travel");
+    } else {
+      console.error('Error connection.');
+    }
+  }, [connected]);
 
   const CurrentLocationMap = () => {
     const { watchPosition } = useWatchLivePositionContext();
@@ -102,7 +113,7 @@ function CurrentScheduleTravel() {
     } = useScheduleTravelManagementContext();
 
     if (!currentSchedule) {
-      return null;
+      return <p>Window</p>;
     }
 
     const onStartingTravel = async () => {
