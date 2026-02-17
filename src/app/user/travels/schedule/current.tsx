@@ -13,7 +13,7 @@ import DraggableDialogImprovement from '@components/dialog/DraggableDialogImprov
 import { useWatchLivePositionContext } from '@/context/WatchLivePositionContext.tsx';
 
 import '@styles/map/google-map-style.scss';
-import ScheduleTravelInformation from '@components/forms/ScheduleCurrentForm.tsx';
+import ScheduleTravelInformation from '@components/forms/driver/ScheduleCurrentForm.tsx';
 
 function CurrentScheduleTravel() {
   const navigate = useNavigate();

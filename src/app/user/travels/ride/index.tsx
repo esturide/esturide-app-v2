@@ -3,14 +3,18 @@ import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import { useNavigate } from 'react-router-dom';
-import RideForm from '@components/forms/RideForm.tsx';
+import RideForm from '@components/forms/passenger/RideForm.tsx';
 import WeightLayout from '@layouts/WeightLayout.tsx';
 
 function RequestRideTravel() {
   const navigate = useNavigate();
   const { theme } = useUserTheme();
 
-  const onRideRequest = async (addressFrom: string, addressTo: string, exiting: Date) => {
+  const onRideRequest = async (
+    addressFrom: string,
+    addressTo: string,
+    exiting: Date,
+  ) => {
     navigate('/home/travels/ride/preview', {
       state: {
         addressTo: addressTo,

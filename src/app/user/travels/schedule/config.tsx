@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import ScheduleTravelForm, {
   ScheduleTravelInput,
-} from '@components/forms/ScheduleTravelForm.tsx';
+} from '@components/forms/driver/ScheduleTravelForm.tsx';
 import { failureMessage } from '$libs/toast/failure.ts';
 import {
   ScheduleLocationAddressParams,

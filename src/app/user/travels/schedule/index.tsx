@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-import ScheduleAddressForm from '@components/forms/ScheduleAddressForm.tsx';
+import ScheduleAddressForm from '@components/forms/driver/ScheduleAddressForm.tsx';
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import { noEmptyStrings } from '$libs/string.ts';
