@@ -35,11 +35,13 @@ const LineElementList: React.FC<Props> = ({ elements = [] }) => {
   };
 
   return (
-    <>
-      <ol className="relative border-stone-300 border-s border-default">
-        {elements.map(element => ElementLi(element))}
-      </ol>
-    </>
+    <div className={'pl-3.5 pt-0.75'}>
+      <div className={''}>
+        <ol className="relative border-stone-300 border-s border-default">
+          {elements.map(element => ElementLi(element))}
+        </ol>
+      </div>
+    </div>
   );
 };
 

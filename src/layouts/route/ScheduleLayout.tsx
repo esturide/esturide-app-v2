@@ -5,11 +5,9 @@ import { failureMessage } from '$libs/toast/failure.ts';
 import { DriverManagementProvider } from '@/context/DriverManagementContext.tsx';
 import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 import { ScheduleTravelManagementProvider } from '@/context/ScheduleTravelManagementContext.tsx';
-import { SocketManagerProvider } from '@/context/SocketManagerContext.tsx';
 
 function ScheduleLayout() {
   const { role } = useUserManagerContext();
-  const { authToken } = useUserManagerContext();
 
   const FailureNavigate = () => {
     useEffect(() => {
@@ -24,17 +22,11 @@ function ScheduleLayout() {
   }
 
   return (
-    <SocketManagerProvider
-      namespace={'travel'}
-      token={authToken}
-      eventListener={['current']}
-    >
-      <ScheduleTravelManagementProvider>
-        <DriverManagementProvider>
-          <Outlet />
-        </DriverManagementProvider>
-      </ScheduleTravelManagementProvider>
-    </SocketManagerProvider>
+    <ScheduleTravelManagementProvider>
+      <DriverManagementProvider>
+        <Outlet />
+      </DriverManagementProvider>
+    </ScheduleTravelManagementProvider>
   );
 }
 

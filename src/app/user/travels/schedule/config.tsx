@@ -21,8 +21,7 @@ function ScheduleConfig() {
   const { state } = useLocation();
   const { addressTo, addressFrom } = state as ScheduleLocationAddressParams;
 
-  const { scheduleTravel, restoreCurrentTravel } =
-    useScheduleTravelManagementContext();
+  const { scheduleTravel } = useScheduleTravelManagementContext();
 
   const [loading, setLoading] = useState(false);
 
@@ -49,7 +48,6 @@ function ScheduleConfig() {
       });
 
       if (status) {
-        await restoreCurrentTravel();
         navigate('/home/travels/schedule/current');
       } else {
         failureMessage('No se pudo agendar tu viaje.');

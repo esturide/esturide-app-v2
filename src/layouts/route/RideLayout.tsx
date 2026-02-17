@@ -5,11 +5,9 @@ import { failureMessage } from '$libs/toast/failure.ts';
 import { PassengerManagementProvider } from '@/context/PassengerManagementContext.tsx';
 import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 import { RideTravelManagementProvider } from '@/context/RideTravelManagmentContext.tsx';
-import { SocketManagerProvider } from '@/context/SocketManagerContext.tsx';
 
 function RideLayout() {
   const { role } = useUserManagerContext();
-  const { authToken } = useUserManagerContext();
 
   const FailureNavigate = () => {
     useEffect(() => {
@@ -24,17 +22,11 @@ function RideLayout() {
   }
 
   return (
-    <SocketManagerProvider
-      namespace={'ride'}
-      token={authToken}
-      eventListener={['ping']}
-    >
-      <RideTravelManagementProvider>
-        <PassengerManagementProvider>
-          <Outlet />
-        </PassengerManagementProvider>
-      </RideTravelManagementProvider>
-    </SocketManagerProvider>
+    <RideTravelManagementProvider>
+      <PassengerManagementProvider>
+        <Outlet />
+      </PassengerManagementProvider>
+    </RideTravelManagementProvider>
   );
 }
 

@@ -17,7 +17,7 @@ import { useWatchLivePositionContext } from '@/context/WatchLivePositionContext.
 import ScheduleRequest from '$libs/request/request/ScheduleRequest.ts';
 import LocationAddress from '$libs/types/LocationAddress.ts';
 import ScheduleTravelInterface from '$libs/types/interface/ScheduleTravelInterface.ts';
-import { recordCurrentLocation } from '$libs/request/record.ts';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 
 export interface ScheduleLocationAddressParams {
   readonly addressFrom: string;
@@ -57,21 +57,13 @@ const ScheduleTravel = createContext<Props>({
 export const ScheduleTravelManagementProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const { watchPosition } = useWatchLivePositionContext();
-
-  useEffect(() => {
-    const request = async () => {
-      if (currentSchedule) {
-        await recordCurrentLocation(getRequestRoot(), watchPosition);
-      }
-    };
-
-    request();
-  }, [watchPosition]);
-
   const [currentSchedule, setCurrentSchedule] = useAtom(
     currentScheduleDataAtom,
   );
+
+  useEffect(() => {
+    console.log(currentSchedule);
+  }, [currentSchedule]);
 
   const restoreCurrentTravel = async () => {
     let status = false;
