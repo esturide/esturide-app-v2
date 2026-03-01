@@ -1,12 +1,18 @@
 import LogoResource from '@assets/images/logo.png';
+import Image from 'next/image';
 
 const Logo = () => {
   return (
-    <img
-      src={LogoResource}
-      className="w-[123px] aspect-[0.99] object-contain"
-      alt="Esturide logo"
-    />
+    <div className="relative h-[50px] w-[123px]">
+      <Image
+        src={LogoResource}
+        alt="Esturide logo"
+        fill
+        className="object-contain"
+        sizes="123px"
+        priority
+      />
+    </div>
   );
 };
 

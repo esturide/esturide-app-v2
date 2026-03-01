@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { FaCar, FaUser } from 'react-icons/fa';
 import UserInput from '@components/input/UserInput.tsx';
 import ButtonCard from '@components/buttons/ButtonCard.tsx';
@@ -16,17 +18,17 @@ const enableUserRegister = false; // Current development
 
 const UserRegister: React.FC = () => {
   const [currentForm, setCurrentForm] = useState(0);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     if (!enableUserRegister) {
       failureMessage("You can't log in at the moment.");
-      navigate('/resource-not-available', { replace: true });
+      router.replace('/resource-not-available');
     }
-  }, [navigate]);
+  }, [router]);
 
   const clickRegister = async () => {
-    navigate('/login');
+    router.push('/login');
   };
 
   const FirstRegister = () => {

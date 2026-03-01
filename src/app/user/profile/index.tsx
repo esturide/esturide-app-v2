@@ -1,3 +1,5 @@
+'use client';
+
 import { useUserManager } from '@/context/UserManager.tsx';
 import SelectOptions from '@components/input/selector/SelectOptions.tsx';
 import UserButton from '@components/buttons/UserButton.tsx';

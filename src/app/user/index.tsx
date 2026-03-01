@@ -1,3 +1,5 @@
+'use client';
+
 import SorryMessage from '@components/resources/SorryMessage.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
 

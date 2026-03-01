@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ItemType } from '@components/navbar/types.ts';
 import MobileNavigationBar from '@components/navbar/MobileNavigationBar.tsx';

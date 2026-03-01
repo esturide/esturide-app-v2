@@ -1,4 +1,5 @@
 import SleepImage from '@assets/images/sleep.png';
+import Image from 'next/image';
 
 type Props = {
   title: string;
@@ -13,11 +14,15 @@ function SorryMessage({ title, message, shadow = false, dark = false }: Props) {
       className={`overflow-hidden pt-4 mx-auto w-full text-center max-w-[480px] rounded-xl ${shadow ? '' : ''}`}
     >
       <section className="flex flex-col px-6 w-full">
-        <img
-          src={SleepImage}
-          alt="sleep"
-          className="object-contain self-center mt-12 max-w-full aspect-[1.17] w-[250px] rounded-4xl inset-shadow-sm"
-        />
+        <div className="relative self-center mt-12 w-[250px] aspect-[1.17] rounded-4xl inset-shadow-sm overflow-hidden">
+          <Image
+            src={SleepImage}
+            alt="sleep"
+            fill
+            className="object-contain"
+            sizes="250px"
+          />
+        </div>
         <div
           className={`self-center pt-2 pb-12 mt-2.5 text-base text-neutral-700 ${dark ? 'text-white' : 'text-black'}`}
         >
