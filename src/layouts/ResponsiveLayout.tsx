@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useId } from 'react';
 import { ItemType } from '@components/navbar/types.ts';
 import { useUserTheme } from '@/context/UserTheme.tsx';

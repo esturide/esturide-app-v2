@@ -1,13 +1,15 @@
+'use client';
+
 import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import OptionButton from '@components/buttons/OptionButton.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useUserManager } from '@/context/UserManager.tsx';
 import SorryMessage from '@components/resources/SorryMessage.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
 
 function UserTravels() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { role } = useUserManager();
   const { theme } = useUserTheme();
 
@@ -33,7 +35,7 @@ function UserTravels() {
             label={'Agendar'}
             theme={theme}
             onClick={async () => {
-              navigate('schedule/');
+              router.push('/home/travels/schedule');
             }}
           />
         </div>
@@ -50,7 +52,7 @@ function UserTravels() {
             label={'Buscar'}
             theme={theme}
             onClick={async () => {
-              navigate('schedule/');
+              router.push('/home/travels/schedule');
             }}
           />
         </div>

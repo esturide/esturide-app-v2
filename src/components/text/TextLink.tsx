@@ -1,5 +1,5 @@
 import LinkProps from '@components/text/LinkProps.ts';
-import { Link } from 'react-router';
+import Link from 'next/link';
 
 type TextWeight = 'bold' | 'normal' | 'light';
 
@@ -24,13 +24,20 @@ function TextLink({
   };
 
   return (
-    <Link
-      className={'flex hover:text-gray-300'}
-      to={to}
-      target={external ? '_blank' : '_self'}
-    >
-      <Text />
-    </Link>
+    external ? (
+      <a
+        className={'flex hover:text-gray-300'}
+        href={to}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Text />
+      </a>
+    ) : (
+      <Link className={'flex hover:text-gray-300'} href={to}>
+        <Text />
+      </Link>
+    )
   );
 }
 

@@ -1,5 +1,5 @@
 import LinkProps from '@components/text/LinkProps.ts';
-import { Link } from 'react-router';
+import Link from 'next/link';
 import ColorTheme from '$libs/types/Theme.ts';
 
 interface ButtonLinkProps extends LinkProps {
@@ -20,13 +20,20 @@ function ButtonLink({
   };
 
   return (
-    <Link
-      className={buttonStyle[theme]}
-      to={to}
-      target={external ? '_blank' : '_self'}
-    >
-      <p>{label}</p>
-    </Link>
+    external ? (
+      <a
+        className={buttonStyle[theme]}
+        href={to}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <p>{label}</p>
+      </a>
+    ) : (
+      <Link className={buttonStyle[theme]} href={to}>
+        <p>{label}</p>
+      </Link>
+    )
   );
 }
 

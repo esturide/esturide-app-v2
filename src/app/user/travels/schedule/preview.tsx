@@ -1,22 +1,19 @@
+'use client';
+
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import GoogleMapView from '@components/map/google/view/MapView.tsx';
 import GoogleRouting from '@components/map/google/GoogleRouting.tsx';
 import { all } from '$libs/functional.ts';
-import { useNavigate } from 'react-router-dom';
 import { failureMessage } from '$libs/toast/failure.ts';
 
-interface LocationState {
-  readonly addressFrom: string;
-  readonly addressTo: string;
-}
-
-const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+const googleMapsApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? '';
 
 function PreviewScheduleTravel() {
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const { addressTo, addressFrom } = state as LocationState;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const addressFrom = searchParams.get('addressFrom') ?? '';
+  const addressTo = searchParams.get('addressTo') ?? '';
 
   const validDirections = (a: string, b: string) => {
     return all([a, b], d => d.length > 0);
@@ -24,15 +21,15 @@ function PreviewScheduleTravel() {
 
   const catchNotFoundRoute = () => {
     failureMessage('Could not find a route.');
-    navigate('/home/travels/schedule/');
+    router.replace('/home/travels/schedule');
   };
 
   useEffect(() => {
     if (!validDirections(addressTo, addressFrom)) {
       failureMessage('Both addresses are invalid.');
-      navigate('/home/travels/schedule/');
+      router.replace('/home/travels/schedule');
     }
-  }, [state]);
+  }, [addressFrom, addressTo, router]);
 
   return (
     <>

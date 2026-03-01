@@ -1,5 +1,5 @@
 import { IconType } from 'react-icons';
-import { Link } from 'react-router';
+import Link from 'next/link';
 import LinkProps from '@components/text/LinkProps.ts';
 
 interface IconLinkProps extends LinkProps {
@@ -10,16 +10,29 @@ function IconLink({ label, icon, to, external = false }: IconLinkProps) {
   const Icon = icon;
 
   return (
-    <Link
-      className={
-        'flex flex-row items-center gap-1 rounded-2xl hover:text-gray-300'
-      }
-      to={to}
-      target={external ? '_blank' : '_self'}
-    >
-      <Icon />
-      <p>{label}</p>
-    </Link>
+    external ? (
+      <a
+        className={
+          'flex flex-row items-center gap-1 rounded-2xl hover:text-gray-300'
+        }
+        href={to}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <Icon />
+        <p>{label}</p>
+      </a>
+    ) : (
+      <Link
+        className={
+          'flex flex-row items-center gap-1 rounded-2xl hover:text-gray-300'
+        }
+        href={to}
+      >
+        <Icon />
+        <p>{label}</p>
+      </Link>
+    )
   );
 }
 

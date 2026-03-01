@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import loaderEffect from '$libs/loaderEffect.ts';
 import { useUserTheme } from '@/context/UserTheme.tsx';
 import FullScreenContainer from '@layouts/container/FullScreenContainer.tsx';
@@ -10,7 +12,7 @@ import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
 
 function ScheduleTravel() {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const { theme } = useUserTheme();
 
@@ -21,9 +23,11 @@ function ScheduleTravel() {
       console.log(`Address from ${addressFrom}, to ${addressTo}`);
     }, setLoadingAddress);
 
-    navigate('/home/travels/schedule/preview', {
-      state: { addressTo: addressTo, addressFrom: addressFrom },
+    const params = new URLSearchParams({
+      addressFrom,
+      addressTo,
     });
+    router.push(`/home/travels/schedule/preview?${params.toString()}`);
   };
 
   if (loadingAddress) {
@@ -47,7 +51,7 @@ function ScheduleTravel() {
         <ScheduleForm
           theme={theme}
           onSchedule={onSchedule}
-          onCancel={() => navigate(-1)}
+          onCancel={() => router.back()}
         />
       </div>
     </MainLayout>
