@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import Image from 'next/image';
 import {
   Disclosure,
   DisclosureButton,
@@ -12,9 +15,9 @@ import { ItemType } from '@components/navbar/types.ts';
 import { FaBell, FaUser } from 'react-icons/fa';
 import { LuMenu } from 'react-icons/lu';
 import { useUserManager } from '@/context/UserManager.tsx';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import LogoResource from '@assets/images/logo.png';
-import { Link } from 'react-router';
+import Link from 'next/link';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
@@ -25,7 +28,7 @@ type Props = {
 };
 
 const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { isAuthenticated, logout } = useUserManager();
 
   const handleItemClick = async (item: ItemType) => {
@@ -36,7 +39,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
 
   const Notifications = () => {
     const onCLick = async () => {
-      navigate('/notify');
+      router.push('/home/notify');
     };
 
     return (
@@ -68,7 +71,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
         >
           <MenuItem>
             <Link
-              to={'/home/profile'}
+              href={'/home/profile'}
               className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
             >
               Your Profile
@@ -76,20 +79,22 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
           </MenuItem>
           <MenuItem>
             <Link
-              to={'/home/settings'}
+              href={'/home/settings'}
               className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
             >
               Settings
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link
-              to={'/'}
+            <button
               className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-              onClick={logout}
+              onClick={async () => {
+                await logout();
+                router.push('/');
+              }}
             >
               Sign out
-            </Link>
+            </button>
           </MenuItem>
         </MenuItems>
       </Menu>
@@ -113,7 +118,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-              <img alt="logo" src={LogoResource} className="h-8 w-auto" />
+              <Image alt="logo" src={LogoResource} className="h-8 w-auto" />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -129,7 +134,7 @@ const DesktopNavigationBar: React.FC<Props> = ({ items }) => {
                     )}
                     onClick={async () => {
                       await handleItemClick(item);
-                      navigate(item.href);
+                      router.push(item.href);
                     }}
                   >
                     {item.label}

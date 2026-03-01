@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useUserManager } from '@/context/UserManager.tsx';
 import loaderEffect from '$libs/loaderEffect.ts';
 import UserInput from '@components/input/UserInput.tsx';
@@ -14,7 +16,7 @@ import Logo from '@components/resources/Logo.tsx';
 import PresentationLayout from '@layouts/PresentationLayout.tsx';
 
 const LoginPage: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { login } = useUserManager();
   const { size } = useDeviceManagement();
   const [userCode, setUserCode] = useState<number>(0);
@@ -24,11 +26,11 @@ const LoginPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const clickRegister = async () => {
-    navigate('/login/register');
+    router.push('/login/register');
   };
 
   const returnToHome = async () => {
-    navigate('/');
+    router.push('/');
   };
 
   const onInputCode = (value: string) => {
@@ -52,7 +54,7 @@ const LoginPage: React.FC = () => {
         const status = await login(userCode, password);
 
         if (status) {
-          navigate('/home', { replace: true });
+          router.replace('/home');
         } else {
           failureMessage('Datos de usuario invalidos.');
         }

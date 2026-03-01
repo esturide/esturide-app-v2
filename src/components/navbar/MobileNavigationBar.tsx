@@ -1,8 +1,9 @@
+'use client';
+
 import React from 'react';
 import { IconContext } from 'react-icons';
 import { ItemType } from '@components/navbar/types.ts';
-import { useNavigate } from 'react-router-dom';
-import { useLocation } from 'react-router';
+import { usePathname, useRouter } from 'next/navigation';
 import NavItem from '@components/navbar/NavItem.tsx';
 import ColorTheme from '$libs/types/Theme.ts';
 
@@ -15,9 +16,9 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
   items,
   theme = 'teal',
 }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const currentPath = location.pathname;
+  const pathname = usePathname();
+  const router = useRouter();
+  const currentPath = pathname;
 
   const handleItemClick = async (item: ItemType) => {
     if (item.action) {
@@ -44,7 +45,7 @@ const MobileNavigationBar: React.FC<NavigationBarProps> = ({
               isActive={item.href == currentPath}
               onClick={async () => {
                 await handleItemClick(item);
-                navigate(item.href);
+                router.push(item.href);
               }}
               color={theme}
             />

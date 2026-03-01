@@ -1,7 +1,6 @@
-import React, { useId } from 'react';
+ 'use client';
 
-import '@styles/background/gradient/gradient-animation-clear.scss';
-import '@styles/background/gradient/gradient-animation-dark.scss';
+import React, { useId } from 'react';
 
 type Props = {
   dark?: boolean;

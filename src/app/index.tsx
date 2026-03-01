@@ -1,6 +1,8 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { GrLogin, GrUserNew } from 'react-icons/gr';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { randomIntFromInterval, shuffleArray } from '$libs/random.ts';
 import { useUserManager } from '@/context/UserManager.tsx';
 import MainLayout from '@layouts/view/MainLayout.tsx';
@@ -14,17 +16,17 @@ import TravelWoman from '@assets/images/resources/travel-woman.jpg';
 
 function UserIndex() {
   const { isAuthenticated } = useUserManager();
-  const navigate = useNavigate();
+  const router = useRouter();
 
-  useEffect(() => {}, [isAuthenticated, navigate]);
+  useEffect(() => {}, [isAuthenticated, router]);
 
   const UserOptions = () => {
     const registerUser = async () => {
-      navigate('/login/register');
+      router.push('/login/register');
     };
 
     const loginUser = async () => {
-      navigate('/login');
+      router.push('/login');
     };
 
     return (
