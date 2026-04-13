@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
-
-const baseURL = 'https://api.esturide.com';
+import { baseURL } from '$libs/const/defaultURL.ts';
 
 const requestRoot = axios.create({
   baseURL: baseURL,

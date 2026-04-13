@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useRouteError, isRouteErrorResponse } from 'react-router-dom';
+import { isRouteErrorResponse, useRouteError } from 'react-router-dom';
 import GradientAnimatedBackground from '@layouts/view/animated/GradientAnimatedBackground.tsx';
-import FooterPresentation from '@components/resources/FooterPresentation.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
-import ButtonLink from '@components/text/ButtonLink.tsx';
+import ButtonLink from '@components/text/hyperlinks/ButtonLink.tsx';
 import Tooltip from '@components/resources/Tooltip.tsx';
 
 function ErrorPage() {
@@ -56,17 +55,19 @@ function ErrorPage() {
 
   return (
     <GradientAnimatedBackground>
-      <div className={'pt-16 h-screen max-md:overflow-y-scroll'}>
-        <MainLayout>
+      <div className={'pt-auto h-screen max-md:overflow-y-scroll'}>
+        <MainResponsiveLayout>
           <div
             className={
-              'flex flex-col gap-2 bg-white rounded-lg px-6 py-8 shadow-xl inset-shadow-sm'
+              'flex flex-col gap-2 bg-white rounded-lg px-6 py-4 shadow-xl inset-shadow-sm'
             }
           >
             <ShowMessage />
 
             <div
-              className={'flex flex-row justify-between items-stretch gap-2'}
+              className={
+                'flex h-full flex-row justify-between items-stretch gap-2'
+              }
             >
               <ButtonLink label={'Regresar'} to={'/'} theme={'gray'} />
               <ButtonLink
@@ -76,9 +77,8 @@ function ErrorPage() {
               />
             </div>
           </div>
-        </MainLayout>
+        </MainResponsiveLayout>
       </div>
-      <FooterPresentation />
     </GradientAnimatedBackground>
   );
 }

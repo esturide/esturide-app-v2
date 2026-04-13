@@ -1,3 +1,9 @@
-type UserRole = 'not-verified' | 'driver' | 'passenger' | 'admin' | 'staff';
+type UserRole =
+  | 'not-verified'
+  | 'standard'
+  | 'driver'
+  | 'passenger'
+  | 'admin'
+  | 'staff';
 
 export default UserRole;

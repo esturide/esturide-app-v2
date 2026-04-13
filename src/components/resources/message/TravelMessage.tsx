@@ -7,11 +7,11 @@ type Props = {
 
 function TravelMessage({ title, message }: Props) {
   return (
-    <div className="flex flex-col items-center px-6 my-3">
+    <div className="flex flex-row lg:flex-col items-center lg:px-6 lg:my-3">
       <img
         src={TravelSource}
         alt="Ilustración de estado vacío mostrando que no hay viajes en la lista"
-        className="object-contain max-w-full aspect-[1.25] w-[250px]"
+        className="object-contain max-w-full lg:aspect-[1.25] w-[150px] lg:w-[250px]"
       />
       <section className="mt-2.5 text-xl font-bold text-center text-neutral-700">
         <h1 className="text-[#3d3d3d]">{title}</h1>

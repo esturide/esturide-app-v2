@@ -1,6 +1,6 @@
 import React from 'react';
 import ImageBackground from '@components/resources/MainBackgroundAnimated.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 
 type Props = {
   filename?: string;
@@ -13,11 +13,11 @@ function MainLayoutWithBackground({
   if (filename) {
     return (
       <ImageBackground>
-        <MainLayout>{children}</MainLayout>
+        <MainResponsiveLayout>{children}</MainResponsiveLayout>
       </ImageBackground>
     );
   } else {
-    return <MainLayout>{children}</MainLayout>;
+    return <MainResponsiveLayout>{children}</MainResponsiveLayout>;
   }
 }
 

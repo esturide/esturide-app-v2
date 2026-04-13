@@ -1,15 +1,12 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
-
-export interface UserDataLogin {
-  readonly code: number;
-  readonly password: string;
-}
+import UserDataLogin from '$libs/request/response/UserDataLogin.ts';
+import TokenResponse from '$libs/request/response/TokenResponse.ts';
 
 export const loginUser = async (
   root: AxiosInstance,
   user: UserDataLogin,
-  setAuthToken: (token: string) => Promise<void>,
+  setAuthToken: (token: string) => void,
 ) => {
   try {
     const response: AxiosResponse = await root.post(
@@ -22,9 +19,10 @@ export const loginUser = async (
     );
 
     const status = [200, 201].includes(response.status);
+    const dataResponse: TokenResponse = response.data;
 
     if (status) {
-      await setAuthToken(response.data.token);
+      setAuthToken(dataResponse.token);
     }
 
     return status;

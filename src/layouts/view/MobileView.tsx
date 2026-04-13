@@ -14,10 +14,13 @@ function MobileView({
   theme,
 }: React.PropsWithChildren<Props>) {
   return (
-    <>
-      <div className={'h-screen max-md:overflow-y-scroll'}>{children}</div>
-      <MobileNavigationBar items={items} theme={theme} />
-    </>
+    <div className={'flex flex-col'}>
+      <div className={'flex-col h-full max-md:overflow-y-scroll'}>
+        {children}
+      </div>
+
+      <MobileNavigationBar items={items} theme={theme} style={'glass'} />
+    </div>
   );
 }
 

@@ -1,19 +1,19 @@
 import { FaFacebook, FaLinkedinIn, FaYoutube } from 'react-icons/fa';
-import IconLink from '@components/text/IconLink.tsx';
-import TextLink from '@components/text/TextLink.tsx';
+import IconLink from '@components/text/hyperlinks/IconLink.tsx';
+import TextLink from '@components/text/hyperlinks/TextLink.tsx';
 import HeaderText from '@components/text/HeaderText.tsx';
 
 const DefaultLinks = {
   youtube: 'https://www.youtube.com/@esturide',
   linkedin: 'https://www.linkedin.com/company/esturide',
-  facebook: 'https://www.facebook.com/esturide',
+  facebook: 'https://www.facebook.com/esturide.mx',
 } as const;
 
 function FooterPresentation() {
   return (
     <div
       className={
-        'px-8 py-6 w-full flex flex-col bg-teal-700 inset-shadow-sm inset-shadow-teal-800 text-white'
+        'px-8 py-6 z-40 w-full flex flex-col bg-teal-700 inset-shadow-sm inset-shadow-teal-800 text-white'
       }
     >
       <div className={'flex flex-col gap-12 overflow-auto overflow-x-hidden'}>
@@ -62,7 +62,7 @@ function FooterPresentation() {
         <div
           className={'flex flex-col sm:flex-row justify-between gap-2 sm:gap-4'}
         >
-          <TextLink label={'©2025 Esturide'} to={'/'} weight={'light'} />
+          <TextLink label={'©2026 Esturide'} to={'/'} weight={'light'} />
 
           <div className={'flex flex-col md:flex-row gap-2'}>
             <TextLink

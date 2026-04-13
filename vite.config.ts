@@ -1,18 +1,19 @@
 import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react';
-import legacy from '@vitejs/plugin-legacy';
 import tailwindcss from '@tailwindcss/vite';
+import Sitemap from 'vite-plugin-sitemap';
 
 import * as path from 'path';
 import staticAssetsPlugin from 'vite-static-assets-plugin';
+import { qrcode } from 'vite-plugin-qrcode';
 
 // https://vite.dev/config/
 export default defineConfig({
   base: './',
   publicDir: 'public',
 
-  assetsInclude: ['**/*.gif', '**/*.png', '**/*.ttf'],
+  assetsInclude: ['**/*.gif', '**/*.png', '**/*.ttf', '***/*.webp'],
 
   resolve: {
     alias: {
@@ -27,12 +28,13 @@ export default defineConfig({
   },
 
   plugins: [
+    qrcode(),
+
     tailwindcss(),
 
     react(),
 
     staticAssetsPlugin({
-      // Optional configuration (defaults shown):
       directory: 'public',
       outputFile: 'src/static-assets.ts',
       ignore: ['.DS_Store'],
@@ -41,11 +43,6 @@ export default defineConfig({
       maxDirectoryDepth: 5,
       allowEmptyDirectories: false,
       addLeadingSlash: true,
-    }),
-
-    legacy({
-      targets: ['defaults', 'not IE 11'],
-      additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
     }),
 
     VitePWA({
@@ -94,5 +91,25 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
       },
     }),
+    Sitemap({
+      hostname: 'esturide.com',
+      dynamicRoutes: ['/', '/home'],
+      changefreq: 'weekly',
+      priority: 0.8,
+      lastmod: new Date(),
+    }),
   ],
+
+  build: {
+    target: 'ES2024',
+    minify: 'esbuild',
+  },
+
+  server: {
+    host: true, // Set host to true to make the server accessible over the local network
+    // Optional: set a custom port
+    // port: 3000,
+    // Optional: open the browser automatically
+    // open: true,
+  },
 });

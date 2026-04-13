@@ -1,16 +1,18 @@
 import SorryMessage from '@components/resources/SorryMessage.tsx';
-import MainLayout from '@layouts/view/MainLayout.tsx';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
 
 function ResourcesNotAvailable() {
   return (
-    <MainLayout>
-      <SorryMessage
-        message={'Este apartado no se encuentra disponible.'}
-        title={'Próximamente'}
-        shadow
-        dark
-      />
-    </MainLayout>
+    <div className={'pt-auto h-screen max-md:overflow-y-scroll'}>
+      <MainResponsiveLayout>
+        <SorryMessage
+          message={'Este apartado no se encuentra disponible.'}
+          title={'Próximamente'}
+          shadow
+          background
+        />
+      </MainResponsiveLayout>
+    </div>
   );
 }
 export default ResourcesNotAvailable;

@@ -15,6 +15,7 @@ type Props = {
   onInput?: (value: string) => void;
   valid?: boolean;
   invalidMessage?: string;
+  readOnly?: boolean;
   theme?: ColorTheme;
 };
 
@@ -26,6 +27,7 @@ const UserInput: React.FC<Props> = ({
   onInput,
   valid = true,
   invalidMessage = '',
+  readOnly = false,
   theme = 'teal',
 }) => {
   const [inputValue, setInputValue] = useState(value);
@@ -78,6 +80,7 @@ const UserInput: React.FC<Props> = ({
           placeholder={placeholder}
           className={allInputThemeColors[theme]}
           aria-label={label || 'User input'}
+          readOnly={readOnly}
         />
         {type === 'password' && (
           <button
