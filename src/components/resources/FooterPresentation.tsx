@@ -6,7 +6,7 @@ import HeaderText from '@components/text/HeaderText.tsx';
 const DefaultLinks = {
   youtube: 'https://www.youtube.com/@esturide',
   linkedin: 'https://www.linkedin.com/company/esturide',
-  facebook: 'https://www.facebook.com/esturide',
+  facebook: 'https://www.facebook.com/esturide.mx',
 } as const;
 
 function FooterPresentation() {
@@ -62,7 +62,7 @@ function FooterPresentation() {
         <div
           className={'flex flex-col sm:flex-row justify-between gap-2 sm:gap-4'}
         >
-          <TextLink label={'©2025 Esturide'} to={'/'} weight={'light'} />
+          <TextLink label={'©2026 Esturide'} to={'/'} weight={'light'} />
 
           <div className={'flex flex-col md:flex-row gap-2'}>
             <TextLink
