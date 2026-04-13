@@ -8900,6 +8900,11 @@ vite-plugin-qrcode@^0.3.0:
   dependencies:
     qrcode-terminal "^0.12.0"
 
+vite-plugin-sitemap@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-sitemap/-/vite-plugin-sitemap-0.8.2.tgz#4121168d331df1054bc4b2cff9de8f21cc0bd7af"
+  integrity sha512-bqIw6NVOXg6je81lzX8Lm0vjf8/QSAp8di8fYQzZ3ZdVicOm8+6idBGALJiy1R1FiXNIK8rgORO6HBqXyHW+iQ==
+
 vite-static-assets-plugin@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/vite-static-assets-plugin/-/vite-static-assets-plugin-1.2.2.tgz#30493a681481f11581dfc05273d65c6a514d1d65"
