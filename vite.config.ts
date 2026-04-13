@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
-import Sitemap from 'vite-plugin-sitemap';
 
 import * as path from 'path';
 import staticAssetsPlugin from 'vite-static-assets-plugin';
@@ -90,13 +89,6 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
       },
-    }),
-    Sitemap({
-      hostname: 'esturide.com',
-      dynamicRoutes: ['/', '/home'],
-      changefreq: 'weekly',
-      priority: 0.8,
-      lastmod: new Date(),
     }),
   ],
 
