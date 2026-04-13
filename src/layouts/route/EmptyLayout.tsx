@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useUserManager } from '@/context/UserManager.tsx';
+import { useUserManagerContext } from '@/context/UserManagementContext.tsx';
 
 function EmptyLayout() {
   const navigate = useNavigate();
-  const { isAuthenticated } = useUserManager();
+  const { isAuthenticated } = useUserManagerContext();
 
   useEffect(() => {
     if (isAuthenticated) {

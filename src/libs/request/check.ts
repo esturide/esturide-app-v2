@@ -1,32 +1,42 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { getRequestConfig } from '$libs/request/api.ts';
+import { ResponseData } from '$libs/request/response';
+import CurrentSessionStatus from '$libs/types/CurrentSessionStatus.ts';
+import UserRole from '$libs/types/UserRole.ts';
 
-export const checkToken = async (
+export interface UserStatusResponse {
+  readonly session: CurrentSessionStatus;
+  readonly role: UserRole;
+}
+
+export const findCurrentSession = async (
   root: AxiosInstance,
-  setStatus: (status: boolean) => void,
-) => {
+): Promise<UserStatusResponse> => {
   try {
-    const response: AxiosResponse = await root.post(
-      `/auth/check`,
-      {},
+    const response: AxiosResponse = await root.get(
+      `/find/status`,
       getRequestConfig(),
     );
 
     const status = [200, 201].includes(response.status);
-    const data = response.data;
+    const dataResponse: ResponseData<UserStatusResponse> = response.data;
 
     if (status) {
-      setStatus(data.status == 'success');
+      return dataResponse.data;
     }
-
-    return status;
   } catch (e) {
-    setStatus(false);
-
     if (axios.isAxiosError(e)) {
-      return false;
+      return {
+        session: 'free',
+        role: 'standard',
+      };
     }
 
     throw e;
   }
+
+  return {
+    session: 'free',
+    role: 'standard',
+  };
 };

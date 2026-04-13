@@ -1,4 +1,4 @@
-import React, { useId, useRef, useState } from 'react';
+import React, { useId, useState } from 'react';
 import { FaCheckCircle, FaChevronDown } from 'react-icons/fa';
 import {
   Label,
@@ -49,11 +49,11 @@ function isOptionArray(arr: any[]): arr is StringOption[] {
 }
 
 const SelectOptions: React.FC<Props> = ({
-  name = undefined,
-  label = null,
+  name,
+  label,
   options,
   defaultValue = 0,
-  onSelect = null,
+  onSelect,
   theme = 'teal',
   disabled = false,
 }) => {
@@ -68,10 +68,10 @@ const SelectOptions: React.FC<Props> = ({
 
   const ShowSelectedOption = () => {
     const allButtonColor = {
-      gray: 'px-4 py-2 grid w-full cursor-default grid-cols-1 rounded-t-[40px] rounded-b-[40px] bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6',
-      teal: 'px-4 py-2 grid w-full cursor-default grid-cols-1 rounded-t-[40px] rounded-b-[40px] bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm/6',
+      gray: 'py-2 grid w-full cursor-default grid-cols-1 rounded-t-[40px] rounded-b-[40px] bg-white py-1.5 px-4 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6',
+      teal: 'py-2 grid w-full cursor-default grid-cols-1 rounded-t-[40px] rounded-b-[40px] bg-white py-1.5 px-4 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-teal-600 sm:text-sm/6',
       indigo:
-        'px-4 py-2 grid w-full cursor-default grid-cols-1 rounded-t-[40px] rounded-b-[40px] bg-white py-1.5 pr-2 pl-3 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6hidden',
+        'py-2 grid w-full cursor-default grid-cols-1 rounded-t-[40px] rounded-b-[40px] bg-white py-1.5 px-4 text-left text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6',
     };
 
     if (isAvatar(selected)) {
@@ -89,7 +89,7 @@ const SelectOptions: React.FC<Props> = ({
           </span>
           <FaChevronDown
             aria-hidden="true"
-            className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+            className="col-start-1 row-start-1 h-5 w-5 self-center justify-self-end text-gray-400 sm:size-4"
           />
         </ListboxButton>
       );
@@ -103,7 +103,7 @@ const SelectOptions: React.FC<Props> = ({
           </span>
           <FaChevronDown
             aria-hidden="true"
-            className="col-start-1 row-start-1 size-5 self-center justify-self-end text-gray-500 sm:size-4"
+            className="col-start-1 row-start-1 h-5 w-5 self-center justify-self-end text-gray-400 sm:size-4"
           />
         </ListboxButton>
       );
@@ -189,7 +189,7 @@ const SelectOptions: React.FC<Props> = ({
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="relative flex flex-col w-full">
       <Listbox
         value={selected}
         onChange={onChangeValue}
@@ -201,18 +201,20 @@ const SelectOptions: React.FC<Props> = ({
             {label}
           </Label>
         )}
-        <div className="relative">
+        <div className="w-full">
           <ShowSelectedOption />
 
-          <ListboxOptions
-            id={id}
-            transition
-            className={
-              'absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'
-            }
-          >
-            <AllElements />
-          </ListboxOptions>
+          <div className={'absolute w-full z-50'}>
+            <ListboxOptions
+              id={id}
+              transition
+              className={
+                'absolute w-full z-50 mt-1 max-h-35 overflow-auto rounded-md bg-white text-base ring-1 shadow-lg ring-black/5 focus:outline-hidden data-leave:transition data-leave:duration-100 data-leave:ease-in data-closed:data-leave:opacity-0 sm:text-sm rounded-t-[10px] rounded-b-[15px]'
+              }
+            >
+              <AllElements />
+            </ListboxOptions>
+          </div>
         </div>
       </Listbox>
     </div>

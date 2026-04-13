@@ -1,21 +1,48 @@
-import { Navigate } from 'react-router';
+import React from 'react';
+import MainResponsiveLayout from '@layouts/view/MainResponsiveLayout.tsx';
+import TravelMessage from '@components/resources/message/TravelMessage.tsx';
 import { useUserTheme } from '@/context/UserTheme.tsx';
-import { useUserManager } from '@/context/UserManager.tsx';
-import OptionButton from '@components/buttons/OptionButton.tsx';
+import { useNavigate } from 'react-router-dom';
+import RideForm from '@components/forms/passenger/RideForm.tsx';
+import WeightLayout from '@layouts/WeightLayout.tsx';
 
-function RideTravel() {
-  const { role } = useUserManager();
+function RequestRideTravel() {
+  const navigate = useNavigate();
   const { theme } = useUserTheme();
 
-  if (role !== 'passenger') {
-    return <Navigate to={'/home/travels'} replace />;
-  }
+  const onRideRequest = async (
+    addressFrom: string,
+    addressTo: string,
+    exiting: Date,
+  ) => {
+    navigate('/home/travels/ride/preview', {
+      state: {
+        addressTo: addressTo,
+        addressFrom: addressFrom,
+        exitingTime: exiting,
+      },
+    });
+  };
 
   return (
-    <div className={'flex flex-col'}>
-      <OptionButton label={'Agendar'} theme={theme} />
-    </div>
+    <MainResponsiveLayout>
+      <WeightLayout>
+        <div className={'relative h-full flex flex-col gap-4'}>
+          <TravelMessage
+            title={'Busca una ruta.'}
+            message={'¿A donde quieres ir?'}
+          />
+
+          <RideForm
+            theme={theme}
+            onRideRequest={onRideRequest}
+            onCancel={() => navigate('/home/travels')}
+            homeAddress={'Av zoquipan 1109'}
+          />
+        </div>
+      </WeightLayout>
+    </MainResponsiveLayout>
   );
 }
 
-export default RideTravel;
+export default RequestRideTravel;

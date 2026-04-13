@@ -5,17 +5,17 @@ type Props = {
   weight: number;
 };
 
-const weightStyle = [
-  'text-4xl',
-  'text-3xl',
-  'text-2xl',
-  'text-xl',
-  'text-lg',
-  'text-xl',
-] as const;
-
 function HeaderText({ title, weight }: Props) {
   const Header = `h${weight}` as keyof JSX.IntrinsicElements;
+
+  const weightStyle = [
+    'text-4xl font-semibold',
+    'text-3xl font-semibold',
+    'text-2xl font-semibold',
+    'text-xl font-semibold',
+    'text-lg font-semibold',
+    'text-xl font-semibold',
+  ] as const;
 
   useEffect(() => {
     if (weight == 0 || weight > weightStyle.length) {
@@ -23,11 +23,7 @@ function HeaderText({ title, weight }: Props) {
     }
   }, [weight]);
 
-  return (
-    <Header className={`text-lg font-semibold ${weightStyle[weight + 1]}`}>
-      {title}
-    </Header>
-  );
+  return <Header className={weightStyle[weight + 1]}>{title}</Header>;
 }
 
 export default HeaderText;
