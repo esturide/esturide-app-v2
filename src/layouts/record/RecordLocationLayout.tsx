@@ -15,9 +15,11 @@ const RecordLocationLayout = ({ children }: React.PropsWithChildren) => {
       if (isAuthenticated) {
         const userSession = await refreshCurrentSession();
 
+        /*
         if (userSession.rideFound || userSession.scheduleFound) {
           await recordCurrentLocation(getRequestRoot(), watchPosition);
         }
+        */
       }
     };
 
